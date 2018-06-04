@@ -1,0 +1,8 @@
+.DS_STORE
+*.c~
+*.swp
+*.o
+._*
+*.a
+*.dSYM/
+.nfs.*
