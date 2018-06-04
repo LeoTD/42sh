@@ -6,7 +6,7 @@
 #    By: ltanenba <ltanenba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 19:18:37 by ltanenba          #+#    #+#              #
-#    Updated: 2018/06/04 12:21:21 by ltanenba         ###   ########.fr        #
+#    Updated: 2018/06/04 12:56:24 by ltanenba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ LIBS		= libft/libft.a \
 
 # Add header files here: (use full relative path to Makefile)
 INCLUDES	= libft/includes/libft.h \
-			  includes/42sh.h \
+			  includes/ft_sh.h \
 
 # Add source files here: (files assumed to be in ./src folder)
 FILES		= main.c \
