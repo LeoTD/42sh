@@ -1,31 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   term_util.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/04 12:24:30 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/04 16:19:04 by ltanenba         ###   ########.fr       */
+/*   Created: 2018/06/04 13:55:51 by ltanenba          #+#    #+#             */
+/*   Updated: 2018/06/04 15:16:52 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_sh.h"
 
-int			main(int argc, char **argv)
+int				ft_weirdchar(int c)
 {
-	char		*buf;
-
-	ft_printf("%s", "Hello 42sh!\n");
-	g_shell = &g_shellinit;
-	g_shell->term_fd = 1;
-	term_init(&g_shell->term);
-	while (1)
-	{
-		get_next_line(1, &buf);
-		ft_putendl(buf);
-	}
-	argc = 0;
-	argv = 0;
+	write(TERM_FD, &c, 1);
 	return (0);
+}
+
+void			update_size(t_term *t)
+{
+	struct winsize		w;
+
+	ioctl(0, TIOCGWINSZ, &w);
+    t->height = w.ws_row;
+    t->width = w.ws_col;
+}
+
+void			reset_defaults(t_term *t)
+{
+	tcsetattr(TERM_FD, TCSANOW, &t->normal);
+	_term_do("ve");
+	_term_do("te");
 }

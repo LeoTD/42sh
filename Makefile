@@ -6,14 +6,14 @@
 #    By: ltanenba <ltanenba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 19:18:37 by ltanenba          #+#    #+#              #
-#    Updated: 2018/06/04 12:56:24 by ltanenba         ###   ########.fr        #
+#    Updated: 2018/06/04 15:07:46 by ltanenba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= 42sh
 
 CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra -ltermcap
 INC_FLAGS	= -I libft/includes -I includes
 
 # -g for lldb
@@ -37,6 +37,8 @@ INCLUDES	= libft/includes/libft.h \
 
 # Add source files here: (files assumed to be in ./src folder)
 FILES		= main.c \
+			  term_util.c \
+			  setup.c \
 
 SRC			= $(addprefix src/, $(FILES))
 
