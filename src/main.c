@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 12:24:30 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/04 12:56:46 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/04 16:13:48 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			main(int argc, char **argv)
 {
-	ft_putendl("Hello 42sh!");
+	ft_printf("%s", "Hello 42sh!\n");
 	argc = 0;
 	argv = 0;
 	return (0);

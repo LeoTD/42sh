@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 12:23:11 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/04 12:53:37 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/04 16:10:07 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define FT_SH_H
 
 # include "libft.h"
+# include "ft_printf.h"
 
 #endif
