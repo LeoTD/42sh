@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 12:23:11 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/05 21:33:11 by ckrommen         ###   ########.fr       */
+/*   Updated: 2018/06/05 21:17:07 by ckrommen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,27 +102,27 @@ typedef struct					s_shell
 
 typedef struct					s_proc
 {
-	struct process		*next;
-	char				**argv;
-	pid_t				pid;
-	char				completed;
-	char				stopped;
-	int					status;
+	struct process		*next;/* next process in pipeline */
+	char				**argv;/* for exec */
+	pid_t				pid;/* process ID */
+	char				completed;/* true if process has completed */
+	char				stopped;/* true if process has stopped */
+	int					status;/* reported status value */
 }								t_proc;
 
 /* A job is a pipeline of processes.  */
 
 typedef struct					s_job
 {
-	struct job			*next;
-	struct termios		tmodes;
-	int					stdin;
-	int					stdout;
-	int					stderr;
-	t_proc				*first_process;
-	char				*command;
-	char				notified;
-	pid_t				pgid;
+	struct job			*next;/* next active job */
+	struct termios		tmodes;/* saved terminal modes */
+	int stdin;/* standard i/o channels */
+	int	stdout;
+	int	stderr;
+	process				*first_process;/* list of processes in this job */
+	char				*command;/* command line, used for messages */
+	char				notified;/* true if user told about stopped job */
+	pid_t				pgid;/* process group ID */
 }								t_job;
 
 /*
@@ -143,12 +143,5 @@ void					reset_defaults(t_term *t);
 void					shell_init(void);
 void					prompt(t_shell *s);
 void					term_init(t_term *t);
-
-/*
-**  Parser functions:
-*/
-
-t_proc					*process_init(void);
-t_job					*job_init(void);
 
 #endif
