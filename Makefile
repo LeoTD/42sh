@@ -6,7 +6,7 @@
 #    By: ltanenba <ltanenba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 19:18:37 by ltanenba          #+#    #+#              #
-#    Updated: 2018/06/04 15:07:46 by ltanenba         ###   ########.fr        #
+#    Updated: 2018/06/04 22:48:16 by ltanenba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ INCLUDES	= libft/includes/libft.h \
 FILES		= main.c \
 			  term_util.c \
 			  setup.c \
+			  prompt.c \
 
 SRC			= $(addprefix src/, $(FILES))
 

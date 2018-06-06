@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 12:23:11 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/04 16:19:41 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/04 22:47:44 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 
 # define _term_do(x) tputs(tgetstr(x, NULL), 1, ft_weirdchar)
 # define _goto(x, y) tputs(tgoto(tgetstr("cm", NULL), x, y), 1, ft_weirdchar)
-# define _put(x) ft_putstr_fd(x, FT_SEL_FD)
+# define _put(x) ft_putstr_fd(x, TERM_FD)
 
 /*
 ** Input keys
@@ -95,6 +95,7 @@ typedef struct					s_shell
 {
 	int					term_fd;
 	t_term				term;
+	char				*prompt_string;
 }								t_shell;
 
 /*
@@ -109,6 +110,11 @@ t_shell					*g_shell;
 */
 
 int						ft_weirdchar(int c);
+void					update_size(t_term *t);
+void					reset_defaults(t_term *t);
+
+void					shell_init(void);
+void					prompt(t_shell *s);
 void					term_init(t_term *t);
 
 #endif

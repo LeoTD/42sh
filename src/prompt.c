@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/04 12:24:30 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/04 22:47:15 by ltanenba         ###   ########.fr       */
+/*   Created: 2018/06/04 22:23:32 by ltanenba          #+#    #+#             */
+/*   Updated: 2018/06/05 00:51:47 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_sh.h"
 
-int			main(int argc, char **argv)
+void		prompt(t_shell *s)
 {
-	ft_printf("%s", "Hello 42sh!\n");
-	shell_init();
-	prompt(g_shell);
+	char		*buf;
+	char		done;
 
-	argc = 0;
-	argv = 0;
-	return (0);
+	done = 0;
+	while (!done)
+	{
+		ft_printf("%s$>", s->prompt_string);
+		get_next_line(1, &buf);
+//		get_func_id
+	}
 }
