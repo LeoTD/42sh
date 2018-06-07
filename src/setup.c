@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 13:40:14 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/05 21:32:56 by ckrommen         ###   ########.fr       */
+/*   Updated: 2018/06/06 21:23:03 by ckrommen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_proc		*process_init(void)
 	proc->next = NULL;
 	proc->argv = NULL;
 	proc->pid = 0;
+	proc->is_pipe = 0;
 	proc->completed = 0;
 	proc->stopped = 0;
 	proc->status = 0;
@@ -60,12 +61,13 @@ t_job		*job_init(void)
 
 	job = (t_job *)malloc(sizeof(t_job));
 	job->next = NULL;
-	ft_bzero(&job->tmodes);
-	job->stdin = 0;
-	job->stdout = 0;
-	job->stderr = 0;
-	job->first_proccess = NULL;
-	job->command = NULL;
+	job->prev = NULL;
+	ft_bzero(&job->tmodes, sizeof(job->tmodes));
+	job->s_in = 0;
+	job->s_out = 0;
+	job->s_err = 0;
+	job->first_process = NULL;
+	job->command = 0;
 	job->notified = 0;
 	job->pgid = 0;
 	return (job);

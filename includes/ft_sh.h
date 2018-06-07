@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 12:23:11 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/05 21:33:11 by ckrommen         ###   ########.fr       */
+/*   Updated: 2018/06/06 21:15:43 by ckrommen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct					s_proc
 {
 	struct process		*next;
 	char				**argv;
+	int					is_pipe;
 	pid_t				pid;
 	char				completed;
 	char				stopped;
@@ -115,12 +116,13 @@ typedef struct					s_proc
 typedef struct					s_job
 {
 	struct job			*next;
+	struct job			*prev;
 	struct termios		tmodes;
-	int					stdin;
-	int					stdout;
-	int					stderr;
+	int					s_in;
+	int					s_out;
+	int					s_err;
 	t_proc				*first_process;
-	char				*command;
+	char				command;
 	char				notified;
 	pid_t				pgid;
 }								t_job;
@@ -150,5 +152,6 @@ void					term_init(t_term *t);
 
 t_proc					*process_init(void);
 t_job					*job_init(void);
+char					**split_args(char *format);
 
 #endif

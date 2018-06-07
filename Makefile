@@ -6,7 +6,7 @@
 #    By: ltanenba <ltanenba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 19:18:37 by ltanenba          #+#    #+#              #
-#    Updated: 2018/06/05 18:22:14 by ltanenba         ###   ########.fr        #
+#    Updated: 2018/06/06 21:23:58 by ckrommen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ FILES		= main.c \
 			  term_util.c \
 			  setup.c \
 			  prompt.c \
+			  parse.c \
 
 SRC			= $(addprefix src/, $(FILES))
 
