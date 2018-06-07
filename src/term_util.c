@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 13:55:51 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/04 15:16:52 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/05 23:25:48 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void			update_size(t_term *t)
     t->width = w.ws_col;
 }
 
-void			reset_defaults(t_term *t)
+void			restore_defaults(t_term *t)
 {
 	tcsetattr(TERM_FD, TCSANOW, &t->normal);
 	_term_do("ve");

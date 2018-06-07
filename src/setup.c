@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 13:40:14 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/05 18:24:08 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/05 21:12:56 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void		term_init(t_term *t)
 void		shell_init(void)
 {
 	g_shell = &g_shellinit;
-	g_shell->term_fd = 1;
 	term_init(&g_shell->term);
 	g_shell->prompt_string = ft_strdup("marvin");
 }
