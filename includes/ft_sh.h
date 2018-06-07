@@ -47,6 +47,21 @@ typedef enum					e_redir_op
 }								t_redir_op;
 
 /*
+** Possible types for AST nodes.
+** sep		and		or		pipe	cmd
+** ;		&&		||		|		simple command, eg ">2 cat <file"
+*/
+
+typedef enum					e_cmdtype
+{
+	SEP,
+	AND,
+	OR,
+	PIPE,
+	CMD
+}								t_cmdtype;
+
+/*
 ** Redirects take the form `[n]redir-op word', where `n' is an (optional) file
 ** descriptor and `word' (required) can be either a file path or a file
 ** descriptor. POSIX standard requires support for FDs 0..9 at minimum.
@@ -61,11 +76,13 @@ typedef struct					s_redir
 
 typedef struct					s_ast
 {
+
 	char				**tokens;
 	t_redir				redir[10];
 	struct s_ast		*lchild;
 	struct s_ast		*rchild;
 	int					rval;
+	t_cmdtype			ctype;
 }								t_ast;
 
 typedef struct					s_term
