@@ -27,6 +27,47 @@ extern char						**environ;
 ** Structs
 */
 
+/*
+** POSIX standard redirect types. We don't (yet?) handle all of them.
+** pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_07
+**	in	out	noclobber	append	heredoc		in_dup	out_dup	rdwr
+**	<	>	|>			>>		<< or <<-	&<		&>		<>
+*/
+
+typedef enum					e_redir_op
+{
+	INPUT,
+	OUTPUT,
+	OUTPUT_NOCLOBBLER,
+	OUTPUT_APPEND,
+	HEREDOC,
+	INPUT_DUP,
+	OUTPUT_DUP,
+	RDWR
+}								t_redir_op;
+
+/*
+** Redirects take the form `[n]redir-op word', where `n' is an (optional) file
+** descriptor and `word' (required) can be either a file path or a file
+** descriptor. POSIX standard requires support for FDs 0..9 at minimum.
+*/
+
+typedef struct					s_redir
+{
+	t_redir_op			op;
+	int					fd;
+	char				*word;
+}								t_redir;
+
+typedef struct					s_ast
+{
+	char				**tokens;
+	t_redir				redir[10];
+	struct s_ast		*lchild;
+	struct s_ast		*rchild;
+	int					rval;
+}								t_ast;
+
 typedef struct					s_term
 {
 	char				*name;
