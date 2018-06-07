@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ckrommen <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/06 20:39:09 by ckrommen          #+#    #+#             */
-/*   Updated: 2018/06/06 22:03:54 by ckrommen         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_sh.h"
 
 static int	ft_getwords(char const *s, char c)
@@ -19,13 +7,13 @@ static int	ft_getwords(char const *s, char c)
 
 	i = 0;
 	k = 0;
-	while (*(s + i))
+	while (s[i])
 	{
-		while (*(s + i) == c)
+		while (s[i] == c)
 			i++;
-		if (*(s + i) && *(s + i) != c)
+		if (s[i] && s[i] != c)
 			k++;
-		while (*(s + i) && *(s + i) != c)
+		while (s[i] && s[i] != c)
 			i++;
 	}
 	return (k);
