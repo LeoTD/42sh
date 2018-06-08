@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   setup.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/04 13:40:14 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/06 21:23:03 by ckrommen         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_sh.h"
 
 void		term_init(t_term *t)
@@ -33,7 +21,6 @@ void		term_init(t_term *t)
 void		shell_init(void)
 {
 	g_shell = &g_shellinit;
-	g_shell->term_fd = 1;
 	term_init(&g_shell->term);
 	g_shell->prompt_string = ft_strdup("marvin");
 

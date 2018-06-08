@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_sh.h                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/04 12:23:11 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/06 21:15:43 by ckrommen         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef FT_SH_H
 # define FT_SH_H
 
@@ -23,25 +11,12 @@
 # include <termios.h>
 # include <fcntl.h>
 
-# define TERM_FD g_shell->term_fd
+# define TERM_FD g_shell->term.fd
+
+extern char						**environ;
 
 /*
-** Colors and Formatting!
-*/
-
-# define SRC_COLOR	"\033[38;5;105;1m"
-# define OBJ_COLOR	"\033[38;5;208m"
-# define DIR_COLOR	"\033[38;5;200m"
-# define LIB_COLOR	"\033[1;32m"
-# define NO_COLOR	"\033[m"
-# define UNDERLINE	"\033[4m"
-# define SELECTED	"\033[7m"
-
-# define COLUMN_PADDING 4
-# define MAX_COLUMN_WIDTH 30
-
-/*
-** Function-y macros
+** Function-y macros for terminal and cursor manipulation.
 */
 
 # define _term_do(x) tputs(tgetstr(x, NULL), 1, ft_weirdchar)
@@ -49,31 +24,67 @@
 # define _put(x) ft_putstr_fd(x, TERM_FD)
 
 /*
-** Input keys
-*/
-
-# define ESC_KEY 27
-# define UP_KEY 4283163
-# define DOWN_KEY 4348699
-# define LEFT_KEY 4479771
-# define RIGHT_KEY 4414235
-# define RETURN_KEY 10
-# define SPACE_KEY 32
-# define DELETE_KEY 2117294875
-# define BACKSPACE_KEY 127
-
-/*
 ** Structs
 */
 
-typedef struct					s_arg
+/*
+** POSIX standard redirect types. We don't (yet?) handle all of them.
+** pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_07
+**	in	out	noclobber	append	heredoc		in_dup	out_dup	rdwr
+**	<	>	|>			>>		<< or <<-	&<		&>		<>
+*/
+
+typedef enum					e_redir_op
 {
-	char				is_sel;
-	char				is_hov;
-	char				*name;
-	struct s_arg		*next;
-	struct s_arg		*prev;
-}								t_arg;
+	INPUT,
+	OUTPUT,
+	OUTPUT_NOCLOBBLER,
+	OUTPUT_APPEND,
+	HEREDOC,
+	INPUT_DUP,
+	OUTPUT_DUP,
+	RDWR
+}								t_redir_op;
+
+/*
+** Possible types for AST nodes.
+** sep		and		or		negate	pipe	cmd
+** ;		&&		||		!		|		simple command, eg ">2 cat <file"
+*/
+
+typedef enum					e_cmdtype
+{
+	SEP,
+	AND,
+	OR,
+	NEGATE,
+	PIPE,
+	CMD
+}								t_cmdtype;
+
+/*
+** Redirects take the form `[n]redir-op word', where `n' is an (optional) file
+** descriptor and `word' (required) can be either a file path or a file
+** descriptor. POSIX standard requires support for FDs 0..9 at minimum.
+*/
+
+typedef struct					s_redir
+{
+	t_redir_op			op;
+	int					fd;
+	char				*word;
+}								t_redir;
+
+typedef struct					s_ast
+{
+
+	char				**tokens;
+	t_redir				redir[10];
+	struct s_ast		*lchild;
+	struct s_ast		*rchild;
+	int					rval;
+	t_cmdtype			ctype;
+}								t_ast;
 
 typedef struct					s_term
 {
@@ -83,19 +94,13 @@ typedef struct					s_term
 	int					fd;
 	int					height;
 	int					width;
-	t_arg				*arg_head;
-	t_arg				*active;
-	int					max_arg_len;
-	int					arg_num;
-	int					col_w;
-	int					col_num;
 }								t_term;
 
 typedef struct					s_shell
 {
-	int					term_fd;
 	t_term				term;
 	char				*prompt_string;
+	char				**temp_args;
 }								t_shell;
 
 /* A process is a single process.  */
@@ -128,7 +133,8 @@ typedef struct					s_job
 }								t_job;
 
 /*
-** Global pointer for signal handling
+** Global pointer for signal handling.
+** For future development.
 */
 
 t_shell					g_shellinit;
@@ -140,10 +146,11 @@ t_shell					*g_shell;
 
 int						ft_weirdchar(int c);
 void					update_size(t_term *t);
-void					reset_defaults(t_term *t);
+void					restore_defaults(t_term *t);
 
 void					shell_init(void);
 void					prompt(t_shell *s);
+void					parse_commands(t_shell *s, char *buf);
 void					term_init(t_term *t);
 
 /*
@@ -153,5 +160,15 @@ void					term_init(t_term *t);
 t_proc					*process_init(void);
 t_job					*job_init(void);
 char					**split_args(char *format);
+/*
+** Builtin Function Declarations.
+*/
+
+int						run_builtin(int id, char **args);
+int						is_builtin(char *str);
+
+int						ftsh_cd(char **args);
+int						ftsh_help(char **args);
+int						ftsh_exit(char **args);
 
 #endif
