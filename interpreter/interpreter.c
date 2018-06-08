@@ -3,6 +3,8 @@
 #define RVAL_INITIAL -1
 #define CTYPE_INITIAL CMD + 1
 
+t_ast	*fake_ast();
+
 void	print_tokens(char **tokens)
 {
 	printf("%s", "[");
@@ -30,5 +32,7 @@ int	main(void)
 	ast->tokens = tmp;
 	print_tokens(ast->tokens);
 	puts("");
+	t_ast *fake = fake_ast();
+	print_tokens(fake->rchild->lchild->tokens);
 	return (0);
 }
