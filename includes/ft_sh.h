@@ -10,6 +10,7 @@
 # include <unistd.h>
 # include <termios.h>
 # include <fcntl.h>
+# include <assert.h>
 
 # define TERM_FD g_shell->term.fd
 
