@@ -1,8 +1,5 @@
 #include "ft_sh.h"
 
-#define RVAL_INITIAL -1
-#define CTYPE_INITIAL CMD + 1
-
 t_ast	*fake_ast();
 
 extern char		*g_cmd_symbols[MAX_CMDTYPE + 1];
@@ -54,8 +51,6 @@ void	print_node(t_ast *a)
 t_ast	*ast_node()
 {
 	t_ast *ast = ft_memalloc(sizeof(*ast));
-	ast->rval = RVAL_INITIAL;
-	ast->ctype = CTYPE_INITIAL;
 	return (ast);
 }
 

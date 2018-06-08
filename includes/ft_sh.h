@@ -62,18 +62,6 @@ typedef enum					e_cmdtype
 	SEP
 }								t_cmdtype;
 
-/*
-** Redirects take the form `[n]redir-op word', where `n' is an (optional) file
-** descriptor and `word' (required) can be either a file path or a file
-** descriptor. POSIX standard requires support for FDs 0..9 at minimum.
-*/
-
-typedef struct					s_redir
-{
-	t_redir_op			op;
-	int					fd;
-	char				*word;
-}								t_redir;
 # define LIST_PRECEDENCE OR
 # define MAX_CMDTYPE SEP
 
@@ -81,7 +69,7 @@ typedef struct					s_ast
 {
 
 	char				**tokens;
-	t_redir				redir[10];
+	int					fds[3];
 	struct s_ast		*lchild;
 	struct s_ast		*rchild;
 	int					rval;
