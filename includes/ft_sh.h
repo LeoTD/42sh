@@ -48,8 +48,8 @@ typedef enum					e_redir_op
 
 /*
 ** Possible types for AST nodes.
-** sep		and		or		pipe	cmd
-** ;		&&		||		|		simple command, eg ">2 cat <file"
+** sep		and		or		negate	pipe	cmd
+** ;		&&		||		!		|		simple command, eg ">2 cat <file"
 */
 
 typedef enum					e_cmdtype
@@ -57,6 +57,7 @@ typedef enum					e_cmdtype
 	SEP,
 	AND,
 	OR,
+	NEGATE,
 	PIPE,
 	CMD
 }								t_cmdtype;
