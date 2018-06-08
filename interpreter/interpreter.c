@@ -77,13 +77,5 @@ void	examine_tree(t_ast *a)
 
 int	main(void)
 {
-	puts("hi");
-	t_ast *ast = ast_node();
-	char *tmp[] = { "a", "na", NULL };
-	ast->tokens = tmp;
-	print_tokens(ast->tokens);
-	puts("");
-	t_ast *fake = fake_ast();
-	print_tokens(fake->rchild->lchild->tokens);
 	return (0);
 }
