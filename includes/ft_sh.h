@@ -54,12 +54,12 @@ typedef enum					e_redir_op
 
 typedef enum					e_cmdtype
 {
-	SEP,
-	AND,
-	OR,
-	NEGATE,
+	CMD,
 	PIPE,
-	CMD
+	NEGATE,
+	OR,
+	AND,
+	SEP
 }								t_cmdtype;
 
 /*
@@ -74,6 +74,8 @@ typedef struct					s_redir
 	int					fd;
 	char				*word;
 }								t_redir;
+# define LIST_PRECEDENCE OR
+# define MAX_CMDTYPE SEP
 
 typedef struct					s_ast
 {

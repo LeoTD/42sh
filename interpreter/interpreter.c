@@ -5,7 +5,7 @@
 
 t_ast	*fake_ast();
 
-extern char		*g_cmd_symbols[CMD + 1];
+extern char		*g_cmd_symbols[MAX_CMDTYPE + 1];
 
 char			*g_cmd_symbols[] = {
 	[SEP] = ";",
@@ -16,7 +16,7 @@ char			*g_cmd_symbols[] = {
 	[CMD] = NULL
 };
 
-extern char		*g_cmd_names[CMD + 1];
+extern char		*g_cmd_names[MAX_CMDTYPE + 1];
 
 char			*g_cmd_names[] = {
 	[SEP] = "separator",
