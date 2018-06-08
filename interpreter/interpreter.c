@@ -29,13 +29,26 @@ char			*g_cmd_names[] = {
 
 void	print_tokens(char **tokens)
 {
+	if (!tokens)
+	{
+		printf("(null)");
+		return;
+	}
 	printf("%s", "[");
 	int i = 0;
 	while (tokens[i])
 	{
-		printf("%d: '%s'%s", i, tokens[i], tokens[i + 1] ? ", " : "]");
+		printf("'%s'%s", tokens[i], tokens[i + 1] ? ", " : "]");
 		++i;
 	}
+}
+
+void	print_node(t_ast *a)
+{
+	if (!a)
+		printf("%s", NULL);
+	else
+		print_tokens(a->tokens);
 }
 
 t_ast	*ast_node()
