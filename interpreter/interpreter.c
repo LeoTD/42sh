@@ -70,6 +70,56 @@ void	examine_tree(t_ast *a)
 	examine_tree(a->rchild);
 }
 
+void	interpret_command(t_ast *a)
+{
+	printf("interpret command: "); print_node(a);
+}
+
+int		interpret_pipe(t_ast *a)
+{
+	pid_t		pid;
+	int			status;
+
+	if (a->ctype == NEGATE)
+		return (!(interpret_pipe(a->lchild)));
+	status = 0;
+	pid = fork();
+	/* actually set up a pipe tho. */
+	if (pid < 0)
+	{
+		//report failure somehow
+	}
+	else if (pid == 0)
+	{
+		if (a->ctype == CMD)
+			interpret_command(a);
+		else
+			interpret_command(a->lchild);
+		_exit(1); // fail if we ever return. better than exit(1) for some reason
+	}
+	else
+	{
+		if (waitpid(pid, &status, 0) != pid)
+			status = -1;
+	}
+	return (status);
+}
+
+void	interpret_list(t_ast *a, int ok_to_execute)
+{
+	if (a->ctype < LIST_PRECEDENCE)
+	{
+		interpret_pipe(a);
+		return ;
+	}
+	if (ok_to_execute)
+		ok_to_execute = interpret_pipe(a->lchild);
+	ok_to_execute = (ok_to_execute && a->ctype != AND)
+		|| (!ok_to_execute && a->ctype == OR)
+		|| a->ctype == SEP;
+	interpret_list(a->rchild, ok_to_execute);
+}
+
 int	main(void)
 {
 	return (0);
