@@ -5,6 +5,28 @@
 
 t_ast	*fake_ast();
 
+extern char		*g_cmd_symbols[CMD + 1];
+
+char			*g_cmd_symbols[] = {
+	[SEP] = ";",
+	[AND] = "&&",
+	[OR] = "||",
+	[NEGATE] = "!",
+	[PIPE] = "|",
+	[CMD] = NULL
+};
+
+extern char		*g_cmd_names[CMD + 1];
+
+char			*g_cmd_names[] = {
+	[SEP] = "separator",
+	[AND] = "and_list",
+	[OR] = "or_list",
+	[NEGATE] = "negation",
+	[PIPE] = "pipe",
+	[CMD] = "simple_cmd"
+};
+
 void	print_tokens(char **tokens)
 {
 	printf("%s", "[");
