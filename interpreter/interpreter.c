@@ -59,6 +59,22 @@ t_ast	*ast_node()
 	return (ast);
 }
 
+void	examine_tree(t_ast *a)
+{
+	if (a == NULL)
+		return ;
+	print_tokens(a->tokens);printf(": My type is '%s'!", g_cmd_names[a->ctype]);
+	if (a->lchild == NULL && a->rchild == NULL)
+		printf("\n\tNo children. :(\n");
+	else
+	{
+		printf("\n\tMy left child is "); print_node(a->lchild);
+		printf("\n\tand my right child is "); print_node(a->rchild); puts(".");
+	}
+	examine_tree(a->lchild);
+	examine_tree(a->rchild);
+}
+
 int	main(void)
 {
 	puts("hi");
