@@ -11,7 +11,7 @@ t_ast	*_ast_node(t_cmdtype ctype, char *tok1, char *tok2, char *tok3)
 	if (tok2) tokens[1] = ft_strdup(tok2);
 	if (tok3) tokens[2] = ft_strdup(tok3);
 	a->tokens = tokens;
-	a->ctype = ctype;
+	a->type = ctype;
 	return a;
 }
 

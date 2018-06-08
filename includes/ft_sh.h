@@ -73,7 +73,7 @@ typedef struct					s_ast
 	struct s_ast		*lchild;
 	struct s_ast		*rchild;
 	int					rval;
-	t_cmdtype			ctype;
+	t_cmdtype			type;
 }								t_ast;
 
 typedef struct					s_term

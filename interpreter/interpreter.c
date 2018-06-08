@@ -58,7 +58,7 @@ void	examine_tree(t_ast *a)
 {
 	if (a == NULL)
 		return ;
-	print_tokens(a->tokens);printf(": My type is '%s'!", g_cmd_names[a->ctype]);
+	print_tokens(a->tokens);printf(": My type is '%s'!", g_cmd_names[a->type]);
 	if (a->lchild == NULL && a->rchild == NULL)
 		printf("\n\tNo children. :(\n");
 	else
@@ -80,7 +80,7 @@ int		interpret_pipe(t_ast *a)
 	pid_t		pid;
 	int			status;
 
-	if (a->ctype == NEGATE)
+	if (a->type == NEGATE)
 		return (!(interpret_pipe(a->lchild)));
 	status = 0;
 	pid = fork();
@@ -91,7 +91,7 @@ int		interpret_pipe(t_ast *a)
 	}
 	else if (pid == 0)
 	{
-		if (a->ctype == CMD)
+		if (a->type == CMD)
 			interpret_command(a);
 		else
 			interpret_command(a->lchild);
@@ -107,16 +107,16 @@ int		interpret_pipe(t_ast *a)
 
 void	interpret_list(t_ast *a, int ok_to_execute)
 {
-	if (a->ctype < LIST_PRECEDENCE)
+	if (a->type < LIST_PRECEDENCE)
 	{
 		interpret_pipe(a);
 		return ;
 	}
 	if (ok_to_execute)
 		ok_to_execute = interpret_pipe(a->lchild);
-	ok_to_execute = (ok_to_execute && a->ctype != AND)
-		|| (!ok_to_execute && a->ctype == OR)
-		|| a->ctype == SEP;
+	ok_to_execute = (ok_to_execute && a->type != AND)
+		|| (!ok_to_execute && a->type == OR)
+		|| a->type == SEP;
 	interpret_list(a->rchild, ok_to_execute);
 }
 
