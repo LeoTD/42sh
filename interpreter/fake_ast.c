@@ -40,6 +40,11 @@ t_ast	*cmd_node(char *tok1, char *tok2, char *tok3)
 	return _ast_node(CMD, tok1, tok2, tok3);
 }
 
+t_ast	*negate_node()
+{
+	return _ast_node(NEGATE, "!", NULL, NULL);
+}
+
 t_ast	*fake_ast()
 {
 	t_ast *head;
