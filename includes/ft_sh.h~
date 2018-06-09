@@ -134,4 +134,10 @@ int						ftsh_cd(char **args);
 int						ftsh_help(char **args);
 int						ftsh_exit(char **args);
 
+/* Parser functions */
+
+char					**split_args(char *format);
+t_ast					*ast_init(void);
+t_rdir					*rdir_init(void);
+
 #endif

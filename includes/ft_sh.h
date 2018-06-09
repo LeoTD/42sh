@@ -138,6 +138,6 @@ int						ftsh_exit(char **args);
 
 char					**split_args(char *format);
 t_ast					*ast_init(void);
-t_rdir					*rdir_init(void);
+t_redir					*rdir_init(void);
 
 #endif

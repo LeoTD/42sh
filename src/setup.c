@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 13:40:14 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/07 16:01:36 by ckrommen         ###   ########.fr       */
+/*   Updated: 2018/06/08 17:19:56 by ckrommen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void		term_init(t_term *t)
 void		shell_init(void)
 {
 	g_shell = &g_shellinit;
-	g_shell->term_fd = 1;
 	term_init(&g_shell->term);
 	g_shell->prompt_string = ft_strdup("marvin");
 
@@ -50,15 +49,15 @@ t_ast		*ast_init(void)
 	ast->rval = 0;
 	ast->lchild = NULL;
 	ast->rchild = NULL;
-	return (job);
+	return (ast);
 }
 
-t_rdir		*rdir_init(void)
+t_redir		*rdir_init(void)
 {
-	t_rdir	*rdir;
+	t_redir	*rdir;
 
-	rdir->op = 0;
-	rdir->fd = 0;
+	rdir = (t_redir *)malloc(sizeof(t_redir));
+	ft_bzero(rdir, sizeof(t_redir));
 	rdir->word = NULL;
 	return (rdir);
 }
