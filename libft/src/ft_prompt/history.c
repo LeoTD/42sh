@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/09 03:47:08 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/09 06:48:08 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/09 07:25:55 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,16 @@ int				forget_most_recent(void)
 	ft_memmove(g_history, g_history + 1, sizeof(char *) * (g_history_max_len - 1));
 	g_history_len--;
 	return (0);
+}
+
+void			cleanup_history(void)
+{
+	int			i;
+
+	if (g_history == NULL)
+		return ;
+	i = -1;
+	while (++i < g_history_len)
+		free(g_history[i]);
+	free(g_history);
 }

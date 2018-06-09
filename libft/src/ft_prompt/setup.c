@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 22:23:39 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/09 05:19:55 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/09 07:46:28 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int				term_init(t_term *t)
 	t->custom.c_lflag &= ~(ICANON | ECHO | IEXTEN | ISIG);
 	t->custom.c_cc[VMIN] = 1;
 	t->custom.c_cc[VTIME] = 0;
-	tcsetattr(STDIN_FILENO, TCSANOW, &t->custom);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &t->custom);
 	return (0);
 }
 

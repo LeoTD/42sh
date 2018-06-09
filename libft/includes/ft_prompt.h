@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 22:14:36 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/09 06:48:41 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/09 07:28:31 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int						prompt_init(t_prompt *p, char *pstr);
 int						print_line(t_prompt *p);
 
 /*
-** Editing functions.
+** Editing functions
 */
 
 int						edit_insert(t_prompt *p, long c);
@@ -119,6 +119,14 @@ int						cursor_move(t_prompt *p, long c);
 int						move_through_history(t_prompt *p, int dir);
 int						ft_prompt_history_set_len(int len);
 int						ft_prompt_history_add(char *str);
+
+/*
+** Cleanup functions
+*/
+
+void					ft_prompt_cleanup(void);
 int						forget_most_recent(void);
+void					cleanup_history(void);
+void					reset_term(t_term *t);
 
 #endif
