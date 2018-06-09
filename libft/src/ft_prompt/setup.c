@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 22:23:39 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/08 08:34:45 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/09 05:19:55 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int				prompt_init(t_prompt *p, char *pstr)
 	p->len = 0;
 	p->cols = get_cols();
 	p->pos = 0;
+	p->his_idx = 0;
 	return (0);
 }

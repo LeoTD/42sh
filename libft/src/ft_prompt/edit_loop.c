@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/08 00:54:00 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/08 08:27:51 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/09 06:46:26 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int				line_edit_loop(t_prompt *p)
 	int			status;
 
 	status = 0;
+	ft_prompt_history_add("");
 	print_line(p);
 	while (!status)
 	{
@@ -63,7 +64,7 @@ int				line_edit_loop(t_prompt *p)
 		if (c == ESC)
 			;//Escape Sequences!
 		else if (c == UP_ARR || c == DOWN_ARR)
-			status = cursor_move(p, c);//TODO: Handle history. Temp: Home/End
+			status = move_through_history(p, (c == UP_ARR ? 1 : -1));//Handle history.
 		else if (c == LEFT_ARR || c == RIGHT_ARR)
 			status = cursor_move(p, c);//Handle cursor movement
 		else if (c == DELETE || c == BACKSPACE)
@@ -71,7 +72,7 @@ int				line_edit_loop(t_prompt *p)
 		else if (c >= 32 && c <= 126)
 			status = edit_insert(p, c);//Add ("type") to buffer.
 		else if (c == ENTER)
-			return (0);//Send command
+			return (forget_most_recent());//Send command
 	}
 	return (status);
 }

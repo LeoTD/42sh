@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 22:14:36 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/08 08:30:07 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/09 06:48:41 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include <unistd.h>
 # include <stdlib.h>
 
-# define LINE_START_SIZE 64
+# define LINE_START_SIZE 256
+# define MAX_HISTORY_LEN 200
 
 # define MALL_CHECK(x) if (!(x)) return (-1)
 # define ERR_CHECK(x) if ((x) == -1) return (-1)
@@ -80,7 +81,7 @@ typedef struct					s_prompt
 	size_t				len;
 	size_t				cols;
 	size_t				pos;
-//	int					history_index;
+	int					his_idx;
 }								t_prompt;
 
 typedef struct					s_term
@@ -110,5 +111,14 @@ int						print_line(t_prompt *p);
 int						edit_insert(t_prompt *p, long c);
 int						edit_delete(t_prompt *p, long c);
 int						cursor_move(t_prompt *p, long c);
+
+/*
+** History functions
+*/
+
+int						move_through_history(t_prompt *p, int dir);
+int						ft_prompt_history_set_len(int len);
+int						ft_prompt_history_add(char *str);
+int						forget_most_recent(void);
 
 #endif
