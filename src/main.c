@@ -14,8 +14,12 @@ int			main(int argc, char **argv)
 //	status = 1;
 //	while (status)
 //	{
+
+
 	temp = ft_prompt("Testing123 :D > ");
-	
+	//decipher the '\' values before going to the main execution
+
+
 	printf("input |%s|\n", temp);
 //	}
 
