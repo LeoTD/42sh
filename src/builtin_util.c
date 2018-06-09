@@ -1,7 +1,7 @@
 #include "ft_sh.h"
 
 /*
-** Function Declarations for builtins.
+** Array declarations for builtins.
 */
 
 char		*builtin_str[] = {
@@ -16,10 +16,20 @@ int			(*builtin_func[])(char **args) = {
 	&ftsh_exit
 };
 
+/*
+** Takes id as given by is_builtin()
+** and char **args, where args[0] contains the cmd
+** and args[1+] contain arguments.
+*/
+
 int			run_builtin(int id, char **args)
 {
 	return (*builtin_func[id])(args);
 }
+
+/*
+** Returns id of builtin or -1 if there's no match.
+*/
 
 int			is_builtin(char *str)
 {
