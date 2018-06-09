@@ -6,14 +6,14 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/09 03:47:08 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/09 07:25:55 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/09 08:16:36 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_prompt.h"
 
 static char		**g_history = NULL;
-static int		g_history_max_len = 0;
+static int		g_history_max_len = 1;
 static int		g_history_len = 0;
 
 /*
@@ -73,7 +73,7 @@ int				ft_prompt_history_add(char *str)
 
 int				ft_prompt_history_set_len(int len)
 {
-	if (len < 1 || g_history_max_len > 0)
+	if (len < 2 || g_history_max_len > 1)
 		return (0);
 	g_history_max_len = len;
 	return (1);
