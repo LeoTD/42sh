@@ -1,28 +1,7 @@
 #include "ft_sh.h"
+#include "ast.h"
 
 t_ast	*fake_ast();
-
-extern char		*g_cmd_symbols[MAX_CMDTYPE + 1];
-
-char			*g_cmd_symbols[] = {
-	[SEP] = ";",
-	[AND] = "&&",
-	[OR] = "||",
-	[NEGATE] = "!",
-	[PIPE] = "|",
-	[CMD] = NULL
-};
-
-extern char		*g_cmd_names[MAX_CMDTYPE + 1];
-
-char			*g_cmd_names[] = {
-	[SEP] = "separator",
-	[AND] = "and_list",
-	[OR] = "or_list",
-	[NEGATE] = "negation",
-	[PIPE] = "pipe",
-	[CMD] = "simple_cmd"
-};
 
 void	print_tokens(char **tokens)
 {
@@ -48,11 +27,11 @@ void	print_node(t_ast *a)
 		print_tokens(a->tokens);
 }
 
-t_ast	*ast_node()
+void	print_pipe(int fd[2])
 {
-	t_ast *ast = ft_memalloc(sizeof(*ast));
-	return (ast);
+	fprintf(stderr, "(%d -> %d)", fd[1], fd[0]);
 }
+
 
 void	examine_tree(t_ast *a)
 {
@@ -72,33 +51,40 @@ void	examine_tree(t_ast *a)
 
 void	interpret_command(t_ast *a)
 {
-	printf("interpret command: "); print_node(a);
+	fprintf(stderr, "interpret command: "); print_node(a);
+	execvp(a->tokens[0], a->tokens);
+	_exit(1);
 }
 
 int		interpret_pipe(t_ast *a)
 {
 	pid_t		pid;
 	int			status;
+	int			fd[2];
 
+	fprintf(stderr, "interpret pipe: <"); print_node(a); fprintf(stderr, ">\n");
 	if (a->type == NEGATE)
 		return (!(interpret_pipe(a->lchild)));
+	if (a->type == CMD)
+		interpret_command(a);
 	status = 0;
+	pipe(fd);
 	pid = fork();
-	/* actually set up a pipe tho. */
-	if (pid < 0)
+	if (pid == 0)
 	{
-		//report failure somehow
-	}
-	else if (pid == 0)
-	{
-		if (a->type == CMD)
-			interpret_command(a);
-		else
-			interpret_command(a->lchild);
-		_exit(1); // fail if we ever return. better than exit(1) for some reason
+		close(fd[0]);
+		close(STDOUT_FILENO);
+		dup(fd[1]);
+		close(fd[1]);
+		interpret_command(a->lchild);
 	}
 	else
 	{
+		close(fd[1]);
+		close(STDIN_FILENO);
+		dup(fd[0]);
+		close(fd[0]);
+		interpret_pipe(a->rchild);
 		if (waitpid(pid, &status, 0) != pid)
 			status = -1;
 	}
@@ -122,5 +108,9 @@ void	interpret_list(t_ast *a, int ok_to_execute)
 
 int	main(void)
 {
+	t_ast *a = fake_ast();
+	interpret_pipe(a);
+	a = fake_ast();
+	interpret_pipe(a);
 	return (0);
 }

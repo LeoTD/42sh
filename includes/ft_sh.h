@@ -47,36 +47,6 @@ typedef enum					e_redir_op
 	RDWR
 }								t_redir_op;
 
-/*
-** Possible types for AST nodes.
-** sep		and		or		negate	pipe	cmd
-** ;		&&		||		!		|		simple command, eg ">2 cat <file"
-*/
-
-typedef enum					e_cmdtype
-{
-	CMD,
-	PIPE,
-	NEGATE,
-	OR,
-	AND,
-	SEP
-}								t_cmdtype;
-
-# define LIST_PRECEDENCE OR
-# define MAX_CMDTYPE SEP
-
-typedef struct					s_ast
-{
-
-	char				**tokens;
-	int					fds[3];
-	struct s_ast		*lchild;
-	struct s_ast		*rchild;
-	int					rval;
-	t_cmdtype			type;
-}								t_ast;
-
 typedef struct					s_term
 {
 	char				*name;

@@ -22,6 +22,7 @@ LIBS		= libft/libft.a \
 # Add header files here: (use full relative path to Makefile)
 INCLUDES	= libft/includes/libft.h \
 			  includes/ft_sh.h \
+			  includes/ast.h \
 
 # Add source files here: (files assumed to be in ./src folder)
 FILES		= main.c \
@@ -31,6 +32,7 @@ FILES		= main.c \
 			  temp_parser.c \
 			  builtins.c \
 			  builtin_util.c \
+			  ast.c \
 
 SRC			= $(addprefix src/, $(FILES))
 
