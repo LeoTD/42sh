@@ -31,13 +31,14 @@
  *			so this is another env value
  *	BEFORE EXECUTION
  *
+ *	ACTUALLY SUBSHELL MIGHT FAIL BECUASE IT NEED TO FIND FOR THE CLOSING BRACKETS
 */
 
 // implement an enum
 
 
-#define DQUOTE '"'
-#define QUOTE '''
+#define DQUOTE ('"')
+#define QUOTE (''')
 #define BQUOTE '`'
 #define SUBSH '('
 
@@ -52,9 +53,9 @@
 /*
 **	capsule:
 **		capsule[0] == DQUOTE;
-**		capsule[0] == QUOTE;
-**		capsule[0] == BQUOTE;
-**		capsule[0] == SUBSH;
+**		capsule[1] == QUOTE;
+**		capsule[2] == BQUOTE;
+**		capsule[3] == SUBSH;
 */
 
 char	*ft_strjoin_newline(char const *s1, char const *s2)
@@ -78,7 +79,6 @@ char	*ft_strjoin_newline(char const *s1, char const *s2)
 	return (tmp);
 }
 
-
 /*
 **	basically calling ft_prompt over and over again until the prompt is fully
 **	complete
@@ -88,6 +88,7 @@ char	*ft_strjoin_newline(char const *s1, char const *s2)
 **	after you check with one type you need to check if any other type is also
 **	involved so you run is capsule_incomplete in the concat string
 */
+
 char		*concatinated_string(char type)
 {
 	char	*temp;
@@ -106,11 +107,10 @@ char		*concatinated_string(char type)
 		temp = join;
 		cont_chars_capsules(temp, type, &(cont_nbr_capsule));
 	}
-	else
-		return (temp);
+	return (temp);
 }
 
-char		*get_type_prompt(char value)=
+char		*get_type_prompt(char value)
 {
 	if (value == DQUOTE)
 		return (DQUOTE_PROMPT);
@@ -134,12 +134,12 @@ void		cont_chars_capsules(char *str, char schar, int *cont)
 		if (str[i] == schar)
 		{
 			if (i == 0)
-				*(cont)++;
+				(*cont)++;
 			else
 				if (str[i - 1] == '\'')
 					;
 				else
-					*(cont)++;
+					(*cont)++;
 		}
 		i++;
 	}
@@ -152,9 +152,10 @@ char		is_capsule_incomplete(char *str, char **temp)
 	int		cont_nbr_capsule;
 	char	get_capsule;
 	char	*concat;
+	char	*tmp;
 
 	get_capsule = 0;
-	i = -1
+	i = -1;
 	while(++i < 4)
 		capsule[i] = 0;
 	i = -1;
@@ -170,10 +171,15 @@ char		is_capsule_incomplete(char *str, char **temp)
 				concat = concatinated_string(get_capsule);// string to concatinate
 				// find begining of capsule, and see if it has and end,
 				// otherwise, find the latest 
+				tmp = ft_strjoin(str, concat);
+				free(str);
+				free(concat);
+				str = tmp;
 			}
 		}
 		++i;
 	}
+	*temp = str;
 }
 
 // you will concantinate str with the new line
@@ -184,10 +190,11 @@ char		*parse_line(char *str)
 
 	// this function can be a void one
 	is_capsule_incomplete(str, &(temp));
-	while(str[i])
-	{
-	}
-	
+	printf("temp |%s|\n", temp);
+//	while(str[i])
+//	{
+//		
+//	}
 	return (temp);
 }
 

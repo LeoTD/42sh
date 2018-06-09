@@ -133,4 +133,16 @@ int						ftsh_cd(char **args);
 int						ftsh_help(char **args);
 int						ftsh_exit(char **args);
 
+/*
+** PARSE_LINE.c
+*/
+
+char					*ft_strjoin_newline(char const *s1, char const *s2);
+char					*concatinated_string(char type);
+char					*get_type_prompt(char value);
+void					cont_chars_capsules(char *str, char schar, int *cont);
+char					is_capsule_incomplete(char *str, char **temp);
+char					*parse_line(char *str);
+
+
 #endif

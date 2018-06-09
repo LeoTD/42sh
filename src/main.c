@@ -21,6 +21,7 @@ int			main(int argc, char **argv)
 
 
 	printf("input |%s|\n", temp);
+	printf("completing |%s|\n", parse_line(temp));
 //	}
 
 	argv = 0;

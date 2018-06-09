@@ -29,6 +29,7 @@ FILES		= main.c \
 			  setup.c \
 			  prompt.c \
 			  parse.c \
+			  parse_line.c \
 			  temp_parser.c \
 			  builtins.c \
 			  builtin_util.c \
