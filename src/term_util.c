@@ -19,5 +19,4 @@ void			restore_defaults(t_term *t)
 {
 	tcsetattr(TERM_FD, TCSANOW, &t->normal);
 	_term_do("ve");
-	_term_do("te");
 }

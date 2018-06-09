@@ -14,15 +14,13 @@
 
 # define TERM_FD g_shell->term.fd
 
-extern char						**environ;
-
 /*
-** Function-y macros for terminal and cursor manipulation.
+** Declaration of environ.
+** Contains environment variables in the form:
+** NAME=VAL
 */
 
-# define _term_do(x) tputs(tgetstr(x, NULL), 1, ft_weirdchar)
-# define _goto(x, y) tputs(tgoto(tgetstr("cm", NULL), x, y), 1, ft_weirdchar)
-# define _put(x) ft_putstr_fd(x, TERM_FD)
+extern char						**environ;
 
 /*
 ** Structs
@@ -60,7 +58,6 @@ typedef struct					s_term
 typedef struct					s_shell
 {
 	t_term				term;
-	char				*prompt_string;
 	char				**temp_args;
 }								t_shell;
 
@@ -76,14 +73,17 @@ t_shell					*g_shell;
 ** Function declarations:
 */
 
-int						ft_weirdchar(int c);
 void					update_size(t_term *t);
-void					restore_defaults(t_term *t);
 
 void					shell_init(void);
 void					prompt(t_shell *s);
 void					parse_commands(t_shell *s, char *buf);
-void					term_init(t_term *t);
+
+/*
+** Input functions.
+*/
+
+char					*ft_prompt(char *prompt_str);
 
 /*
 ** Builtin Function Declarations.

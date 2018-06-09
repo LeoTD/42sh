@@ -6,7 +6,7 @@
 #    By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 19:18:37 by ltanenba          #+#    #+#              #
-#    Updated: 2018/06/04 15:55:03 by ltanenba         ###   ########.fr        #
+#    Updated: 2018/06/08 08:01:55 by ltanenba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,9 @@ NAME		= libft.a
 
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra -I includes
-INCLUDES	= includes/libft.h
+INCLUDES	= includes/libft.h \
+			  includes/ft_printf.h \
+			  includes/ft_prompt.h
 
 LIBC_SRC	= ft_memset.c \
 			  ft_bzero.c \
@@ -102,9 +104,17 @@ PRINTF_SRC	= tools.c \
 			  helper.c \
 			  buffer.c
 
-PF_SRC		= $(addprefix ft_printf/, $(PRINTF_SRC))
+PROMPT_SRC	= cursor_movement.c \
+			  delete.c \
+			  edit_loop.c \
+			  ft_prompt.c \
+			  print.c \
+			  setup.c
 
-FILES		+= $(LIBC_SRC) $(ADD_SRC) $(EX_SRC) $(BONUS_SRC) $(CLIST_SRC) $(PF_SRC)
+PF_SRC		= $(addprefix ft_printf/, $(PRINTF_SRC))
+PRT_SRC		= $(addprefix ft_prompt/, $(PROMPT_SRC))
+
+FILES		+= $(LIBC_SRC) $(ADD_SRC) $(EX_SRC) $(BONUS_SRC) $(CLIST_SRC) $(PF_SRC) $(PRT_SRC)
 
 SRC			= $(addprefix src/, $(FILES))
 OBJ			= $(addprefix obj/, $(FILES:.c=.o))
@@ -138,6 +148,7 @@ obj:
 	@printf "Creating obj/ directory...\n"
 	@mkdir obj/
 	@mkdir obj/ft_printf
+	@mkdir obj/ft_prompt
 
 obj/%.o: src/%.c | obj
 	@printf "%b" "$(COM_COLOR)  $(COM_STRING) $(OBJ_COLOR)$@\n$(NO_COLOR)"

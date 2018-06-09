@@ -37,13 +37,16 @@ void		prompt(t_shell *s)
 	char		*buf;
 	char		status;
 
+	s = 0;
 	status = 1;
 	while (status)
 	{
-		ft_printf("%s$>", s->prompt_string);
-		get_next_line(1, &buf);
-		parse_commands(s, buf);
-		status = execute(s->temp_args);
+		buf = ft_prompt("marvin$> ");
+		ft_putendl(buf);
+//		status = input_loop(s);
+//		get_next_line(1, &buf);
+//		parse_commands(s, buf);
+//		status = execute(s->temp_args);
 	}
-	restore_defaults(&s->term);
+//	restore_defaults(&s->term);
 }
