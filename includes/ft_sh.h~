@@ -22,7 +22,7 @@ extern char						**environ;
 # define _term_do(x) tputs(tgetstr(x, NULL), 1, ft_weirdchar)
 # define _goto(x, y) tputs(tgoto(tgetstr("cm", NULL), x, y), 1, ft_weirdchar)
 # define _put(x) ft_putstr_fd(x, TERM_FD)
-
+# define get_op(x) return ()
 /*
 ** Structs
 */
@@ -60,6 +60,7 @@ typedef enum					e_cmdtype
 	PIPE,
 	CMD
 }								t_cmdtype;
+
 
 /*
 ** Redirects take the form `[n]redir-op word', where `n' is an (optional) file
@@ -138,6 +139,6 @@ int						ftsh_exit(char **args);
 
 char					**split_args(char *format);
 t_ast					*ast_init(void);
-t_rdir					*rdir_init(void);
+t_redir					*rdir_init(void);
 
 #endif

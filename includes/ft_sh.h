@@ -22,7 +22,7 @@ extern char						**environ;
 # define _term_do(x) tputs(tgetstr(x, NULL), 1, ft_weirdchar)
 # define _goto(x, y) tputs(tgoto(tgetstr("cm", NULL), x, y), 1, ft_weirdchar)
 # define _put(x) ft_putstr_fd(x, TERM_FD)
-
+# define _op(x) (x == '|' || x == '&' || x == ';')
 /*
 ** Structs
 */
@@ -61,11 +61,13 @@ typedef enum					e_cmdtype
 	CMD
 }								t_cmdtype;
 
+
 /*
 ** Redirects take the form `[n]redir-op word', where `n' is an (optional) file
 ** descriptor and `word' (required) can be either a file path or a file
 ** descriptor. POSIX standard requires support for FDs 0..9 at minimum.
 */
+
 
 typedef struct					s_redir
 {
