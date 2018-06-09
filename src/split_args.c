@@ -8,25 +8,6 @@ char            *g_cmd_symbols[] = {
     [CMD] = NULL
 };
 
-static int	ft_getwords(char const *s, char c)
-{
-	int	i;
-	int	k;
-
-	i = 0;
-	k = 0;
-	while (s[i])
-	{
-		while (s[i] == c)
-			i++;
-		if (s[i] && s[i] != c)
-			k++;
-		while (s[i] && s[i] != c)
-			i++;
-	}
-	return (k);
-}
-
 static char	**st_strptrnew(size_t size)
 {
 	char			**tmp;
@@ -81,7 +62,7 @@ char	**split_args(char *format)
 	int			hold;
 
 	st_init(&i, &k, &hold);
-	word_count = ft_getwords(format, 32);
+	word_count = ft_strlen(format) / 2;
 	if (!(tmp = st_strptrnew(word_count)))
 		return (0);
 	while (format[i])
