@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 13:40:14 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/06 21:23:03 by ckrommen         ###   ########.fr       */
+/*   Updated: 2018/06/07 16:01:36 by ckrommen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,35 +40,25 @@ void		shell_init(void)
 	
 }
 
-t_proc		*process_init(void)
+t_ast		*ast_init(void)
 {
-	t_proc	*proc;
+	t_ast	*ast;
 
-	proc = (t_proc *)malloc(sizeof(t_proc));
-	proc->next = NULL;
-	proc->argv = NULL;
-	proc->pid = 0;
-	proc->is_pipe = 0;
-	proc->completed = 0;
-	proc->stopped = 0;
-	proc->status = 0;
-	return (proc);
+	if (!(ast = (t_ast *)malloc(sizeof(t_ast))))
+		return (NULL);
+	ast->tokens = NULL;
+	ast->rval = 0;
+	ast->lchild = NULL;
+	ast->rchild = NULL;
+	return (job);
 }
 
-t_job		*job_init(void)
+t_rdir		*rdir_init(void)
 {
-	t_job	*job;
+	t_rdir	*rdir;
 
-	job = (t_job *)malloc(sizeof(t_job));
-	job->next = NULL;
-	job->prev = NULL;
-	ft_bzero(&job->tmodes, sizeof(job->tmodes));
-	job->s_in = 0;
-	job->s_out = 0;
-	job->s_err = 0;
-	job->first_process = NULL;
-	job->command = 0;
-	job->notified = 0;
-	job->pgid = 0;
-	return (job);
+	rdir->op = 0;
+	rdir->fd = 0;
+	rdir->word = NULL;
+	return (rdir);
 }

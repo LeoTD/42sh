@@ -6,7 +6,7 @@
 #    By: ltanenba <ltanenba@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 19:18:37 by ltanenba          #+#    #+#              #
-#    Updated: 2018/06/06 21:23:58 by ckrommen         ###   ########.fr        #
+#    Updated: 2018/06/07 16:12:11 by ckrommen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ FILES		= main.c \
 			  term_util.c \
 			  setup.c \
 			  prompt.c \
-			  parse.c \
+			  split_args.c \
 
 SRC			= $(addprefix src/, $(FILES))
 
