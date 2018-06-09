@@ -32,7 +32,7 @@ FILES		= main.c \
 			  temp_parser.c \
 			  builtins.c \
 			  builtin_util.c \
-			  ast.c \
+			  ast.c 
 
 SRC			= $(addprefix src/, $(FILES))
 
