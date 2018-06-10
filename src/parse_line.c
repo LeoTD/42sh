@@ -37,8 +37,8 @@
 // implement an enum
 
 
-#define DQUOTE ('"')
-#define QUOTE (''')
+#define DQUOTE '\"'
+#define QUOTE '\''
 #define BQUOTE '`'
 #define SUBSH '('
 
@@ -47,8 +47,7 @@
 #define BQUOTE_PROMPT "bquote> "
 #define SUBSH_PROMPT "subsh> "
 
-#define IS_CAPSULE (str[i] == '"' || str[i] == ''' || str[i] == '(' || str[i] == '`')
-
+#define IS_CAPSULE (str[i] == '\"' || str[i] == '\'' || str[i] == '(' || str[i] == '`')
 
 /*
 **	capsule:
@@ -73,9 +72,10 @@ char	*ft_strjoin_newline(char const *s1, char const *s2)
 		return (0);
 	while (*s1)
 		*(tmp + ++i) = *(s1++);
-	tmp[++i] = '\n';
+	*(tmp + ++i) = '\n';
 	while (*s2)
 		*(tmp + ++i) = *(s2++);
+	printf("printing str :|%s|\n", tmp);
 	return (tmp);
 }
 
@@ -96,15 +96,19 @@ char		*concatinated_string(char type)
 	char	*join;
 	int		cont_nbr_capsule;
 
+	cont_nbr_capsule = 0;
 	temp = ft_prompt(get_type_prompt(type));
 	cont_chars_capsules(temp, type, &(cont_nbr_capsule));
+	printf("cont_nbr_capsule = |%d|\n", cont_nbr_capsule);
 	while (cont_nbr_capsule % 1 == 1)
 	{
+		printf("entering loop\n");
 		concat = ft_prompt(get_type_prompt(type));
 		join = ft_strjoin_newline(temp, concat);
 		free(temp);
 		free(concat);
 		temp = join;
+		cont_nbr_capsule = 0;
 		cont_chars_capsules(temp, type, &(cont_nbr_capsule));
 	}
 	return (temp);
@@ -171,7 +175,7 @@ char		is_capsule_incomplete(char *str, char **temp)
 				concat = concatinated_string(get_capsule);// string to concatinate
 				// find begining of capsule, and see if it has and end,
 				// otherwise, find the latest 
-				tmp = ft_strjoin(str, concat);
+				tmp = ft_strjoin_newline(str, concat);
 				free(str);
 				free(concat);
 				str = tmp;
@@ -180,6 +184,7 @@ char		is_capsule_incomplete(char *str, char **temp)
 		++i;
 	}
 	*temp = str;
+	return (0);
 }
 
 // you will concantinate str with the new line
