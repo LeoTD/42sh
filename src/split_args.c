@@ -32,7 +32,7 @@ static void	st_init(int *i, int *k, int *hold)
 	*hold = 0;
 }
 
-int		is_op(char *c);
+// int		is_op(char *c);
 int		op_len(char *c)
 {
 	int i;
@@ -43,14 +43,32 @@ int		op_len(char *c)
 	return (i);
 }
 
-int		is_op(char *c)
+
+int is_op(char *c)
 {
 	if (op_len(c) == 1)
-		return (*c == '|' ? PIPE : SEP);
-	else if (op_len(c) == 2)
-		return (*c == '&' ? AND : OR);
-	else
-		return (0);
+	{
+		if (*c == ':' || *c == '|')
+			return (*c == '|' ? PIPE : SEP);
+		else
+			ft_printf("sh: parse error near `%.1s'\n", c);
+	}
+	if (op_len(c) == 2)
+	{
+		if (!ft_strncmp(c, "||", 2) || !ft_strncmp(c, "&&", 2))
+			return (!ft_strncmp(c, "||", 2) ? OR : AND);
+		else if (ft_printf("sh: parse error near `%.2s'\n", c))
+			exit(1);
+	}
+	else if (op_len(c) != 2)// && ft_printf("sh: parse error near `%.4s'\n", c))
+	{
+		if (op_len(c) == 3)
+			ft_printf("sh: parse error near `%.1s'\n", c + 2);
+		else if (op_len(c) >= 4)
+			ft_printf("sh: parse error near `%.2s'\n", c + 2);
+		exit(1);
+	}
+	return (0);
 }
 
 char	**split_args(char *format)
@@ -70,10 +88,13 @@ char	**split_args(char *format)
 		hold = i;
 		while (format[i] && !_op(format[i]))
 			i++;
-		if (_op(format[i]))
+		if (_op(format[i]))//i is where && || ; are but we also need to be looking for >> > < and ()
 		{
-			tmp[k++] = ft_strsub(format, hold, i - hold);
-			tmp[k++] = ft_strdup(g_cmd_symbols[is_op(&(format[i]))]);
+			// printf("k = .%d. i = .%d. hold = .%d.\n", k, i, hold);
+			tmp[k++] = ft_strsub(format, hold, i - hold);//this copies the string into the array
+			// printf("here = .%s.\n", tmp[k - 1]);
+			tmp[k++] = ft_strdup(g_cmd_symbols[is_op(&(format[i]))]);//this copies the operator into the array
+			// printf("here2 = .%s.\n", tmp[k - 1]);
 			while (format[i] && _op(format[i]))
 				i++;
 		}
@@ -88,98 +109,3 @@ char	**split_args(char *format)
 		ft_putendl(tmp[x++]);
 	return (tmp);
 }
-/*
-char	**split_args(char *format)
-{
-	int			word_count;
-	char		**tmp;
-	int			i;
-	int			k;
-	int			hold;
-
-	st_init(&i, &k, &hold);
-	word_count = ft_getwords(format, 32);
-	if (!(tmp = st_strptrnew(word_count)))
-		return (0);
-	while (format[i] && i < (int)ft_strlen(format))
-	{
-		hold = i;
-		while (format[i] && !is_op(&(format[i])))
-			i++;
-		if (format[i] && is_op(&(format[i])) > 0)
-		{
-//			fprintf(stderr, "%d %d %s\n", hold, i, ft_strsub(format, hold, i - hold));
-			if (i != 0)
-				tmp[k++] = ft_strsub(format, hold, i - hold);
-			tmp[k++] = ft_strdup(g_cmd_symbols[is_op(&(format[i])) - 1]);
-			i += (op_len(&(format[i])));
-		}
-		else
-		{
-			tmp[k++] = ft_strsub(format, hold, i - hold);
-			i++;
-		}
-//		printf("here= %s k = %d i = %d hold = %d\n", tmp[0], k, i, hold);
-	}
-	tmp[k] = NULL;
-	int x = 0;
-	ft_putendl(tmp[0]);
-	while (tmp[x])
-		ft_putendl(tmp[x++]);
-	return (tmp);
-	}*/
-/*
-int		find_next(char *format, int *i)
-{
-	char	len;
-
-	len = 0;
-	while (format[*i])
-	{
-		if (format[*i] == '"')
-		{
-			while (format[++(*i)] != '"' && format[*i])
-				len++;
-			if (format[*i] == '"')
-				len++;
-		}
-		if (ft_isspace(format[*i]))
-			break ;
-		len++;
-		(*i)++;
-	}
-	return (len);
-}
-
-char	**split_args(char *format)
-{
-	char	**res;
-	int		len;
-	int		tmp;
-	int		i;
-	int		k;
-
-	i = 0;
-	k = 0;
-	if (!(res = (char **)malloc(sizeof(char *) * ft_getwords(format, ' '))))
-		return (NULL);
-	while (format[i])
-	{
-		tmp = i;
-		len = find_next(format, &i);
-		res[k] = ft_strdup(ft_strsub(format, tmp, len));
-		if (ft_isspace(format[i]))
-			i++;
-		printf("%s\n", res[k]);
-		k++;
-	}
-	return (res);
-}
-
-char	**group_args(char **args)
-{
-	char	**res;
-	int		i;
-	
-}
-*/
