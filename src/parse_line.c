@@ -100,7 +100,7 @@ char		*concatinated_string(char type)
 	temp = ft_prompt(get_type_prompt(type));
 	cont_chars_capsules(temp, type, &(cont_nbr_capsule));
 	printf("cont_nbr_capsule = |%d|\n", cont_nbr_capsule);
-	while (cont_nbr_capsule % 1 == 1)
+	while (cont_nbr_capsule % 1 == 1 || cont_nbr_capsule == 0)
 	{
 		printf("entering loop\n");
 		concat = ft_prompt(get_type_prompt(type));
@@ -149,6 +149,15 @@ void		cont_chars_capsules(char *str, char schar, int *cont)
 	}
 }
 
+/*
+** you can change IS_CAPSULE to differ QUOTES and OTHER INHIBS
+** like:
+**		\
+**		(
+**		{
+**		[
+*/
+
 char		is_capsule_incomplete(char *str, char **temp)
 {
 	int		i;
@@ -162,14 +171,17 @@ char		is_capsule_incomplete(char *str, char **temp)
 	i = -1;
 	while(++i < 4)
 		capsule[i] = 0;
-	i = -1;
+	i = 0;
 	cont_nbr_capsule = 0;
+	printf("str to look at: |%s|\n", str);
 	while(str[i])
 	{
 		if (IS_CAPSULE)
 		{
 			get_capsule = str[i];
+			printf("CAPSULE_INCOMPLETE - cont_nbr = %d\n", cont_nbr_capsule);
 			cont_chars_capsules(str, get_capsule, &(cont_nbr_capsule));
+			printf("CAPSULE_INCOMPLETE - cont_nbr = %d\n", cont_nbr_capsule);
 			if (cont_nbr_capsule % 2 == 1)
 			{
 				concat = concatinated_string(get_capsule);// string to concatinate
@@ -180,6 +192,7 @@ char		is_capsule_incomplete(char *str, char **temp)
 				free(concat);
 				str = tmp;
 			}
+			cont_nbr_capsule = 0;
 		}
 		++i;
 	}
