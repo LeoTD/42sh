@@ -36,8 +36,8 @@
 **
 ** you can change IS_CAPSULE to differ QUOTES and OTHER INHIBS
 ** like:
-**		\
-**		(
+**		\ PRIORITY
+**		( PRIORITY
 **		{
 **		[
 **
@@ -59,6 +59,8 @@
 
 
 #define IS_CAPSULE (str[i] == '\"' || str[i] == '\'' || str[i] == '`')
+//#define IS_BRACK_NL (str[i] == '\\' || str[i] == '(' || str[i] == ')')
+#define IS_BRACK_NL (str[i] == '\\')
 
 char	*ft_strjoin_newline(char const *s1, char const *s2)
 {
@@ -92,6 +94,15 @@ char	*ft_strjoin_newline(char const *s1, char const *s2)
 **	involved so you run is capsule_incomplete in the concat string
 */
 
+/*
+ *  for newline
+ *  	ft_streq(ft_strstr(str, "\"), "")
+ *		
+ *  because it doesnt really matter if it has a space after that it shouldn prompt
+ *
+ *  
+*/
+
 char		*concatinated_string(char type)
 {
 	char	*temp;
@@ -105,7 +116,7 @@ char		*concatinated_string(char type)
 //	printf("cont_nbr_capsule = |%d|\n", cont_nbr_capsule);
 	while (cont_nbr_capsule % 1 == 1 || cont_nbr_capsule == 0)
 	{
-//		printf("entering loop\n");
+		printf("entering loop\n");
 		concat = ft_prompt(get_type_prompt(type));
 		join = ft_strjoin_newline(temp, concat);
 		free(temp);
@@ -127,6 +138,7 @@ char		*get_type_prompt(char value)
 		return (BQUOTE_PROMPT);
 	else if (value == SUBSH)
 		return (SUBSH_PROMPT);
+
 	else
 		return (NULL);
 }
@@ -184,6 +196,9 @@ char		is_capsule_incomplete(char *str, char **temp)
 				str = tmp;
 			}
 			cont_nbr_capsule = 0;
+		}
+		else if (IS_BRACK_NL)
+		{
 		}
 		++i;
 	}
