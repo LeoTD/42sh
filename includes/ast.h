@@ -36,6 +36,5 @@ extern char		*g_cmd_names[MAX_CMDTYPE + 1];
 t_ast			*ast_node(void);
 t_ast			*opnode(t_cmdtype type);
 t_ast			*cmd_node(char **tokens);
-t_ast			*quick_cmd_node(char *s1, char *s2, char *s3);
 
 #endif

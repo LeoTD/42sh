@@ -48,14 +48,3 @@ t_ast	*cmd_node(char **tokens)
 	a->tokens = tokens;
 	return (a);
 }
-
-t_ast	*quick_cmd_node(char *s1, char *s2, char *s3)
-{
-	char **tokens;
-
-	tokens = ft_memalloc(sizeof(char *) * 4);
-	tokens[0] = s1;
-	tokens[1] = s2;
-	tokens[2] = s3;
-	return (cmd_node(tokens));
-}
