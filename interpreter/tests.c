@@ -1,6 +1,5 @@
 #include "ast.h"
 #include "stdio.h"
-#include "interpreter.h"
 #include "_interpreter_dev.h"
 
 char	test_output_file[200];
@@ -26,7 +25,7 @@ void	run_basic_interpreter_test(node_factory **nodes,
 		curr->rchild = nodes[i]();
 		curr = curr->rchild;
 	}
-	interpret_list(head, NULL);
+	interpret_tree(head);
 	check_test_output(expect);
 }
 
@@ -65,10 +64,11 @@ void	simplest_test(void)
 	run_basic_interpreter_test(f, "simplest_test", "OK   A, ");
 }
 
-void	run_interpreter_tests(void)
+int		main(void)
 {
 	simple_ands();
 	hard_test();
 	mixed_with_negates();
 	simple_ors();
+	return 0;
 }

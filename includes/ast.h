@@ -37,4 +37,6 @@ t_ast			*ast_node(void);
 t_ast			*opnode(t_cmdtype type);
 t_ast			*cmd_node(char **tokens);
 
+void			interpret_tree(t_ast *tree);
+
 #endif

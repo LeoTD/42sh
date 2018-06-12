@@ -1,64 +1,112 @@
 #include "ft_sh.h"
 #include "ast.h"
-#include "_interpreter_dev.h"
 
-void	interpret_cmd(t_ast *a)
+/*
+** Interpreting the AST form of a parsed command.
+** A command list begins with a &&, a || or a semicolon and owns a
+** a pipeline -- simple command[s], separated by pipes if plural.
+** A list waits for its pipeline to exit, marks its exit status, and
+** call the next list. The next list either executes its pipeline
+** or skips itself, depending on the 'ok' flag of the list that called it.
+*/
+
+/*
+** In `echo hello | ./fail-if-hello && echo hooray || echo :(`...
+**
+** The && calls its left child, which exits falsy. && sets its 'ok' flag
+** to 0. The || cannot run its left child, 'echo hooray'. It sets its
+** ok flag to 1 (failure + OR == success). ||'s right child is a pipeline,
+** not a list. It sees the ok==1 and just runs itself.
+*/
+
+/*
+** Pipelines are also trees.
+** In `echo hello | tr e x | sed s/hxllo//`,
+** the first | has 'echo hello' as its left child and the other pipeline
+** as its right child. There is no conditional logic in a pipeline -- if
+** it's called, it just runs.
+*/
+
+/*
+** Negations like `! echo hello | ./fail-if-hello && echo hooray` (note '!')
+** are handled by inserting a useless 'pipe-like' node which exists only so that
+** the controlling command list, &&, can find out that it was actually negated.
+*/
+
+void	interpret_simple_cmd(t_ast *a)
 {
 	execvp(a->tokens[0], a->tokens);
 	_exit(1);
 }
 
-int		interpret_pipe(t_ast *a)
+int		encounter_pipe(t_ast *a)
 {
 	pid_t		pid;
 	int			status;
 	int			fd[2];
 
 	if (a->type == NEGATE)
-		return (!(interpret_pipe(a->lchild)));
-	if (a->type == CMD)
-		interpret_command(a);
+		return (encounter_pipe(a->rchild));
 	status = 0;
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
 		close(fd[0]);
-		close(STDOUT_FILENO);
 		dup(fd[1]);
-		close(fd[1]);
-		interpret_command(a->lchild);
+		interpret_simple_cmd(a->lchild ? a->lchild : a);
 	}
 	else
 	{
 		close(fd[1]);
-		close(STDIN_FILENO);
 		dup(fd[0]);
-		close(fd[0]);
-		interpret_pipe(a->rchild);
+		if (a->rchild)
+			encounter_pipe(a->rchild);
 		if (waitpid(pid, &status, 0) != pid)
 			status = -1;
 	}
 	return (status);
 }
 
-void	interpret_list(t_ast *a, int ok_to_execute)
+int		ok_next_list(t_ast *a, int exit_status)
 {
-	if (a->type < LIST_PRECEDENCE)
-	{
-		interpret_pipe(a);
-		return ;
-	}
-	if (ok_to_execute)
-		ok_to_execute = interpret_pipe(a->lchild);
-	ok_to_execute = (ok_to_execute && a->type != AND)
-		|| (!ok_to_execute && a->type == OR)
-		|| a->type == SEP;
-	interpret_list(a->rchild, ok_to_execute);
+	int		ok;
+
+	if (a->type == SEP)
+		return (1);
+	if (a->type == OR)
+		ok = (exit_status != 0);
+	else
+		ok = (exit_status == 0);
+	if (a->lchild->type == NEGATE)
+		ok = !ok;
+	return (ok);
 }
 
-int	main(void)
+void	encounter_new_list(t_ast *a, t_ast *prev)
 {
-	run_interpreter_tests();
-	return (0);
+	int		status;
+	int		ok;
+
+	ok = !prev || prev->ok;
+	if (!ok && a->type < LIST_PRECEDENCE)
+		return ;
+	else if (!ok)
+	{
+		a->ok = a->type != prev->type;
+		encounter_new_list(a->rchild, a);
+	}
+	else if (a->type < LIST_PRECEDENCE)
+		encounter_pipe(a);
+	else
+	{
+		status = encounter_pipe(a->lchild);
+		a->ok = ok_next_list(a, status);
+		encounter_new_list(a->rchild, a);
+	}
+}
+
+void	interpret_tree(t_ast *tree)
+{
+	encounter_new_list(tree, NULL);
 }
