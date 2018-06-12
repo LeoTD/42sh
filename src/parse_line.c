@@ -199,6 +199,7 @@ char		is_capsule_incomplete(char *str, char **temp)
 		}
 		else if (IS_BRACK_NL)
 		{
+			if
 		}
 		++i;
 	}
