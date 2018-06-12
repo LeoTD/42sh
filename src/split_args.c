@@ -48,7 +48,7 @@ int is_op(char *c)
 {
 	if (op_len(c) == 1)
 	{
-		if (*c == ':' || *c == '|')
+		if (*c == ';' || *c == '|')
 			return (*c == '|' ? PIPE : SEP);
 		else
 			ft_printf("sh: parse error near `%.1s'\n", c);
@@ -60,7 +60,7 @@ int is_op(char *c)
 		else if (ft_printf("sh: parse error near `%.2s'\n", c))
 			exit(1);
 	}
-	else if (op_len(c) != 2)// && ft_printf("sh: parse error near `%.4s'\n", c))
+	else if (op_len(c) != 2)
 	{
 		if (op_len(c) == 3)
 			ft_printf("sh: parse error near `%.1s'\n", c + 2);
@@ -90,11 +90,9 @@ char	**split_args(char *format)
 			i++;
 		if (_op(format[i]))//i is where && || ; are but we also need to be looking for >> > < and ()
 		{
-			// printf("k = .%d. i = .%d. hold = .%d.\n", k, i, hold);
+			printf("k = .%d. i = .%d. hold = .%d.\n", k, i, hold);
 			tmp[k++] = ft_strsub(format, hold, i - hold);//this copies the string into the array
-			// printf("here = .%s.\n", tmp[k - 1]);
 			tmp[k++] = ft_strdup(g_cmd_symbols[is_op(&(format[i]))]);//this copies the operator into the array
-			// printf("here2 = .%s.\n", tmp[k - 1]);
 			while (format[i] && _op(format[i]))
 				i++;
 		}
