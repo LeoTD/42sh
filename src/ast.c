@@ -1,7 +1,8 @@
 #include "ft_sh.h"
 #include "ast.h"
 
-char			*g_cmd_symbols[] = {
+char	*g_cmd_symbols[] =
+{
 	[SEP] = ";",
 	[AND] = "&&",
 	[OR] = "||",
@@ -10,7 +11,8 @@ char			*g_cmd_symbols[] = {
 	[CMD] = NULL
 };
 
-char			*g_cmd_names[] = {
+char	*g_cmd_names[] =
+{
 	[SEP] = "separator",
 	[AND] = "and_list",
 	[OR] = "or_list",
