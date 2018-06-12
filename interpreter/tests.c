@@ -6,7 +6,7 @@ char	test_output_file[200];
 
 typedef t_ast	*node_factory(void);
 
-void	run_basic_interpreter_test(node_factory **nodes,
+void	run_basic_interpreter_list_test(node_factory **nodes,
 									char *test_name, char *expect)
 {
 	t_ast *head, *curr;
@@ -29,46 +29,57 @@ void	run_basic_interpreter_test(node_factory **nodes,
 	check_test_output(expect);
 }
 
-void	simple_ands(void)
+void	list_simple_ands_test(void)
 {
 	node_factory *f[] = { ok_and, ok_and, fail_and, oknode, NULL };
-	run_basic_interpreter_test(f, "simple_ands", "OK   A, OK   B, FAIL A, ");
+	run_basic_interpreter_list_test(f, "list_test_simple_ands", "OK   A, OK   B, FAIL A, ");
 }
 
-void	simple_ors(void)
+void	list_simple_ors_test(void)
 {
 	node_factory *f[] = { fail_or, fail_or, ok_or, fail_or, ok_or, ok_or,
 		fail_or, failnode, NULL };
-	run_basic_interpreter_test(f, "simple_ors", "FAIL A, FAIL B, OK   A, ");
+	run_basic_interpreter_list_test(f, "list_test_simple_ors", "FAIL A, FAIL B, OK   A, ");
 }
 
-void	mixed_with_negates(void)
+void	list_test_mixed_with_negates(void)
 {
 	node_factory *f[] = { fail_or, notok_or, ok_or, notok_or, notfail_or,
 		fail_and, failnode, NULL };
-	run_basic_interpreter_test(f, "mixed_with_negates",
+	run_basic_interpreter_list_test(f, "list_test_mixed_with_negates",
 			"FAIL A, OK   A, OK   B, FAIL D, ");
 }
 
-void	hard_test(void)
+void	list_hard_test(void)
 {
 	node_factory *f[] = { notfail_and, notok_or, ok_or, notok_sep, ok_and,
 		notok_and, notfail_and, notok_or, ok_and, failnode, NULL };
-	run_basic_interpreter_test(f, "hard_test",
+	run_basic_interpreter_list_test(f, "list_hard_test",
 			"FAIL A, OK   A, OK   B, OK   D, OK   E, OK   G, FAIL C, ");
 }
 
-void	simplest_test(void)
+void	list_simplest_test(void)
 {
 	node_factory *f[] = { oknode, NULL };
-	run_basic_interpreter_test(f, "simplest_test", "OK   A, ");
+	run_basic_interpreter_list_test(f, "list_simplest_test", "OK   A, ");
+}
+
+void	pipe_simplest_test()
+{
+	char	*tok[] = { "echo", "hello", NULL };
+	t_ast *c = cmd_node(tok);
+	interpret_tree(c);
 }
 
 int		main(void)
 {
-	simple_ands();
-	hard_test();
-	mixed_with_negates();
-	simple_ors();
+//	list_simplest_test();
+//	list_simple_ands_test();
+//	list_hard_test();
+//	list_test_mixed_with_negates();
+//	list_simple_ors_test();
+
+	pipe_simplest_test();
+
 	return 0;
 }
