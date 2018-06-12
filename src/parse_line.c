@@ -49,10 +49,14 @@
 #define BQUOTE '`'
 #define SUBSH '('
 
+#define NEWLINE '\\'
+
 #define DQUOTE_PROMPT "dquote> "
 #define QUOTE_PROMPT "quote> "
 #define BQUOTE_PROMPT "bquote> "
 #define SUBSH_PROMPT "subsh> "
+#define NEWLINE_PROMPT "> "
+
 
 #define IS_CAPSULE (str[i] == '\"' || str[i] == '\'' || str[i] == '`')
 
