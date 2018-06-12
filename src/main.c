@@ -16,13 +16,13 @@ int			main(int argc, char **argv)
 //	{
 
 
-	temp = ft_prompt("Testing123 :D > ");
+	temp = ft_prompt("42sh> ");
 	//decipher the '\' values before going to the main execution
 
 
 	printf("input |%s|\n", temp);
 	printf("completing |%s|\n", parse_line(temp));
-//	}
+//	free(temp);
 
 	argv = 0;
 	return (0);

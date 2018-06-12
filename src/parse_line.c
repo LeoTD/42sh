@@ -1,41 +1,48 @@
 #include "ft_sh.h"
 
 /*
- *	ft_prompt 
- *
- *	there's no end, just 
- *
- *	dquote> 	"
- *	quote> 		'
- *	bquote> 	`
- *	subsh> 		(
- *
- *
- *	ft_prompt is gonna return a raw string
- *		check for incomplete capsule
- *			call ft_prompt and concatinate those string
- *	RAW STRING -> STILL_RAW STRING
- *
- *	STILL_RAW STRING -> tokenizer
- *		tokenizer is gonna delete the special characters and eliminate the encapsulate
- *		while its reading and fragmentating
- *	
- *		2 PART TOKENIZER
- *			built a tree
- *	
- *	
- *	change spaecial characters:
- *		- backslashes		\
- *		- env values		$
- *		- spaecial chars	~ <- $HOME
- *			so this is another env value
- *	BEFORE EXECUTION
- *
- *	ACTUALLY SUBSHELL MIGHT FAIL BECUASE IT NEED TO FIND FOR THE CLOSING BRACKETS
+**	ft_prompt 
+**
+**	there's no end, just 
+**
+**	dquote> 	"
+**	quote> 		'
+**	bquote> 	`
+**	subsh> 		(
+**
+**
+**	ft_prompt is gonna return a raw string
+**		check for incomplete capsule
+**			call ft_prompt and concatinate those string
+**	RAW STRING -> STILL_RAW STRING
+**
+**	STILL_RAW STRING -> tokenizer
+**		tokenizer is gonna delete the special characters and eliminate the encapsulate
+**		while its reading and fragmentating
+**	
+**		2 PART TOKENIZER
+**			built a tree
+**	
+**	
+**	change spaecial characters:
+**		- backslashes		\
+**			*which is basically waiting for a new line
+**		- env values		$
+**		- spaecial chars	~ <- $HOME
+**			so this is another env value
+**	BEFORE EXECUTION
+**
+**	ACTUALLY SUBSHELL MIGHT FAIL BECUASE IT NEED TO FIND FOR THE CLOSING BRACKETS
+**
+** you can change IS_CAPSULE to differ QUOTES and OTHER INHIBS
+** like:
+**		\
+**		(
+**		{
+**		[
+**
+**		SUBSH is currently not handle it
 */
-
-// implement an enum
-
 
 #define DQUOTE '\"'
 #define QUOTE '\''
@@ -47,15 +54,7 @@
 #define BQUOTE_PROMPT "bquote> "
 #define SUBSH_PROMPT "subsh> "
 
-#define IS_CAPSULE (str[i] == '\"' || str[i] == '\'' || str[i] == '(' || str[i] == '`')
-
-/*
-**	capsule:
-**		capsule[0] == DQUOTE;
-**		capsule[1] == QUOTE;
-**		capsule[2] == BQUOTE;
-**		capsule[3] == SUBSH;
-*/
+#define IS_CAPSULE (str[i] == '\"' || str[i] == '\'' || str[i] == '`')
 
 char	*ft_strjoin_newline(char const *s1, char const *s2)
 {
@@ -75,7 +74,7 @@ char	*ft_strjoin_newline(char const *s1, char const *s2)
 	*(tmp + ++i) = '\n';
 	while (*s2)
 		*(tmp + ++i) = *(s2++);
-	printf("printing str :|%s|\n", tmp);
+//	printf("printing str :|%s|\n", tmp);
 	return (tmp);
 }
 
@@ -99,10 +98,10 @@ char		*concatinated_string(char type)
 	cont_nbr_capsule = 0;
 	temp = ft_prompt(get_type_prompt(type));
 	cont_chars_capsules(temp, type, &(cont_nbr_capsule));
-	printf("cont_nbr_capsule = |%d|\n", cont_nbr_capsule);
+//	printf("cont_nbr_capsule = |%d|\n", cont_nbr_capsule);
 	while (cont_nbr_capsule % 1 == 1 || cont_nbr_capsule == 0)
 	{
-		printf("entering loop\n");
+//		printf("entering loop\n");
 		concat = ft_prompt(get_type_prompt(type));
 		join = ft_strjoin_newline(temp, concat);
 		free(temp);
@@ -140,7 +139,7 @@ void		cont_chars_capsules(char *str, char schar, int *cont)
 			if (i == 0)
 				(*cont)++;
 			else
-				if (str[i - 1] == '\'')
+				if (str[i - 1] == '\\')
 					;
 				else
 					(*cont)++;
@@ -149,39 +148,27 @@ void		cont_chars_capsules(char *str, char schar, int *cont)
 	}
 }
 
-/*
-** you can change IS_CAPSULE to differ QUOTES and OTHER INHIBS
-** like:
-**		\
-**		(
-**		{
-**		[
-*/
 
 char		is_capsule_incomplete(char *str, char **temp)
 {
 	int		i;
-	char	capsule[4];
 	int		cont_nbr_capsule;
 	char	get_capsule;
 	char	*concat;
 	char	*tmp;
 
 	get_capsule = 0;
-	i = -1;
-	while(++i < 4)
-		capsule[i] = 0;
 	i = 0;
 	cont_nbr_capsule = 0;
-	printf("str to look at: |%s|\n", str);
+//	printf("str to look at: |%s|\n", str);
 	while(str[i])
 	{
 		if (IS_CAPSULE)
 		{
 			get_capsule = str[i];
-			printf("CAPSULE_INCOMPLETE - cont_nbr = %d\n", cont_nbr_capsule);
+//			printf("CAPSULE_INCOMPLETE - cont_nbr = %d\n", cont_nbr_capsule);
 			cont_chars_capsules(str, get_capsule, &(cont_nbr_capsule));
-			printf("CAPSULE_INCOMPLETE - cont_nbr = %d\n", cont_nbr_capsule);
+//			printf("CAPSULE_INCOMPLETE - cont_nbr = %d\n", cont_nbr_capsule);
 			if (cont_nbr_capsule % 2 == 1)
 			{
 				concat = concatinated_string(get_capsule);// string to concatinate
@@ -208,26 +195,10 @@ char		*parse_line(char *str)
 
 	// this function can be a void one
 	is_capsule_incomplete(str, &(temp));
-	printf("temp |%s|\n", temp);
-//	while(str[i])
-//	{
-//		
-//	}
+//	printf("temp |%s|\n", temp);
 	return (temp);
 }
-
-
 
 // DECIPHER BACKSLASH
 //  talk to curtis and liam
 //  this can be easily handle in the tokenizer
-
-/*
-char		*decipher_back_slash(char *str)
-{
-	char	*temp;
-	int		i;
-
-	while()
-}
-*/
