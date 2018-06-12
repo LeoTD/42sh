@@ -27,6 +27,7 @@ typedef struct	s_ast
 	struct s_ast	*lchild;
 	struct s_ast	*rchild;
 	t_cmdtype		type;
+	int				ok;
 }				t_ast;
 
 extern char		*g_cmd_symbols[MAX_CMDTYPE + 1];

@@ -24,6 +24,7 @@ t_ast	*ast_node(void)
 	t_ast *a;
 
 	a = ft_memalloc(sizeof(*a));
+	a->ok = 1;
 	return (a);
 }
 
