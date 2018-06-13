@@ -50,8 +50,6 @@ int		encounter_pipe(t_ast *a)
 	fprintf(stderr, "encounter pipe: ");print_node(a);fprintf(stderr, "\n");
 	if (a->type == NEGATE)
 		return (encounter_pipe(a->rchild));
-	if (a->type == CMD)
-		interpret_simple_cmd(a);
 	status = 0;
 	pipe(fd);
 	pid = fork();
@@ -61,7 +59,7 @@ int		encounter_pipe(t_ast *a)
 		close(STDOUT_FILENO);
 		dup(fd[1]);
 		close(fd[1]);
-		interpret_simple_cmd(a->lchild);
+		interpret_simple_cmd(a->type == CMD ? a : a->lchild);
 	}
 	else if (pid == -1)
 		fprintf(stderr, " fork err\n");
@@ -71,7 +69,8 @@ int		encounter_pipe(t_ast *a)
 		close(STDIN_FILENO);
 		dup(fd[0]);
 		close(fd[0]);
-		encounter_pipe(a->rchild);
+		if (a->type != CMD)
+			encounter_pipe(a->rchild);
 		if (waitpid(pid, &status, 0) != pid)
 			status = -1;
 	}

@@ -101,15 +101,15 @@ void	pipe_HELLOWORLD_test()
 
 int		main(void)
 {
-//	list_simplest_test();
+	list_simplest_test();
 //	list_simple_ands_test();
 //	list_hard_test();
 //	list_test_mixed_with_negates();
 //	list_simple_ors_test();
 
-//	pipe_helloworld_test();
+	pipe_helloworld_test();
 //	pipe_HELLOWORLD_test();
 //	FIXME: It seems impossible to run any other test after a pipe test, at the moment. Does that make sense?
-	pipe_HELLOUNIVERSE_test();
+//	pipe_HELLOUNIVERSE_test();
 	return 0;
 }
