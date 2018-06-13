@@ -7,7 +7,7 @@ char	*g_commands[] = {
 	[ENV] = "env",
 	[SETENV] = "setenv",
 	[UNSETENV] = "unsetenv",
-	[END] = NULL
+	[END] = "end"
 };
 
 char	*g_ops[] = {
@@ -37,7 +37,7 @@ int		is_command(char *arg)
 	while (g_commands[i])
 	{
 		if (!ft_strcmp(arg, g_commands[i]))
-			return (CMD);
+			return (i + (MAX_CMDTYPE + 1));
 		i++;
 	}
 	return (-1);
