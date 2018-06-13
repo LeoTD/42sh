@@ -36,10 +36,14 @@
 
 void	interpret_simple_cmd(t_ast *a)
 {
-	fprintf(stderr, "encounter cmd: ");print_node(a);fprintf(stderr, "\n");
 	execvp(a->tokens[0], a->tokens);
 	_exit(1);
 }
+
+/*
+** Check if a->type == CMD after forking, so as not to clobber current PID,
+** but before closing stdout, because the final cmd in a pipe is not redirected.
+*/
 
 int		encounter_pipe(t_ast *a)
 {
@@ -47,7 +51,6 @@ int		encounter_pipe(t_ast *a)
 	int			status;
 	int			fd[2];
 
-	fprintf(stderr, "encounter pipe: ");print_node(a);fprintf(stderr, "\n");
 	if (a->type == NEGATE)
 		return (encounter_pipe(a->rchild));
 	status = 0;
@@ -55,14 +58,19 @@ int		encounter_pipe(t_ast *a)
 	pid = fork();
 	if (pid == 0)
 	{
+		if (a->type == CMD)
+			interpret_simple_cmd(a);
 		close(fd[0]);
 		close(STDOUT_FILENO);
 		dup(fd[1]);
 		close(fd[1]);
-		interpret_simple_cmd(a->type == CMD ? a : a->lchild);
+		interpret_simple_cmd(a->lchild);
 	}
 	else if (pid == -1)
-		fprintf(stderr, " fork err\n");
+	{
+		fprintf(stderr, "Fork error\n");
+		_exit(1);
+	}
 	else
 	{
 		close(fd[1]);

@@ -11,7 +11,7 @@ void	run_basic_interpreter_list_test(node_factory **nodes,
 {
 	t_ast *head, *curr;
 
-	fprintf(stderr, "Running %s \n", test_name);
+	fprintf(stderr, "\nRunning %s \n", test_name);
 	reset_ok_fail_labels();
 	bzero(test_output_file, sizeof(test_output_file));
 	strcat(test_output_file, test_name);
@@ -66,7 +66,7 @@ void	list_simplest_test(void)
 
 void	pipe_helloworld_test()
 {
-	fprintf(stderr, "Running simplest test\n");
+	fprintf(stderr, "\nRunning pipe_simplest_test\n");
 	char	*tok[] = { "echo", "hello", NULL };
 	t_ast *c = cmd_node(tok);
 	interpret_tree(c);
@@ -74,6 +74,7 @@ void	pipe_helloworld_test()
 
 void	pipe_HELLOUNIVERSE_test()
 {
+	fprintf(stderr, "\nRunning pipe_HELLOUNIVERSE_test");fprintf(stderr, "\n");
 	t_ast *head;
 	char *tok[] = { "echo", "hello", "world", NULL };
 	char *t2[] = { "tr", "a-z", "A-Z", NULL };
@@ -89,6 +90,7 @@ void	pipe_HELLOUNIVERSE_test()
 
 void	pipe_HELLOWORLD_test()
 {
+	fprintf(stderr, "\nRunning pipe_HELLOWORLD_test");fprintf(stderr, "\n");
 	t_ast *head;
 	char *tok[] = { "echo", "hello", "world", NULL };
 	char *t2[] = { "tr", "a-z", "A-Z", NULL };
@@ -101,15 +103,18 @@ void	pipe_HELLOWORLD_test()
 
 int		main(void)
 {
-	list_simplest_test();
-//	list_simple_ands_test();
-//	list_hard_test();
-//	list_test_mixed_with_negates();
-//	list_simple_ors_test();
 
+	pipe_HELLOUNIVERSE_test();
+	list_hard_test();
+
+	list_simplest_test();
 	pipe_helloworld_test();
-//	pipe_HELLOWORLD_test();
-//	FIXME: It seems impossible to run any other test after a pipe test, at the moment. Does that make sense?
-//	pipe_HELLOUNIVERSE_test();
+
+	list_simple_ands_test();
+	pipe_HELLOWORLD_test();
+
+	list_test_mixed_with_negates();
+	list_simple_ors_test();
+
 	return 0;
 }
