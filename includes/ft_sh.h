@@ -136,7 +136,7 @@ int						ftsh_cd(char **args);
 int						ftsh_help(char **args);
 int						ftsh_exit(char **args);
 
-/* Parser functions */
+/* Parser Functions */
 
 char					**split_args(char *format);
 char					*find_next(int *i, char *format, int end, char *tmp);
@@ -149,5 +149,10 @@ char					**st_strptrnew(size_t size);
 int						is_all_space(char *format, int i);
 void					st_init(int *i, int *k, int *hold);
 int						skip_char(char *format, int *i, char c);
+
+/* Tokenizer Functions */
+
+int						*tokenizer(char **format);
+int						arr_length(char **format);
 
 #endif
