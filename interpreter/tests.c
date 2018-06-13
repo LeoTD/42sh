@@ -64,12 +64,40 @@ void	list_simplest_test(void)
 	run_basic_interpreter_list_test(f, "list_simplest_test", "OK   A, ");
 }
 
-void	pipe_simplest_test()
+void	pipe_helloworld_test()
 {
+	fprintf(stderr, "Running simplest test\n");
 	char	*tok[] = { "echo", "hello", NULL };
 	t_ast *c = cmd_node(tok);
 	interpret_tree(c);
 }
+
+void	pipe_HELLOUNIVERSE_test()
+{
+	t_ast *head;
+	char *tok[] = { "echo", "hello", "world", NULL };
+	char *t2[] = { "tr", "a-z", "A-Z", NULL };
+	char *t3[] = { "sed", "s/WORLD/UNIVERSE/", NULL };
+
+	head = opnode(PIPE);
+	head->rchild = opnode(PIPE);
+	head->lchild = cmd_node(tok);
+	head->rchild->lchild = cmd_node(t2);
+	head->rchild->rchild = cmd_node(t3);
+	interpret_tree(head);
+}
+
+void	pipe_HELLOWORLD_test()
+{
+	t_ast *head;
+	char *tok[] = { "echo", "hello", "world", NULL };
+	char *t2[] = { "tr", "a-z", "A-Z", NULL };
+	head = opnode(PIPE);
+	head->lchild = cmd_node(tok);
+	head->rchild = cmd_node(t2);
+	interpret_tree(head);
+}
+
 
 int		main(void)
 {
@@ -79,7 +107,9 @@ int		main(void)
 //	list_test_mixed_with_negates();
 //	list_simple_ors_test();
 
-	pipe_simplest_test();
-
+//	pipe_helloworld_test();
+//	pipe_HELLOWORLD_test();
+//	FIXME: It seems impossible to run any other test after a pipe test, at the moment. Does that make sense?
+	pipe_HELLOUNIVERSE_test();
 	return 0;
 }
