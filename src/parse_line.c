@@ -98,12 +98,12 @@ char	*ft_strjoin_newline(char const *s1, char const *s2)
 */
 
 /*
- *  for newline
- *  	ft_streq(ft_strstr(str, "\"), "")
- *		
- *  because it doesnt really matter if it has a space after that it shouldn prompt
- *
- *  
+**  for newline
+**  	ft_streq(ft_strstr(str, "\"), "")
+**		
+**  because it doesnt really matter if it has a space after that it shouldn prompt
+**
+**
 */
 
 char		*concatinated_string(char type)
@@ -138,39 +138,41 @@ char		*concatinated_string(char type)
 char		*concatined_newline(int i) // this can be void
 {
 	char	*temp;
-	char	keep_concat;
+//	char	keep_concat;
 	char	*concat;
 	char	*join;
+	int		e;
 
-	keep_concat = 0;
+	char	*extra;
+
+//	keep_concat = 0;
+	e = -1;
 	temp = ft_prompt(NEWLINE_PROMPT);
-	while (ft_streq(ft_strstr(temp + i, "\\"), "\\") == 1 && \
-		((cont_nbr_backslashes(str, i) % 2 == 0) || \
-		(cont_nbr_backslashes(str, i) == 0)))
+	if (ft_strequ(ft_strstr(temp + i, "\\"), "\\") == 1 && \
+		((cont_nbr_backslashes(temp, i) % 2 == 0) || \
+		(cont_nbr_backslashes(temp, i) == 0)))
 	{
 		concat = ft_prompt(NEWLINE_PROMPT);
+		// find backslashes - find it here
+		while (concat[++e])
+			if (concat[e] == '\\')
+				if  (ft_strequ(ft_strstr(concat + e, "\\"), "\\") == 1 && \
+				((cont_nbr_backslashes(concat, e) % 2 == 0) || \
+				(cont_nbr_backslashes(concat, e) == 0)))
+				{
+					extra = concatined_newline(e);
+					join = ft_strjoin_newline(concat, extra);
+					free(concat);
+					free(extra);
+					concat = join;
+					join = NULL;
+				}
 		join = ft_strjoin_newline(temp, concat);
-		free(temo);
+		free(temp);
 		free(concat);
 		temp = join;
-		// find backslashes and
 	}
 	return (temp);
-}
-
-char		*get_type_prompt(char value)
-{
-	if (value == DQUOTE)
-		return (DQUOTE_PROMPT);
-	else if (value == QUOTE)
-		return (QUOTE_PROMPT);
-	else if (value == BQUOTE)
-		return (BQUOTE_PROMPT);
-	else if (value == SUBSH)
-		return (SUBSH_PROMPT);
-
-	else
-		return (NULL);
 }
 
 void		cont_chars_capsules(char *str, char schar, int *cont)
@@ -232,10 +234,15 @@ char		is_capsule_incomplete(char *str, char **temp)
 			// if ft_strlen(str) >= 2 then if (str[ft_strlen(str) - 1] == '\\') <- if this is true, exit
 			// this can be inner check
 			//	function: COUNT_NBR backslashes then nrb % 1
-			if (ft_streq(ft_strstr(str + i, "\\"), "\\") == 1 && \
-				(cont_nbr_backslashes(str, i) % 2 == 1))
+			if (ft_strequ(ft_strstr(str + i, "\\"), "\\") == 1 && \
+				((cont_nbr_backslashes(str, i) % 2 == 0) || \
+				(cont_nbr_backslashes(str, i) == 0)))
 			{
-				concat = ;
+				concat = concatined_newline(i);
+				tmp = ft_strjoin_newline(str, concat);
+				free(str);
+				free(concat);
+				str = tmp;
 			}
 		}
 		++i;
