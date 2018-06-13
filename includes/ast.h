@@ -6,7 +6,7 @@
 /*
 ** Possible types for AST nodes.
 ** sep		and		or		negate	pipe	cmd
-** ;		&&		||		!		|		simple command, eg ">2 cat <file"
+** ;		&&		||		!		|		simple command, eg ">&2 cat <file"
 */
 
 typedef enum	e_cmdtype
@@ -33,7 +33,10 @@ typedef struct	s_ast
 }				t_ast;
 
 /*
-** Handled t_redir_ops for now: INPUT, OUTPUT, OUTPUT_APPEND.
+** POSIX standard redirect types.
+** pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_07
+**	in	trunc	append	noclobber	heredoc		in_dup	out_dup		rdwr
+**	<	>		>>		|>			<< or <<-	&<		&>			<>
 */
 
 typedef struct	s_redir

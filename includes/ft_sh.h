@@ -27,25 +27,6 @@ extern char						**environ;
 ** Structs
 */
 
-/*
-** POSIX standard redirect types. We don't (yet?) handle all of them.
-** pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_07
-**	in	out	noclobber	append	heredoc		in_dup	out_dup	rdwr
-**	<	>	|>			>>		<< or <<-	&<		&>		<>
-*/
-
-typedef enum					e_redir_op
-{
-	INPUT,
-	OUTPUT,
-	OUTPUT_NOCLOBBLER,
-	OUTPUT_APPEND,
-	HEREDOC,
-	INPUT_DUP,
-	OUTPUT_DUP,
-	RDWR
-}								t_redir_op;
-
 typedef struct					s_shell
 {
 	t_term				term;

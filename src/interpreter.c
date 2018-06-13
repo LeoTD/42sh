@@ -7,7 +7,7 @@
 ** A command list begins with a &&, a || or a semicolon and owns a
 ** a pipeline -- simple command[s], separated by pipes if plural.
 ** A list waits for its pipeline to exit, marks its exit status, and
-** call the next list. The next list either executes its pipeline
+** calls the next list. The next list either executes its pipeline
 ** or skips itself, depending on the 'ok' flag of the list that called it.
 */
 
@@ -41,8 +41,9 @@ void	interpret_simple_cmd(t_ast *a)
 }
 
 /*
-** Check if a->type == CMD after forking, so as not to clobber current PID,
-** but before closing stdout, because the final cmd in a pipe is not redirected.
+** If a->type == CMD, run a:
+** -- After forking, so we don't completely lose the controlling process.
+** -- Before we would otherwise close/dup, so a's output isn't lost.
 */
 
 int		encounter_pipe(t_ast *a)
