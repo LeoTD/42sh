@@ -1,5 +1,6 @@
 #include "ft_sh.h"
 #include "ast.h"
+#include "_interpreter_dev.h"
 
 /*
 ** Interpreting the AST form of a parsed command.
@@ -35,6 +36,7 @@
 
 void	interpret_simple_cmd(t_ast *a)
 {
+	fprintf(stderr, "encounter cmd: ");print_node(a);fprintf(stderr, "\n");
 	execvp(a->tokens[0], a->tokens);
 	_exit(1);
 }
@@ -45,23 +47,31 @@ int		encounter_pipe(t_ast *a)
 	int			status;
 	int			fd[2];
 
+	fprintf(stderr, "encounter pipe: ");print_node(a);fprintf(stderr, "\n");
 	if (a->type == NEGATE)
 		return (encounter_pipe(a->rchild));
+	if (a->type == CMD)
+		interpret_simple_cmd(a);
 	status = 0;
 	pipe(fd);
 	pid = fork();
 	if (pid == 0)
 	{
 		close(fd[0]);
+		close(STDOUT_FILENO);
 		dup(fd[1]);
-		interpret_simple_cmd(a->lchild ? a->lchild : a);
+		close(fd[1]);
+		interpret_simple_cmd(a->lchild);
 	}
+	else if (pid == -1)
+		fprintf(stderr, " fork err\n");
 	else
 	{
 		close(fd[1]);
+		close(STDIN_FILENO);
 		dup(fd[0]);
-		if (a->rchild)
-			encounter_pipe(a->rchild);
+		close(fd[0]);
+		encounter_pipe(a->rchild);
 		if (waitpid(pid, &status, 0) != pid)
 			status = -1;
 	}
@@ -88,6 +98,8 @@ void	encounter_new_list(t_ast *a, t_ast *prev)
 	int		status;
 	int		ok;
 
+	if (!a)
+		return ;
 	ok = !prev || prev->ok;
 	if (!ok && a->type < LIST_PRECEDENCE)
 		return ;
@@ -97,7 +109,9 @@ void	encounter_new_list(t_ast *a, t_ast *prev)
 		encounter_new_list(a->rchild, a);
 	}
 	else if (a->type < LIST_PRECEDENCE)
+	{
 		encounter_pipe(a);
+	}
 	else
 	{
 		status = encounter_pipe(a->lchild);
