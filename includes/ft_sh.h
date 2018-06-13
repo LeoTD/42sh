@@ -54,12 +54,16 @@ typedef enum					e_redir_op
 
 typedef enum					e_cmdtype
 {
-	SEP,
-	AND,
-	OR,
+	CMD = 1,
+	NEGATE,
 	PIPE,
-	CMD
+	OR,
+	AND,
+	SEP
 }								t_cmdtype;
+
+#define LIST_PRECEDENCE OR
+#define MAX_CMDTYPE SEP
 
 typedef enum					e_cmdname
 {

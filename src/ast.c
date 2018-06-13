@@ -6,11 +6,11 @@ int		highest_prec(int *tokens, int len)
 
 	i = -1;
 	while (++i < len)
-		if (tokens[i] < 3)
+		if (tokens[i] >= LIST_PRECEDENCE)
 			return (i);
 	i = -1;
 	while (++i < len)
-		if (tokens[i] < 4)
+		if (tokens[i] >= PIPE)
 			return (i);
 	return (-1);
 }
@@ -20,7 +20,6 @@ t_ast	*create_tree(char **args, int *tokens, t_ast *head)
 	int i;
 
 	i = highest_prec(tokens, arr_length(args));
-	printf("%d\n", i);
 	if (!head)
 		head = ast_init();
 //	if (_op(tokens[i]))

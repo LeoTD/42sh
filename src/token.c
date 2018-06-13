@@ -11,11 +11,12 @@ char	*g_commands[] = {
 };
 
 char	*g_ops[] = {
-   [SEP] = ";",
-   [AND] = "&&",
-   [OR] = "||",
-   [PIPE] = "|",
-   [CMD] = NULL
+	[SEP] = ";",
+	[AND] = "&&",
+	[OR] = "||",
+	[PIPE] = "|",
+	[NEGATE] = "!",
+	[CMD] = NULL
 };
 
 int		arr_length(char **format)
@@ -36,7 +37,7 @@ int		is_command(char *arg)
 	while (g_commands[i])
 	{
 		if (!ft_strcmp(arg, g_commands[i]))
-			return (4);
+			return (CMD);
 		i++;
 	}
 	return (-1);
@@ -47,9 +48,9 @@ int		is_operator(char *arg)
 	int i;
 
 	i = 0;
-	while (g_ops[i])
+	while (i < MAX_CMDTYPE)
 	{
-		if (!ft_strcmp(arg, g_ops[i]))
+		if (g_ops[i] && !ft_strcmp(arg, g_ops[i]))
 			return (i);
 		i++;
 	}
@@ -69,10 +70,10 @@ int		*tokenize(char **format)
 	{
 		if (is_command(format[i]) >= 0)
 			token[i] = is_command(format[i]);
-		else if (is_operator(format[i]) >= 0)
+		else if (is_operator(format[i]) != -1)
 			token[i] = is_operator(format[i]);
 		else
-			token[i] = 5;
+			token[i] = CMD;
 		i++;
 	}
 	for (int x = 0; x < arr_length(format); x++)

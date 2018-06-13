@@ -89,6 +89,7 @@ char		**split_args(char *format)
 	int			i;
 	int			k;
 	int			hold;
+
 	st_init(&i, &k, &hold);
 	if (!(tmp = st_strptrnew(ft_strlen(format) / 2)))
 		return (0);
