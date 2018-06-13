@@ -1,6 +1,7 @@
 #ifndef AST_H
 # define AST_H
 # include "libft.h"
+# include "ft_sh.h"
 
 /*
 ** Possible types for AST nodes.
@@ -28,7 +29,20 @@ typedef struct	s_ast
 	struct s_ast	*rchild;
 	t_cmdtype		type;
 	int				ok;
+	t_list			*redirs;
 }				t_ast;
+
+/*
+** Handled t_redir_ops for now: INPUT, OUTPUT, OUTPUT_APPEND.
+*/
+
+typedef struct	s_redir
+{
+	int				fd;
+	t_redir_op		op;
+	char			*word;
+	int				is_fd;
+}				t_redir;
 
 extern char		*g_cmd_symbols[MAX_CMDTYPE + 1];
 extern char		*g_cmd_names[MAX_CMDTYPE + 1];
