@@ -100,6 +100,13 @@ int		ok_next_list(t_ast *a, int exit_status)
 	return (ok);
 }
 
+/*
+** LIST_PRECEDENCE == min of: AND, OR, SEP. See ast.h
+** This check is necessary because we currently start out assuming the first
+** thing we see is some type of LIST_PRECEDENCE node, but in short
+** pipelines, or at the end of any pipeline / list, that won't be true.
+*/
+
 void	encounter_new_list(t_ast *a, t_ast *prev)
 {
 	int		status;
