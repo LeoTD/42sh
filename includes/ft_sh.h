@@ -139,7 +139,15 @@ int						ftsh_exit(char **args);
 /* Parser functions */
 
 char					**split_args(char *format);
+char					*find_next(int *i, char *format, int end, char *tmp);
+
+int						is_op(char *c);
+int						op_len(char *c);
 t_ast					*ast_init(void);
 t_redir					*rdir_init(void);
+char					**st_strptrnew(size_t size);
+int						is_all_space(char *format, int i);
+void					st_init(int *i, int *k, int *hold);
+int						skip_char(char *format, int *i, char c);
 
 #endif
