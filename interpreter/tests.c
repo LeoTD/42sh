@@ -116,26 +116,27 @@ void	do_redir_test(char **tok, enum e_redirect op,
 	interpret_tree(c);
 }
 
+#define WRAP(function_call) if (fork() == 0) {	function_call; exit(0); } else { wait(0); }
+
 int		main(void)
 {
-	char *t1[] = { "echo", "hello wordl", NULL };
+	char *t1[] = { "echo", "redirect testing is fun", NULL };
 	char *t2[] = { "tr", "a-z", "A-Z", NULL };
-	do_redir_test(t1, APPEND, 1, "somefile", 0);
-	do_redir_test(t2, INPUT, 0, "somefile", 0);
 
-	fprintf(stderr, "\n\n------------\n\n");
+	WRAP(do_redir_test(t1, APPEND, 1, "somefile", 0);)
+	WRAP(do_redir_test(t2, INPUT, 0, "somefile", 0);)
 
-	pipe_HELLOUNIVERSE_test();
-	list_hard_test();
+	WRAP(pipe_HELLOUNIVERSE_test();)
+	WRAP(list_hard_test();)
 
-	list_simplest_test();
-	pipe_helloworld_test();
+	WRAP(list_simplest_test();)
+	WRAP(pipe_helloworld_test();)
 
-	list_simple_ands_test();
-	pipe_HELLOWORLD_test();
+	WRAP(list_simple_ands_test();)
+	WRAP(pipe_HELLOWORLD_test();)
 
-	list_test_mixed_with_negates();
-	list_simple_ors_test();
+	WRAP(list_test_mixed_with_negates();)
+	WRAP(list_simple_ors_test();)
 
 	return 0;
 }
