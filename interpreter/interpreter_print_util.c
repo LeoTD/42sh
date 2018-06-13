@@ -45,3 +45,16 @@ void	examine_tree(t_ast *a)
 	examine_tree(a->lchild);
 	examine_tree(a->rchild);
 }
+
+char	*redir_op_names[] =
+{
+	[TRUNC] = ">",
+	[APPEND] = ">>",
+	[INPUT] = "<",
+};
+
+void	examine_redir(t_redir *r)
+{
+	fprintf(stderr, "%d %s %s %s\n",
+			r->to_fd, redir_op_names[r->op], r->from_file, r->file_string_represents_fd ? "(fd)" : "");
+}

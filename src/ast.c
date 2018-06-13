@@ -50,3 +50,8 @@ t_ast	*cmd_node(char **tokens)
 	a->tokens = tokens;
 	return (a);
 }
+
+t_redir	*new_redir(void)
+{
+	return ((t_redir *)ft_memalloc(sizeof(t_redir)));
+}

@@ -101,8 +101,29 @@ void	pipe_HELLOWORLD_test()
 }
 
 
+void	interpret_simple_cmd(t_ast *a);
+
+void	do_redir_test(char **tok, enum e_redirect op,
+			int opt_fd, char *word, int is_fd)
+{
+
+	t_redir *r = make_redir(opt_fd, op, word, is_fd);
+	examine_redir(r);
+	t_list *lst = ft_lstnew(r, sizeof(*r));
+	t_ast *c = cmd_node(tok);
+	c->redirs = lst;
+	handle_redirs(c);
+	interpret_tree(c);
+}
+
 int		main(void)
 {
+	char *t1[] = { "echo", "hello wordl", NULL };
+	char *t2[] = { "tr", "a-z", "A-Z", NULL };
+	do_redir_test(t1, APPEND, 1, "somefile", 0);
+	do_redir_test(t2, INPUT, 0, "somefile", 0);
+
+	fprintf(stderr, "\n\n------------\n\n");
 
 	pipe_HELLOUNIVERSE_test();
 	list_hard_test();

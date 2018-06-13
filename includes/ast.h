@@ -39,12 +39,23 @@ typedef struct	s_ast
 **	<	>		>>		|>			<< or <<-	&<		&>			<>
 */
 
+/*
+** We currently handle only INPUT, OUTPUT, and APPEND.
+*/
+
+enum			e_redirect
+{
+	INPUT,
+	TRUNC,
+	APPEND,
+};
+
 typedef struct	s_redir
 {
-	int				fd;
-	t_redir_op		op;
-	char			*word;
-	int				is_fd;
+	enum e_redirect		op;
+	int					to_fd;
+	char				*from_file;
+	int					file_string_represents_fd;
 }				t_redir;
 
 extern char		*g_cmd_symbols[MAX_CMDTYPE + 1];
@@ -55,5 +66,8 @@ t_ast			*opnode(t_cmdtype type);
 t_ast			*cmd_node(char **tokens);
 
 void			interpret_tree(t_ast *tree);
+void			handle_redirs(t_ast *leaf);
+
+t_redir			*new_redir(void);
 
 #endif

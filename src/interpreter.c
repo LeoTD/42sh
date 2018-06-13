@@ -36,6 +36,7 @@
 
 void	interpret_simple_cmd(t_ast *a)
 {
+	handle_redirs(a);
 	execvp(a->tokens[0], a->tokens);
 	_exit(1);
 }

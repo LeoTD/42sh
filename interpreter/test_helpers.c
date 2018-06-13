@@ -108,8 +108,21 @@ int				check_test_output(char *expected_str)
 	else if (read_num == 4096)
 		buf[4095] = '\0';
 	res = ft_strcmp(expected_str, buf);
-	fprintf(stderr, "Expected:\t%s\nResult:\t\t%s\n\nMatch? [ %s ]\n\n",
-			expected_str, buf, (res == 0 ? "YES" : "NO"));
+	fprintf(stderr, "%s\n", res == 0 ? "list test ok" : "list test failed");
+	//fprintf(stderr, "Expected:\t%s\nResult:\t\t%s\n\nMatch? [ %s ]\n\n",
+			//expected_str, buf, (res == 0 ? "YES" : "NO"));
 	close(fd);
 	return (!!res);
+}
+
+t_redir	*make_redir(int left, enum e_redirect op, char *right, int is_fd)
+{
+	t_redir *r;
+
+	r = new_redir();
+	r->to_fd = left;
+	r->op = op;
+	r->from_file = ft_strdup(right);
+	r->file_string_represents_fd = is_fd;
+	return (r);
 }

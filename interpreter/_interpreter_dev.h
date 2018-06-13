@@ -33,4 +33,7 @@ void	examine_tree(t_ast *a);
 int		check_test_output(char *expected_str);
 
 void	run_interpreter_tests(void);
+
+t_redir	*make_redir(int opt_fd, enum e_redirect op, char *word, int is_fd);
+void	examine_redir(t_redir *r);
 #endif
