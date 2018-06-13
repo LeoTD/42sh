@@ -44,6 +44,9 @@
 **		SUBSH is currently not handle it
 */
 
+
+
+
 #define DQUOTE '\"'
 #define QUOTE '\''
 #define BQUOTE '`'
@@ -128,6 +131,33 @@ char		*concatinated_string(char type)
 	return (temp);
 }
 
+/*
+ *	you can use this thing recursively 
+ */
+
+char		*concatined_newline(int i) // this can be void
+{
+	char	*temp;
+	char	keep_concat;
+	char	*concat;
+	char	*join;
+
+	keep_concat = 0;
+	temp = ft_prompt(NEWLINE_PROMPT);
+	while (ft_streq(ft_strstr(temp + i, "\\"), "\\") == 1 && \
+		((cont_nbr_backslashes(str, i) % 2 == 0) || \
+		(cont_nbr_backslashes(str, i) == 0)))
+	{
+		concat = ft_prompt(NEWLINE_PROMPT);
+		join = ft_strjoin_newline(temp, concat);
+		free(temo);
+		free(concat);
+		temp = join;
+		// find backslashes and
+	}
+	return (temp);
+}
+
 char		*get_type_prompt(char value)
 {
 	if (value == DQUOTE)
@@ -164,7 +194,6 @@ void		cont_chars_capsules(char *str, char schar, int *cont)
 	}
 }
 
-
 char		is_capsule_incomplete(char *str, char **temp)
 {
 	int		i;
@@ -199,7 +228,15 @@ char		is_capsule_incomplete(char *str, char **temp)
 		}
 		else if (IS_BRACK_NL)
 		{
-			if
+			// str[ft_strlen(str)] == '\\' <- should work
+			// if ft_strlen(str) >= 2 then if (str[ft_strlen(str) - 1] == '\\') <- if this is true, exit
+			// this can be inner check
+			//	function: COUNT_NBR backslashes then nrb % 1
+			if (ft_streq(ft_strstr(str + i, "\\"), "\\") == 1 && \
+				(cont_nbr_backslashes(str, i) % 2 == 1))
+			{
+				concat = ;
+			}
 		}
 		++i;
 	}

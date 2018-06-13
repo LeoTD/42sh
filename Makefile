@@ -30,6 +30,7 @@ FILES		= main.c \
 			  prompt.c \
 			  parse.c \
 			  parse_line.c \
+			  helpers_parser.c \
 			  temp_parser.c \
 			  builtins.c \
 			  builtin_util.c \

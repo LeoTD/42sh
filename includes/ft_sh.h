@@ -134,6 +134,12 @@ int						ftsh_help(char **args);
 int						ftsh_exit(char **args);
 
 /*
+** HELPERS_PARSER.c
+*/
+
+int			cont_nbr_backslashes(char *str, int i);
+
+/*
 ** PARSE_LINE.c
 */
 
