@@ -46,6 +46,8 @@ int		op_len(char *c)
 
 int is_op(char *c)
 {
+	if (!_op(*c))
+		return (-1);
 	if (op_len(c) == 1)
 	{
 		if (*c == ';' || *c == '|')
@@ -68,9 +70,85 @@ int is_op(char *c)
 			ft_printf("sh: parse error near `%.2s'\n", c + 2);
 		exit(1);
 	}
-	return (0);
+	return (-1);
 }
 
+void	skip_char(char *format, int *i, char c)
+{
+	if (_op(c))
+		while (_op(format[*i]) && format[*i])
+			(*i)++;
+	else if (c == '"')
+		while (format[++(*i)] != c && format[*i])
+			 ;
+	else if (c == ' ')
+		while (format[*i] == c && format[*i])
+			(*i)++;
+	else
+		while (!_op(format[*i]) && format[*i] != ' ' && format[*i])
+			(*i)++;
+			
+}
+
+char	*find_next(int *i, char *format)
+{
+	int		end;
+	char	*tmp;
+
+	end = 0;
+	tmp = NULL;
+	while (format[*i] && *i < (int)ft_strlen(format))
+	{
+		end = *i;
+		if (format[*i] == ' ')
+		{
+			skip_char(format, i, ' ');
+		}
+		else if (is_op(format + *i) != -1)
+		{
+			skip_char(format, &end, format[end]);
+			tmp = ft_strsub(format, *i, end - *i);
+			break ;
+		}
+		else if (format[*i] == '"')
+		{
+			skip_char(format, &end, '"');
+			tmp = ft_strsub(format, *i, ((end += 1) - *i));
+			break ;
+		}
+		else
+		{
+			skip_char(format, &end, 'a');
+			tmp = ft_strsub(format, *i, end - *i);
+			break ;
+ 		}
+		if (*i == (int)ft_strlen(format))
+			return (NULL);
+	}
+	*i += (end - *i);
+	return (tmp);
+}
+
+char	**split_args(char *format)
+{
+	char		**tmp;
+	int			i;
+	int			k;
+	int			hold;
+	st_init(&i, &k, &hold);
+	if (!(tmp = st_strptrnew(ft_strlen(format) / 2)))
+		return (0);
+	while (format[i] && i < (int)ft_strlen(format))
+	{
+		tmp[k++] = find_next(&i, format);
+		printf("I = %d, strlen = %d\n", i, (int)ft_strlen(format));
+	}
+	for (int x = 0; x < k; x++)
+		printf("%d tmp =_%s_\n", x, tmp[x]);
+	return (tmp);
+}
+
+/*
 char	**split_args(char *format)
 {
 	int			word_count;
@@ -103,7 +181,9 @@ char	**split_args(char *format)
 	}
 	tmp[k] = NULL;
 	int x = 0;
+
 	while (tmp[x])
-		ft_putendl(tmp[x++]);
+		printf("-%s-\n", ptr[x++]);
 	return (tmp);
 }
+*/
