@@ -61,7 +61,16 @@ typedef enum					e_cmdtype
 	CMD
 }								t_cmdtype;
 
-
+typedef enum					e_cmdname
+{
+	ECH,
+	CD,
+	EXIT,
+	ENV,
+	SETENV,
+	UNSETENV,
+	END
+}								t_cmdname;
 /*
 ** Redirects take the form `[n]redir-op word', where `n' is an (optional) file
 ** descriptor and `word' (required) can be either a file path or a file
@@ -79,7 +88,7 @@ typedef struct					s_redir
 typedef struct					s_ast
 {
 
-	char				**tokens;
+	char				*tokens[1024];
 	t_redir				redir[10];
 	struct s_ast		*lchild;
 	struct s_ast		*rchild;
@@ -152,7 +161,13 @@ int						skip_char(char *format, int *i, char c);
 
 /* Tokenizer Functions */
 
-int						*tokenizer(char **format);
+int						*tokenize(char **format);
 int						arr_length(char **format);
+int						is_operator(char *arg);
+int						is_command(char *arg);
+
+/* AST functions */
+
+t_ast					*create_tree(char **args, int *tokens, t_ast *head);
 
 #endif

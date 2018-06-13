@@ -1,5 +1,23 @@
 #include "ft_sh.h"
 
+char	*g_commands[] = {
+	[ECH] = "echo",
+	[CD] = "cd",
+	[EXIT] = "exit",
+	[ENV] = "env",
+	[SETENV] = "setenv",
+	[UNSETENV] = "unsetenv",
+	[END] = NULL
+};
+
+char	*g_ops[] = {
+   [SEP] = ";",
+   [AND] = "&&",
+   [OR] = "||",
+   [PIPE] = "|",
+   [CMD] = NULL
+};
+
 int		arr_length(char **format)
 {
 	int i;
@@ -8,6 +26,34 @@ int		arr_length(char **format)
 	while (format[i])
 		i++;
 	return (i);
+}
+
+int		is_command(char *arg)
+{
+	int i;
+
+	i = 0;
+	while (g_commands[i])
+	{
+		if (!ft_strcmp(arg, g_commands[i]))
+			return (4);
+		i++;
+	}
+	return (-1);
+}
+
+int		is_operator(char *arg)
+{
+	int i;
+
+	i = 0;
+	while (g_ops[i])
+	{
+		if (!ft_strcmp(arg, g_ops[i]))
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
 int		*tokenize(char **format)
@@ -21,6 +67,15 @@ int		*tokenize(char **format)
 	ft_bzero(token, arr_length(format));
 	while (i < arr_length(format))
 	{
-		
+		if (is_command(format[i]) >= 0)
+			token[i] = is_command(format[i]);
+		else if (is_operator(format[i]) >= 0)
+			token[i] = is_operator(format[i]);
+		else
+			token[i] = 5;
+		i++;
 	}
+	for (int x = 0; x < arr_length(format); x++)
+		printf("%d %s\n", token[x], format[x]);
+	return (token);
 }

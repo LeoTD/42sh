@@ -1,6 +1,6 @@
 #include "ft_sh.h"
 
-char            *g_cmd_symbols[] = {
+char		*g_cmd_symbols[] = {
     [SEP] = ";",
     [AND] = "&&",
     [OR] = "||",
@@ -8,7 +8,7 @@ char            *g_cmd_symbols[] = {
     [CMD] = NULL
 };
 
-int is_op(char *c)
+int 		is_op(char *c)
 {
 	if (!_op(*c))
 		return (-1);
@@ -37,7 +37,7 @@ int is_op(char *c)
 	return (-1);
 }
 
-int		skip_char(char *format, int *i, char c)
+int			skip_char(char *format, int *i, char c)
 {
 	if (_op(c))
 		while (_op(format[*i]) && format[*i])
@@ -54,7 +54,7 @@ int		skip_char(char *format, int *i, char c)
 	return (1);
 }
 
-char	*find_next(int *i, char *format, int end, char *tmp)
+char		*find_next(int *i, char *format, int end, char *tmp)
 {
 	while (format[*i] && *i < (int)ft_strlen(format))
 	{
@@ -83,7 +83,7 @@ char	*find_next(int *i, char *format, int end, char *tmp)
 	return (tmp);
 }
 
-char	**split_args(char *format)
+char		**split_args(char *format)
 {
 	char		**tmp;
 	int			i;
@@ -98,7 +98,7 @@ char	**split_args(char *format)
 			break ;
 		tmp[k++] = find_next(&i, format, 0, NULL);
 	}
-	for (int x = 0; x < k; x++)
-		printf("%d tmp =_%s_\n", x, tmp[x]);
+//	for (int x = 0; x < k; x++)
+//		printf("%d tmp =_%s_\n", x, tmp[x]);
 	return (tmp);
 }

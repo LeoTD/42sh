@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/04 13:40:14 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/08 17:19:56 by ckrommen         ###   ########.fr       */
+/*   Updated: 2018/06/12 20:43:27 by ckrommen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_ast		*ast_init(void)
 
 	if (!(ast = (t_ast *)malloc(sizeof(t_ast))))
 		return (NULL);
-	ast->tokens = NULL;
+	ft_bzero(ast->tokens, 1024);
 	ast->rval = 0;
 	ast->lchild = NULL;
 	ast->rchild = NULL;
