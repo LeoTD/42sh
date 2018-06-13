@@ -1,8 +1,10 @@
 #ifndef FT_SH_H
 # define FT_SH_H
 
+# include "ast.h"
 # include "libft.h"
 # include "ft_printf.h"
+# include "ft_prompt.h"
 # include <termcap.h>
 # include <sys/ioctl.h>
 # include <stdio.h>
@@ -10,10 +12,9 @@
 # include <unistd.h>
 # include <termios.h>
 # include <fcntl.h>
+# include <assert.h>
 
 # define TERM_FD g_shell->term.fd
-
-extern char						**environ;
 
 /*
 ** Function-y macros for terminal and cursor manipulation.
@@ -28,87 +29,12 @@ extern char						**environ;
 */
 
 /*
-** POSIX standard redirect types. We don't (yet?) handle all of them.
-** pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_07
-**	in	out	noclobber	append	heredoc		in_dup	out_dup	rdwr
-**	<	>	|>			>>		<< or <<-	&<		&>		<>
+** Declaration of environ.
+** Contains environment variables in the form:
+** NAME=VAL
 */
 
-typedef enum					e_redir_op
-{
-	INPUT,
-	OUTPUT,
-	OUTPUT_NOCLOBBLER,
-	OUTPUT_APPEND,
-	HEREDOC,
-	INPUT_DUP,
-	OUTPUT_DUP,
-	RDWR
-}								t_redir_op;
-
-/*
-** Possible types for AST nodes.
-** sep		and		or		pipe	cmd
-** ;		&&		||		|		simple command, eg ">2 cat <file"
-*/
-
-typedef enum					e_cmdtype
-{
-	CMD = 1,
-	NEGATE,
-	PIPE,
-	OR,
-	AND,
-	SEP
-}								t_cmdtype;
-
-#define LIST_PRECEDENCE OR
-#define MAX_CMDTYPE SEP
-
-typedef enum					e_cmdname
-{
-	ECH,
-	CD,
-	EXIT,
-	ENV,
-	SETENV,
-	UNSETENV,
-	END
-}								t_cmdname;
-/*
-** Redirects take the form `[n]redir-op word', where `n' is an (optional) file
-** descriptor and `word' (required) can be either a file path or a file
-** descriptor. POSIX standard requires support for FDs 0..9 at minimum.
-*/
-
-
-typedef struct					s_redir
-{
-	t_redir_op			op;
-	int					fd;
-	char				*word;
-}								t_redir;
-
-typedef struct					s_ast
-{
-
-	char				*tokens[1024];
-	t_redir				redir[10];
-	struct s_ast		*lchild;
-	struct s_ast		*rchild;
-	int					rval;
-	t_cmdtype			ctype;
-}								t_ast;
-
-typedef struct					s_term
-{
-	char				*name;
-	struct termios		normal;
-	struct termios		custom;
-	int					fd;
-	int					height;
-	int					width;
-}								t_term;
+extern char						**environ;
 
 typedef struct					s_shell
 {
@@ -129,14 +55,12 @@ t_shell					*g_shell;
 ** Function declarations:
 */
 
-int						ft_weirdchar(int c);
 void					update_size(t_term *t);
 void					restore_defaults(t_term *t);
 
 void					shell_init(void);
 void					prompt(t_shell *s);
 void					parse_commands(t_shell *s, char *buf);
-void					term_init(t_term *t);
 
 /*
 ** Builtin Function Declarations.

@@ -1,12 +1,5 @@
 #include "ft_sh.h"
-
-char		*g_cmd_symbols[] = {
-    [SEP] = ";",
-    [AND] = "&&",
-    [OR] = "||",
-    [PIPE] = "|",
-    [CMD] = NULL
-};
+#include "ast.h"
 
 int 		is_op(char *c)
 {

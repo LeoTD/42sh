@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/04 12:24:30 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/12 20:38:30 by ckrommen         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_sh.h"
 
 int			main(int argc, char **argv)
@@ -17,6 +5,7 @@ int			main(int argc, char **argv)
 	char	**args;
 	int		*tokens;
 	t_ast	*ast;
+	char		*line;
 
 	if (argc == 2)
 	{
@@ -24,6 +13,34 @@ int			main(int argc, char **argv)
 		args = split_args(argv[1]);
 		tokens = tokenize(args);
 		ast = create_tree(args, tokens, NULL);
+		return (0);
+	}
+
+	ft_printf("%s", "Hello 42sh!\n- - - - - - - - - -\n\nUse [ exit ] to quit echo_sh.\n\n");
+
+/*	This function must be called to enable history.
+**	Sets the max length of the history log.	*/
+	ft_prompt_history_set_len(200);
+
+	while (1)
+	{
+/*		ft_prompt returns [ NULL ] on error.
+**		and a pointer to a fresh string on success. */
+		line = ft_prompt("echo_sh $> ");
+
+/*		This function adds a string to the history log.
+**		ft_prompt does NOT keep track of history internally. */
+		ft_prompt_history_add(line);
+
+		ft_putendl(line);
+		if (!ft_strcmp(line, "exit"))
+		{
+/*			[ line ] has been malloc'd by ft_prompt and must be freed.
+**			History is freed by ft_prompt on program exit. */
+			free(line);
+			break ;
+		}
+		free(line);
 	}
 //	shell_init();
 //	prompt(g_shell);

@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ltanenba <ltanenba@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/02/21 19:18:37 by ltanenba          #+#    #+#              #
-#    Updated: 2018/06/12 20:34:30 by ckrommen         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME		= 42sh
 
 CC			= gcc
@@ -34,16 +22,19 @@ LIBS		= libft/libft.a \
 # Add header files here: (use full relative path to Makefile)
 INCLUDES	= libft/includes/libft.h \
 			  includes/ft_sh.h \
+			  includes/ast.h \
 
 # Add source files here: (files assumed to be in ./src folder)
 FILES		= main.c \
-			  term_util.c \
 			  setup.c \
 			  prompt.c \
 			  split_args.c \
 			  parse_help.c \
 			  token.c \
-			  ast.c \
+			  temp_parser.c \
+			  builtins.c \
+			  builtin_util.c \
+			  ast.c  \
 
 SRC			= $(addprefix src/, $(FILES))
 
