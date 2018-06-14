@@ -1,6 +1,21 @@
 #include "ast.h"
 #include "_interpreter_dev.h"
 
+t_ast	*opnode(t_cmdtype t)
+{
+	t_ast *a = ft_memalloc(sizeof(*a));
+	a->type = t;
+	a->ok = 1;
+	return (a);
+}
+
+t_ast	*cmd_node(char **tokens)
+{
+	t_ast *a = opnode(CMD);
+	a->tokens = tokens;
+	return a;
+}
+
 enum			okstate { OK, FAIL };
 static char		_ok_label[] = 	"OK   A, ";
 static char		_fail_label[] = "FAIL A, ";

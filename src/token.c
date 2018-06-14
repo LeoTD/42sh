@@ -38,7 +38,8 @@ int		is_command(char *arg)
 	while (g_commands[i])
 	{
 		if (!ft_strcmp(arg, g_commands[i]))
-			return (i + (MAX_CMDTYPE + 1));
+			return 1;
+			//return (i + (MAX_CMDTYPE + 1));
 		i++;
 	}
 	return (-1);
@@ -77,7 +78,7 @@ int		*tokenize(char **format)
 			token[i] = CMD;
 		i++;
 	}
-	for (int x = 0; x < arr_length(format); x++)
-		printf("%d %s\n", token[x], format[x]);
+	//for (int x = 0; x < arr_length(format); x++)
+	//	printf("%d %s\n", token[x], format[x]);
 	return (token);
 }

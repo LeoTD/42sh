@@ -1,4 +1,6 @@
 #include "ft_sh.h"
+#include "ast.h"
+#include "_interpreter_dev.h"
 
 int			main(int argc, char **argv)
 {
@@ -10,12 +12,10 @@ int			main(int argc, char **argv)
 	if (argc == 2)
 	{
 		ast = NULL;
-		ft_printf("%s", "Hello 42sh!\n");
 		args = split_args(argv[1]);
 		tokens = tokenize(args);
 		create_tree(args, tokens, &ast, highest_prec(tokens));
-				print_tree(ast, 1);
-//		interpret_tree(ast);
+		interpret_tree(ast);
 		return (0);
 	}
 

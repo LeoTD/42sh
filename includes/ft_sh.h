@@ -23,7 +23,7 @@
 # define _term_do(x) tputs(tgetstr(x, NULL), 1, ft_weirdchar)
 # define _goto(x, y) tputs(tgoto(tgetstr("cm", NULL), x, y), 1, ft_weirdchar)
 # define _put(x) ft_putstr_fd(x, TERM_FD)
-# define _op(x) (x == '|' || x == '&' || x == ';')
+# define _op(x) (x == '|' || x == '&' || x == ';' || x == '!')
 # define _redir(x) (x == '>' || x == '<')
 
 /*

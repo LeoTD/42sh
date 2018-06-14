@@ -15,7 +15,7 @@ char	**fetch_tokens(char **args)
 {
   char	**ptr;
   int	i;
-
+  
   i = 0;
   if ((ptr = (char **)malloc(sizeof(char *) * arr_length(args))))
     return (NULL);
@@ -29,8 +29,17 @@ t_ast	*parsed_ast_node(char **args, int *tokens, int hp)
 {
 	t_ast *a;
 
+	//printf("args = %s\n", *args);
 	a = ft_memalloc(sizeof(*a));
-	a->tokens = args;
+	if (_op((*(args))[0]))
+	  {
+	    if (!(a->tokens = st_strptrnew(2)))
+	      return (NULL);
+	    *(a->tokens) = *args;
+	    *args = NULL;
+	  }
+	else
+	  a->tokens = args;
 	a->type = tokens[hp];
 	a->ok = 0;
 	a->lchild = NULL;
@@ -54,7 +63,7 @@ int		highest_prec(int *tokens)
 			return (i);
 	i = -1;
 	while (tokens[++i])
-		if (tokens[i] == PIPE)
+		if (tokens[i] == PIPE || tokens[i] == NEGATE)
 			return (i);
 	return (0);
 }
