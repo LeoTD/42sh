@@ -98,7 +98,22 @@ char			**copy_environ_variables(void)
 	new[i] = NULL;
 	return (new);
 }
+	
+void			search_and_execute(char **all_bin_paths, t_ast *a)
+{
+	int		i;
 
+	i = 0;
+	while (all_bin_paths[i])
+	{
+		if (access(all_bin_paths[i], X_OK) != -1)
+		{
+			execve(all_bin_paths[i], a->tokens, environ);
+			break;
+		}
+		i++;
+	}
+}
 /*
 **	Find the path variable inside the global extern char **environ.
 **	String split the paths listed under the PATH variable.
@@ -129,14 +144,6 @@ void			ft_exec(t_ast *a)
 		return ;
 	}
 	all_bin_paths = strcat_path_with_file(all_bin_paths, a);
-	i = 0;
-	while (all_bin_paths[i])
-	{
-		if (access(all_bin_paths[i], X_OK) != -1)
-		{
-			execve(all_bin_paths[i], a->tokens, environ);
-			break;
-		}
-		i++;
-	}
+	search_and_execute(all_bin_paths, a);
+	
 }
