@@ -18,7 +18,7 @@ int		redir_source_fd(t_redir *redir)
 	int		fd;
 
 	if (redir->file_string_represents_fd)
-		fd = redir->from_file[1] + '0';
+		fd = redir->from_file[1] - '0';
 	else if (redir->op == INPUT)
 		fd = open(redir->from_file, oflags[redir->op]);
 	else
