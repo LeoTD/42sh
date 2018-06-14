@@ -1,24 +1,7 @@
 #include "ft_sh.h"
 
-#define DQUOTE '\"'
-#define QUOTE '\''
-#define BQUOTE '`'
-#define SUBSH '('
-#define NEWLINE '\\'
-#define DQUOTE_PROMPT "dquote> "
-#define QUOTE_PROMPT "quote> "
-#define BQUOTE_PROMPT "bquote> "
-#define SUBSH_PROMPT "subsh> "
-#define NEWLINE_PROMPT "> "
-
-
 #define IS_CAPSULE (str[i] == '\"' || str[i] == '\'' || str[i] == '`')
 #define IS_BRACK_NL (str[i] == '\\')
-
-/*
-** CHECK BRACKETS AND EXIT IF THERE ARE NOT COMPLETES
-*/
-
 #define STRNWL(x, y) ft_strjoin_newline(x, y)
 #define ALLO_AND_FREE(dest, x, y) dest = STRNWL(x, y); free(x); free(y)
 
@@ -46,7 +29,7 @@ char		*concatinated_string(char type)
 }
 
 /*
-**	you can use this thing recursively 
+**	recursively solution for the inhbitors in the '\' 
 */
 
 #define LAST_CHAR_BSLASH(x, i) (ft_strequ(ft_strstr(x + i, "\\"), "\\") == 1)
@@ -80,43 +63,6 @@ char		*concatined_newline(int i)
 	}
 	return (temp);
 }
-/*
-void		is_capsule_incomplete(char *str, char **temp)
-{
-	int		i;
-	int		cont_nbr_capsule;
-	char	get_capsule;
-	char	*concat;
-	char	*tmp;
-
-	i = -1;
-	cont_nbr_capsule = 0;
-	while(str[++i])
-	{
-		if (IS_CAPSULE)
-		{
-			get_capsule = str[i];
-			cont_chars_capsules(str, get_capsule, &(cont_nbr_capsule));
-			if (cont_nbr_capsule % 2 == 1)
-			{
-				concat = concatinated_string(get_capsule);
-				ALLO_AND_FREE(tmp, str, concat);
-				str = tmp;
-			}
-			cont_nbr_capsule = 0;
-		}
-		else if (IS_BRACK_NL)
-			if (LAST_CHAR_BSLASH(str, i) && ((N_SLASH(str, i) % 2 == 0 ) || \
-			(N_SLASH(str, i) == 0)))
-			{
-				concat = concatined_newline(i);
-				ALLO_AND_FREE(tmp, str, concat);
-				str = tmp;
-			}
-	}
-	*temp = str;
-}
-*/
 
 void		wrap_quotes(char **str, int i)
 {

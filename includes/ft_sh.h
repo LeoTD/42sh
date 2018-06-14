@@ -133,20 +133,16 @@ int						ftsh_cd(char **args);
 int						ftsh_help(char **args);
 int						ftsh_exit(char **args);
 
-
 #define DQUOTE '\"'
 #define QUOTE '\''
 #define BQUOTE '`'
 #define SUBSH '('
-
 #define NEWLINE '\\'
-
 #define DQUOTE_PROMPT "dquote> "
 #define QUOTE_PROMPT "quote> "
 #define BQUOTE_PROMPT "bquote> "
 #define SUBSH_PROMPT "subsh> "
 #define NEWLINE_PROMPT "> "
-
 
 /*
 ** HELPERS_PARSER.c
