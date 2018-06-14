@@ -126,3 +126,21 @@ t_redir	*make_redir(int left, enum e_redirect op, char *right, int is_fd)
 	r->file_string_represents_fd = is_fd;
 	return (r);
 }
+
+char	**quickstrs(int nstrs, ...)
+{
+	va_list	args;
+	char	**strs;
+	int		i;
+
+	i = 0;
+	va_start(args, nstrs);
+	strs = ft_memalloc((nstrs+1) * sizeof(char *));
+	while (i < nstrs)
+	{
+		strs[i] = ft_strdup(va_arg(args, char *));
+		++i;
+	}
+	va_end(args);
+	return (strs);
+}

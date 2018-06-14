@@ -69,5 +69,9 @@ void			interpret_tree(t_ast *tree);
 void			handle_redirs(t_ast *leaf);
 
 t_redir			*new_redir(void);
+t_redir			*quick_redir(int to_fd, enum e_redirect op,
+		char *from, int is_fd);
+void			append_redir(int to_fd, enum e_redirect op,
+		char *from, int is_fd, t_ast *a);
 
 #endif
