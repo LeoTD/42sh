@@ -108,7 +108,6 @@ char		**split_args(char *format)
 			break ;
 		tmp[k++] = find_next(&i, format, 0, NULL);
 	}
-//	for (int x = 0; x < k; x++)
-//		printf("%d tmp =_%s_\n", x, tmp[x]);
+	tmp[k] = NULL;
 	return (tmp);
 }
