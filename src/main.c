@@ -1,6 +1,5 @@
 #include "ft_sh.h"
 #include "ast.h"
-#include "_interpreter_dev.h"
 
 int			main(int argc, char **argv)
 {
