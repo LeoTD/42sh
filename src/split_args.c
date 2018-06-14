@@ -1,17 +1,9 @@
 #include "ft_sh.h"
 #include "ast.h"
 
-int 		is_op(char *c)
+
+int			op_error_handle(char *c)
 {
-	if (!_op(*c))
-		return (-1);
-	if (op_len(c) == 1)
-	{
-		if (*c == ';' || *c == '|')
-			return (*c == '|' ? PIPE : SEP);
-		else
-			ft_printf("sh: parse error near `%.1s'\n", c);
-	}
 	if (op_len(c) == 2)
 	{
 		if (!ft_strncmp(c, "||", 2) || !ft_strncmp(c, "&&", 2))
@@ -28,6 +20,22 @@ int 		is_op(char *c)
 		exit(1);
 	}
 	return (-1);
+}
+
+int 		is_op(char *c)
+{
+	if (!_op(*c))
+		return (-1);
+	if (op_len(c) == 1)
+	{
+		if (*c == ';' || *c == '|')
+			return (*c == '|' ? PIPE : SEP);
+		else if (*c == '!')
+			return (NEGATE);
+		else
+			ft_printf("sh: parse error near `%.1s'\n", c);
+	}
+	return (op_error_handle(c));
 }
 
 int			skip_char(char *format, int *i, char c)

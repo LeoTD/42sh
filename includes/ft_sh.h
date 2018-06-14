@@ -23,7 +23,7 @@
 # define _term_do(x) tputs(tgetstr(x, NULL), 1, ft_weirdchar)
 # define _goto(x, y) tputs(tgoto(tgetstr("cm", NULL), x, y), 1, ft_weirdchar)
 # define _put(x) ft_putstr_fd(x, TERM_FD)
-# define _op(x) (x == '|' || x == '&' || x == ';')
+# define _op(x) (x == '|' || x == '&' || x == ';' || x == '!')
 # define _redir(x) (x == '>' || x == '<')
 
 /*
@@ -80,6 +80,7 @@ int						ftsh_exit(char **args);
 char					**split_args(char *format);
 char					*find_next(int *i, char *format, int end, char *tmp);
 
+int						op_error_handle(char *c);
 int						is_op(char *c);
 int						op_len(char *c);
 t_ast					*ast_init(void);
