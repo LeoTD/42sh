@@ -1,7 +1,6 @@
 #ifndef AST_H
 # define AST_H
 # include "libft.h"
-# include "ft_sh.h"
 
 /*
 ** Possible types for AST nodes.
@@ -22,12 +21,27 @@ typedef enum	e_cmdtype
 # define LIST_PRECEDENCE OR
 # define MAX_CMDTYPE SEP
 
+/*
+** Builtins
+*/
+
+typedef enum					e_cmdname
+{
+	ECH,
+	CD,
+	EXIT,
+	ENV,
+	SETENV,
+	UNSETENV,
+	END
+}								t_cmdname;
+
 typedef struct	s_ast
 {
 	char			**tokens;
 	struct s_ast	*lchild;
 	struct s_ast	*rchild;
-	t_cmdtype		type;
+	int				type;
 	int				ok;
 	t_list			*redirs;
 }				t_ast;
@@ -59,8 +73,13 @@ typedef struct	s_redir
 }				t_redir;
 
 extern char		*g_cmd_symbols[MAX_CMDTYPE + 1];
-extern char		*g_cmd_names[MAX_CMDTYPE + 1];
 
+/* AST functions */
+
+t_ast			*parsed_ast_node(char **args, int *tokens, int hp);
+int				highest_prec(int *tokens);
+void			print_tree(t_ast *ast, int i);
+void			create_tree(char **args, int *tokens, t_ast **head, int hp);
 t_ast			*ast_node(void);
 t_ast			*opnode(t_cmdtype type);
 t_ast			*cmd_node(char **tokens);

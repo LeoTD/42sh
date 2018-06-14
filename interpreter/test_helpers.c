@@ -127,6 +127,18 @@ t_redir	*make_redir(int left, enum e_redirect op, char *right, int is_fd)
 	return (r);
 }
 
+void	examine_redir(t_redir *r)
+{
+	static char	*redir_op_names[] =
+	{
+		[TRUNC] = ">",
+		[APPEND] = ">>",
+		[INPUT] = "<",
+	};
+	fprintf(stderr, "%d %s %s %s\n",
+			r->to_fd, redir_op_names[r->op], r->from_file, r->file_string_represents_fd ? "(fd)" : "");
+}
+
 char	**quickstrs(int nstrs, ...)
 {
 	va_list	args;

@@ -2,7 +2,21 @@
 
 int			main(int argc, char **argv)
 {
+	char	**args;
+	int		*tokens;
+	t_ast	*ast;
 	char		*line;
+
+	if (argc == 2)
+	{
+		ast = NULL;
+		ft_printf("%s", "Hello 42sh!\n");
+		args = split_args(argv[1]);
+		tokens = tokenize(args);
+		create_tree(args, tokens, &ast, highest_prec(tokens));
+//		print_tree(ast, 1);
+		return (0);
+	}
 
 	ft_printf("%s", "Hello 42sh!\n- - - - - - - - - -\n\nUse [ exit ] to quit echo_sh.\n\n");
 
@@ -30,7 +44,6 @@ int			main(int argc, char **argv)
 		}
 		free(line);
 	}
-
 	argc = 0;
 	argv = 0;
 	return (0);

@@ -1,5 +1,6 @@
 #include "ast.h"
 #include "stdio.h"
+#include "ft_sh.h"
 #include "_interpreter_dev.h"
 
 char	test_output_file[200];
@@ -163,8 +164,7 @@ void	big_test()
 	curr->lchild->rchild = sedhellohi;
 	curr->rchild = echothirdline;
 
-	examine_tree(head);
-	fprintf(stderr, "\n\n-----\n\n");
+	fprintf(stderr, "\nRan interpreter hard test -- check relevant files for output ?\n");
 	interpret_tree(head);
 }
 

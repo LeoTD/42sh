@@ -34,7 +34,9 @@ FILES		= main.c \
 			  temp_parser.c \
 			  builtins.c \
 			  builtin_util.c \
-			  ast.c 
+			  interpreter.c \
+			  ast.c \
+			  redir.c \
 
 SRC			= $(addprefix src/, $(FILES))
 

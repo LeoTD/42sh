@@ -1,6 +1,5 @@
 #include "ft_sh.h"
 #include "ast.h"
-#include "_interpreter_dev.h"
 
 /*
 ** Interpreting the AST form of a parsed command.
