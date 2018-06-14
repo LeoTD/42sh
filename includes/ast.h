@@ -11,7 +11,7 @@
 
 typedef enum	e_cmdtype
 {
-	CMD,
+	CMD = 1,
 	PIPE,
 	NEGATE,
 	OR,

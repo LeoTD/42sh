@@ -28,6 +28,9 @@ INCLUDES	= libft/includes/libft.h \
 FILES		= main.c \
 			  setup.c \
 			  prompt.c \
+			  split_args.c \
+			  parse_help.c \
+			  token.c \
 			  temp_parser.c \
 			  builtins.c \
 			  builtin_util.c \
