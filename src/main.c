@@ -9,11 +9,12 @@ int			main(int argc, char **argv)
 
 	if (argc == 2)
 	{
+		ast = NULL;
 		ft_printf("%s", "Hello 42sh!\n");
 		args = split_args(argv[1]);
 		tokens = tokenize(args);
-		ast = create_tree(args, tokens, NULL,
-						highest_prec(tokens, arr_length(args)));
+		create_tree(args, tokens, &ast, highest_prec(tokens));
+//		print_tree(ast, 1);
 		return (0);
 	}
 

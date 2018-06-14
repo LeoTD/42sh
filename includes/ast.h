@@ -78,8 +78,9 @@ extern char		*g_cmd_names[MAX_CMDTYPE + 1];
 /* AST functions */
 
 t_ast			*ast_node(char **args, int *tokens, int hp);
-int				highest_prec(int *tokens, int len);
-t_ast			*create_tree(char **args, int *tokens, t_ast *head, int hp);
+int				highest_prec(int *tokens);
+void			print_tree(t_ast *ast, int i);
+void			create_tree(char **args, int *tokens, t_ast **head, int hp);
 //t_ast			*opnode(t_cmdtype type);
 //t_ast			*cmd_node(char **tokens);
 
