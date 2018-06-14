@@ -58,7 +58,6 @@ void	print_tree(t_ast *ast, int i)
 		if (ast->rchild)
 		{
 			print_tree(ast->rchild, i);
-			ft_putendl("");
 		}
 	}
 }
@@ -74,7 +73,7 @@ void	create_tree(char **args, int *tokens, t_ast **head, int hp)
 		tokens[hp] = 0;
 		if (args+hp)
 			create_tree(args, tokens, &(ast->lchild), highest_prec(tokens));
-		else if (args+hp)
+		if (args+hp)
 			create_tree(args+(hp + 1), tokens+(hp + 1), &(ast->rchild), highest_prec(tokens + (hp + 1)));
 	}
 	else
