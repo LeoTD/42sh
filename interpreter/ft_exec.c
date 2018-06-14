@@ -3,7 +3,6 @@
 #include "libft.h"
 //#include "_intepreter_dev.h"
 
-
 /*
 **	Execve(char *path, char **argv, char **environ);
 **	First argument is the path of bin (e.g. /usr/bin/)
@@ -13,24 +12,48 @@
 
 extern char		**environ;
 
-char	**strsplit_paths(char *str)
+char			**strcat_path_with_file(char **all_bin_paths, t_ast *a)
 {
 	int		i;
+	char	*temp;
+
+	i = 0;
+	while (all_bin_paths[i])
+	{
+		temp = all_bin_paths[i];
+		all_bin_paths[i] = ft_strjoin(all_bin_paths[i], "/");
+		free(temp);
+		temp = all_bin_paths[i];
+		all_bin_paths[i] = ft_strjoin(all_bin_paths[i], a->tokens[0]);
+		free(temp);
+		i++;
+	}
+	return (all_bin_paths);
+}
+
+int				find_number_of_paths(char *str)
+{
+	int 	i;
+	int		number_of_paths;
+
+	i = 0;
+	number_of_paths = 1;
+	while (str[i])
+	{
+		if (str[i] == ':')
+			number_of_paths++;
+		i++;
+	}
+	return (number_of_paths);
+}
+
+char			**strsplit_paths(char *str, int i, int j)
+{
 	int		number_of_paths;
 	char	**paths;
 
-	i = 0;
-	number_of_paths = 0;
-	while (str[i])
-		if (str[i++] == ':')
-			number_of_paths++;
-	number_of_paths++;
-
-//	fprintf(stderr, "inside strsplit_paths");
+	number_of_paths = find_number_of_paths(str);
 	paths = (char**)malloc(sizeof(char*) * (number_of_paths + 1));
-	i = 0;
-	int j;
-	j = 0;
 	while (number_of_paths != 1)
 	{
 		while (str[j])
@@ -43,132 +66,77 @@ char	**strsplit_paths(char *str)
 				number_of_paths--;
 				i++;
 			}
-			// WARNING: DO NOT REMOVE THIS IF STATEMENT
 			if (str[j])
 				j++;
 		}
 	}
 	paths[i] = ft_strdup(str);
 	paths[i + 1] = NULL;
-	i = 0;
-//	printf("\n\n\n");
-	while (paths[i])
-	{
-//		fprintf(stderr, "path=%s\n", paths[i]);
-		i++;
-	}
 	return (paths);
 }
 
 /*
-**	Creating a duplicate of environment so that we can search throuogh multiple paths.
+**	Creating a duplicate environment so that we can search through paths.
 */
 
-void	examine_path_file(char **str)
+char			**copy_environ_variables(void)
 {
-	for (int i = 0; str[i]; i++)
-		fprintf(stderr, "%s\n", str[i]);
-}
-
-void	ft_exec(t_ast *a)
-{
-	int		i = 0;
-	char	*environment_copy[256];
-
-	while (environ[i])
-	{
-		environment_copy[i] = ft_strdup(environ[i]);
-		i++;
-	}
-	environment_copy[i] = NULL;
+	int			i;
+	char		**new;
 
 	i = 0;
+	while (environ[i])
+		i++;	
+	if (!(new = (char**)malloc(sizeof(char*) * (i + 1))))
+		return (NULL);
+	i = 0;
+	while (environ[i])
+	{
+		new[i] = ft_strdup(environ[i]);
+		i++;
+	}
+	new[i] = NULL;
+	return (new);
+}
+
+/*
+**	Find the path variable inside the global extern char **environ.
+**	String split the paths listed under the PATH variable.
+**	Search through all paths to find the executable.
+**	If found, execute. Else, do nothing and return.
+*/
+
+void			ft_exec(t_ast *a)
+{
+	int		i;
+	char	**environment_copy;
+	char	**all_bin_paths;
 	char	*temp = NULL;
-	while (environment_copy[i])
+
+	i = 0;
+	environment_copy = copy_environ_variables();
+	while (environment_copy && environment_copy[i])
 	{
 		if (ft_strnstr(environment_copy[i], "PATH=", 5))
 			temp = ft_strdup(environment_copy[i]);
 		i++;
 	}
-
-	char	**all_bin_paths;
-	char	**bin_paths_plus_file;
-
 	if (temp)
-	{
-		all_bin_paths = strsplit_paths(temp + 5);
-		bin_paths_plus_file = strsplit_paths(temp + 5);
-	}
+		all_bin_paths = strsplit_paths(temp + 5, 0, 0);
 	else
 	{
-		fprintf(stderr, "\n\n\n\n\n ABORT ABORT ABORT \n\n\n\n\n\n");
+		ft_printf("Command %s not found\n", a->tokens[0]);
 		return ;
 	}
+	all_bin_paths = strcat_path_with_file(all_bin_paths, a);
 	i = 0;
-	while (bin_paths_plus_file[i])
+	while (all_bin_paths[i])
 	{
-		bin_paths_plus_file[i] = ft_strjoin(bin_paths_plus_file[i], "/");
-		bin_paths_plus_file[i] = ft_strjoin(bin_paths_plus_file[i], a->tokens[0]);
-		i++;
-	}
-//	examine_path_file(bin_paths_plus_file);
-	i = 0;
-	char	*execute;
-
-
-	execute = ft_strnew(0);
-	int j = 0;
-
-	while (bin_paths_plus_file[i])
-	{
-		if (access(bin_paths_plus_file[i], X_OK) != -1)
+		if (access(all_bin_paths[i], X_OK) != -1)
 		{
-			fprintf(stderr, "We can execute this!\n");
-			fprintf(stderr, "executing: |%s|\n", bin_paths_plus_file[i]);
-			while (a->tokens[j])
-			{
-					fprintf(stderr, "%s\n", a->tokens[j]);
-					j++;
-			}
-			execve(bin_paths_plus_file[i], a->tokens, environ);
+			execve(all_bin_paths[i], a->tokens, environ);
 			break;
 		}
 		i++;
 	}
-//	fprintf(stderr, "\n\n\nOUTSIDE OF WHILE LOOP \n\n\n");
-	if (access("./nfs/2016/e/eliu/starfleet/starfleet_github/leo42sh/interpreter/helpers/write_and_exit", X_OK))
-		{
-//			fprintf(stderr, "\n\n\n MADE IT INSIDE \n\n\n");
-			execve("/nfs/2016/e/eliu/starfleet/starfleet_github/leo42sh/interpreter/helpers/write_and_exit", a->tokens, environ);
-		}
-	else
-		fprintf(stderr, "else statement\n");
-/*
-	// while trying all paths, if found an executable binary, execute, break and exit
-	// if not, break and exit
-*/
-//	execvp(a->tokens[0], a->tokens);
-
-	// Iterate through environ g_variable to see if PATH= exists.
-	// DONE
-
-	// If it does, store all possible paths inside 2d char array.
-	// DONE
-
-	// See if the executable is inside the path
-	// CURRENT
-
-	// Concatenate the name of the PATH + EXECUTABLE_NAME eg: /usr/bin/ls
-	// Use access to see if it can be accessible, otherwise move onto next bin and see if can be found or executed
-	// if execute, stop search and return
-
-	// If it is, execute the function with execve.
-
-	// If not, return and do nothing.
-
-//	printf("\n eliu working dev :3 \n");
-
-
-
-
 }
