@@ -86,7 +86,7 @@ char			**copy_environ_variables(void)
 
 	i = 0;
 	while (environ[i])
-		i++;	
+		i++;
 	if (!(new = (char**)malloc(sizeof(char*) * (i + 1))))
 		return (NULL);
 	i = 0;
@@ -98,7 +98,7 @@ char			**copy_environ_variables(void)
 	new[i] = NULL;
 	return (new);
 }
-	
+
 void			search_and_execute(char **all_bin_paths, t_ast *a)
 {
 	int		i;
@@ -145,5 +145,4 @@ void			ft_exec(t_ast *a)
 	}
 	all_bin_paths = strcat_path_with_file(all_bin_paths, a);
 	search_and_execute(all_bin_paths, a);
-	
 }
