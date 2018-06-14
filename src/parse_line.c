@@ -65,6 +65,10 @@
 //#define IS_BRACK_NL (str[i] == '\\' || str[i] == '(' || str[i] == ')')
 #define IS_BRACK_NL (str[i] == '\\')
 
+#define STRNWL(x, y) ft_strjoin_newline(x, y)
+#define ALLO_AND_FREE(dest, x, y) dest = STRNWL(x, y); free(x); free(y)
+
+/*
 char	*ft_strjoin_newline(char const *s1, char const *s2)
 {
 	char	*tmp;
@@ -86,6 +90,30 @@ char	*ft_strjoin_newline(char const *s1, char const *s2)
 //	printf("printing str :|%s|\n", tmp);
 	return (tmp);
 }
+*/
+
+char	*ft_strjoin_newline(char const *s1, char const *s2)
+{
+	char	*tmp;
+	int		len;
+	int		i;
+
+	if (!s1 || !s2)
+		return (0);
+	i = -1;
+	len = ft_strlen(s1) + ft_strlen(s2) + 1; // for the newline
+	tmp = ft_strnew(len);
+	if (!tmp)
+		return (0);
+	while (*s1)
+		*(tmp + ++i) = *(s1++);
+	*(tmp + ++i) = '\n';
+	while (*s2)
+		*(tmp + ++i) = *(s2++);
+//	printf("printing str :|%s|\n", tmp);
+	return (tmp);
+}
+
 
 /*
 **	basically calling ft_prompt over and over again until the prompt is fully
@@ -116,10 +144,8 @@ char		*concatinated_string(char type)
 	cont_nbr_capsule = 0;
 	temp = ft_prompt(get_type_prompt(type));
 	cont_chars_capsules(temp, type, &(cont_nbr_capsule));
-//	printf("cont_nbr_capsule = |%d|\n", cont_nbr_capsule);
 	while (cont_nbr_capsule % 1 == 1 || cont_nbr_capsule == 0)
 	{
-		printf("entering loop\n");
 		concat = ft_prompt(get_type_prompt(type));
 		join = ft_strjoin_newline(temp, concat);
 		free(temp);
@@ -138,14 +164,11 @@ char		*concatinated_string(char type)
 char		*concatined_newline(int i) // this can be void
 {
 	char	*temp;
-//	char	keep_concat;
 	char	*concat;
 	char	*join;
 	int		e;
-
 	char	*extra;
 
-//	keep_concat = 0;
 	e = -1;
 	temp = ft_prompt(NEWLINE_PROMPT);
 	if (ft_strequ(ft_strstr(temp + i, "\\"), "\\") == 1 && \
@@ -153,17 +176,14 @@ char		*concatined_newline(int i) // this can be void
 		(cont_nbr_backslashes(temp, i) == 0)))
 	{
 		concat = ft_prompt(NEWLINE_PROMPT);
-		// find backslashes - find it here
 		while (concat[++e])
 			if (concat[e] == '\\')
-				if  (ft_strequ(ft_strstr(concat + e, "\\"), "\\") == 1 && \
+				if (ft_strequ(ft_strstr(concat + e, "\\"), "\\") == 1 && \
 				((cont_nbr_backslashes(concat, e) % 2 == 0) || \
 				(cont_nbr_backslashes(concat, e) == 0)))
 				{
 					extra = concatined_newline(e);
-					join = ft_strjoin_newline(concat, extra);
-					free(concat);
-					free(extra);
+					ALLO_AND_FREE(join, concat, extra);
 					concat = join;
 					join = NULL;
 				}
