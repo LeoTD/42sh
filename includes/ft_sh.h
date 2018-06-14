@@ -162,7 +162,7 @@ char					*ft_strjoin_newline(char const *s1, char const *s2);
 */
 
 char					*concatinated_string(char type);
-char					is_capsule_incomplete(char *str, char **temp);
+void					is_capsule_incomplete(char *str, char **temp);
 char					*parse_line(char *str);
 
 

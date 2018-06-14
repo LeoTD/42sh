@@ -1,57 +1,10 @@
 #include "ft_sh.h"
 
-/*
-**	ft_prompt 
-**
-**	there's no end, just 
-**
-**	dquote> 	"
-**	quote> 		'
-**	bquote> 	`
-**	subsh> 		(
-**
-**
-**	ft_prompt is gonna return a raw string
-**		check for incomplete capsule
-**			call ft_prompt and concatinate those string
-**	RAW STRING -> STILL_RAW STRING
-**
-**	STILL_RAW STRING -> tokenizer
-**		tokenizer is gonna delete the special characters and eliminate the encapsulate
-**		while its reading and fragmentating
-**	
-**		2 PART TOKENIZER
-**			built a tree
-**	
-**	
-**	change spaecial characters:
-**		- backslashes		\
-**			*which is basically waiting for a new line
-**		- env values		$
-**		- spaecial chars	~ <- $HOME
-**			so this is another env value
-**	BEFORE EXECUTION
-**
-**	ACTUALLY SUBSHELL MIGHT FAIL BECUASE IT NEED TO FIND FOR THE CLOSING BRACKETS
-**
-** you can change IS_CAPSULE to differ QUOTES and OTHER INHIBS
-** like:
-**		\ PRIORITY
-**		( PRIORITY
-**		{
-**		[
-**
-**		SUBSH is currently not handle it
-*/
-
-
 #define DQUOTE '\"'
 #define QUOTE '\''
 #define BQUOTE '`'
 #define SUBSH '('
-
 #define NEWLINE '\\'
-
 #define DQUOTE_PROMPT "dquote> "
 #define QUOTE_PROMPT "quote> "
 #define BQUOTE_PROMPT "bquote> "
@@ -60,32 +13,14 @@
 
 
 #define IS_CAPSULE (str[i] == '\"' || str[i] == '\'' || str[i] == '`')
-//#define IS_BRACK_NL (str[i] == '\\' || str[i] == '(' || str[i] == ')')
 #define IS_BRACK_NL (str[i] == '\\')
+
+/*
+** CHECK BRACKETS AND EXIT IF THERE ARE NOT COMPLETES
+*/
 
 #define STRNWL(x, y) ft_strjoin_newline(x, y)
 #define ALLO_AND_FREE(dest, x, y) dest = STRNWL(x, y); free(x); free(y)
-
-
-
-/*
-**	basically calling ft_prompt over and over again until the prompt is fully
-**	complete
-**	the only moment where you have to free is when you do the join thingy
-**	
-**	IMPORTANT
-**	after you check with one type you need to check if any other type is also
-**	involved so you run is capsule_incomplete in the concat string
-*/
-
-/*
-**  for newline
-**  	ft_streq(ft_strstr(str, "\"), "")
-**		
-**  because it doesnt really matter if it has a space after that it shouldn prompt
-**
-**
-*/
 
 char		*concatinated_string(char type)
 {
@@ -111,13 +46,13 @@ char		*concatinated_string(char type)
 }
 
 /*
-*	you can use this thing recursively 
+**	you can use this thing recursively 
 */
 
 #define LAST_CHAR_BSLASH(x, i) (ft_strequ(ft_strstr(x + i, "\\"), "\\") == 1)
 #define N_SLASH(x, i) cont_nbr_backslashes(x, i)
 
-char		*concatined_newline(int i) // this can be void
+char		*concatined_newline(int i)
 {
 	char	*temp;
 	char	*concat;
@@ -145,9 +80,8 @@ char		*concatined_newline(int i) // this can be void
 	}
 	return (temp);
 }
-
-
-char		is_capsule_incomplete(char *str, char **temp)
+/*
+void		is_capsule_incomplete(char *str, char **temp)
 {
 	int		i;
 	int		cont_nbr_capsule;
@@ -155,10 +89,9 @@ char		is_capsule_incomplete(char *str, char **temp)
 	char	*concat;
 	char	*tmp;
 
-//	get_capsule = 0;
-	i = 0;
+	i = -1;
 	cont_nbr_capsule = 0;
-	while(str[i])
+	while(str[++i])
 	{
 		if (IS_CAPSULE)
 		{
@@ -173,7 +106,6 @@ char		is_capsule_incomplete(char *str, char **temp)
 			cont_nbr_capsule = 0;
 		}
 		else if (IS_BRACK_NL)
-		{
 			if (LAST_CHAR_BSLASH(str, i) && ((N_SLASH(str, i) % 2 == 0 ) || \
 			(N_SLASH(str, i) == 0)))
 			{
@@ -181,25 +113,60 @@ char		is_capsule_incomplete(char *str, char **temp)
 				ALLO_AND_FREE(tmp, str, concat);
 				str = tmp;
 			}
-		}
-		++i;
 	}
 	*temp = str;
-	return (0);
+}
+*/
+
+void		wrap_quotes(char **str, int i)
+{
+	char	get_capsule;
+	int		cont_nbr_capsule;
+	char	*concat;
+	char	*tmp;
+
+	cont_nbr_capsule = 0;
+	get_capsule = (*str)[i];
+	cont_chars_capsules(*str, get_capsule, &(cont_nbr_capsule));
+	if (cont_nbr_capsule % 2 == 1)
+	{
+		concat = concatinated_string(get_capsule);
+		ALLO_AND_FREE(tmp, *str, concat);
+		*str = tmp;
+	}
 }
 
-// you will concantinate str with the new line
+void		is_capsule_incomplete(char *str, char **temp)
+{
+	int		i;
+	int		cont_nbr_capsule;
+	char	*concat;
+	char	*tmp;
+
+	i = -1;
+	cont_nbr_capsule = 0;
+	while(str[++i])
+	{
+		if (IS_CAPSULE)
+			wrap_quotes(&(str), i);
+		else if (IS_BRACK_NL)
+			if (LAST_CHAR_BSLASH(str, i) && ((N_SLASH(str, i) % 2 == 0 ) || \
+			(N_SLASH(str, i) == 0)))
+			{
+				concat = concatined_newline(i);
+				ALLO_AND_FREE(tmp, str, concat);
+				str = tmp;
+			}
+	}
+	*temp = str;
+}
+
 
 char		*parse_line(char *str)
 {
 	char	*temp;
 
-	// this function can be a void one
+	temp = NULL;
 	is_capsule_incomplete(str, &(temp));
-//	printf("temp |%s|\n", temp);
 	return (temp);
 }
-
-// DECIPHER BACKSLASH
-//  talk to curtis and liam
-//  this can be easily handle in the tokenizer
