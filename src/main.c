@@ -14,8 +14,8 @@ int			main(int argc, char **argv)
 		args = split_args(argv[1]);
 		tokens = tokenize(args);
 		create_tree(args, tokens, &ast, highest_prec(tokens));
-		interpret_tree(ast);
-//		print_tree(ast, 1);
+		print_tree(ast, 1);
+//		interpret_tree(ast);
 		return (0);
 	}
 
