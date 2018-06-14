@@ -37,7 +37,11 @@
 void	interpret_simple_cmd(t_ast *a)
 {
 	handle_redirs(a);
-	execvp(a->tokens[0], a->tokens);
+//	fprintf(stderr, "tokens[0] = %s\n", a->tokens[0]);
+//	for (int i = 0; a->tokens[i]; i++)
+//		fprintf(stderr, "a->tokens[i] = %s\n", a->tokens[i]);
+//	execvp(a->tokens[0], a->tokens);
+	ft_exec(a);
 	_exit(1);
 }
 

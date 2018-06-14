@@ -6,7 +6,7 @@
 #    By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 19:18:37 by ltanenba          #+#    #+#              #
-#    Updated: 2018/06/09 05:55:22 by ltanenba         ###   ########.fr        #
+#    Updated: 2018/06/14 03:57:37 by eliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ LIBC_SRC	= ft_memset.c \
 			  ft_memcmp.c \
 			  ft_strlen.c \
 			  ft_strdup.c \
+			  ft_strndup.c \
 			  ft_strcpy.c \
 			  ft_strncpy.c \
 			  ft_strcat.c \

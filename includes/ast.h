@@ -74,4 +74,11 @@ t_redir			*quick_redir(int to_fd, enum e_redirect op,
 void			append_redir(int to_fd, enum e_redirect op,
 		char *from, int is_fd, t_ast *a);
 
+
+/*
+**	Ft_exec.c
+*/
+
+void						ft_exec(t_ast *a);
+
 #endif
