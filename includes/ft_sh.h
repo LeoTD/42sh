@@ -24,6 +24,8 @@
 # define _goto(x, y) tputs(tgoto(tgetstr("cm", NULL), x, y), 1, ft_weirdchar)
 # define _put(x) ft_putstr_fd(x, TERM_FD)
 # define _op(x) (x == '|' || x == '&' || x == ';')
+# define _redir(x) (x == '>' || x == '<')
+
 /*
 ** Structs
 */
@@ -34,14 +36,14 @@
 ** NAME=VAL
 */
 
-extern char						**environ;
+extern char				**environ;
 
-typedef struct					s_shell
+typedef struct			s_shell
 {
 	t_term				term;
 	char				*prompt_string;
 	char				**temp_args;
-}								t_shell;
+}						t_shell;
 
 /*
 ** Global pointer for signal handling.
@@ -82,6 +84,7 @@ int						is_op(char *c);
 int						op_len(char *c);
 t_ast					*ast_init(void);
 t_redir					*rdir_init(void);
+int						is_shovel(char *format, int i);
 char					**st_strptrnew(size_t size);
 int						is_all_space(char *format, int i);
 void					st_init(int *i, int *k, int *hold);
@@ -93,9 +96,5 @@ int						*tokenize(char **format);
 int						arr_length(char **format);
 int						is_operator(char *arg);
 int						is_command(char *arg);
-
-/* AST functions */
-
-t_ast					*create_tree(char **args, int *tokens, t_ast *head);
 
 #endif

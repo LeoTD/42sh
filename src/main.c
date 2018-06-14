@@ -12,7 +12,8 @@ int			main(int argc, char **argv)
 		ft_printf("%s", "Hello 42sh!\n");
 		args = split_args(argv[1]);
 		tokens = tokenize(args);
-		ast = create_tree(args, tokens, NULL);
+		ast = create_tree(args, tokens, NULL,
+						highest_prec(tokens, arr_length(args)));
 		return (0);
 	}
 

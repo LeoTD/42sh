@@ -1,5 +1,15 @@
 #include "ft_sh.h"
 
+int		is_shovel(char *format, int i)
+{
+	if (format[i] && format[i + 1] &&
+		ft_isdigit(format[i]) && _redir(format[i + 1]))
+		return (1);
+	else if (_redir(format[i]))
+		return (1);
+	return (0);
+}
+
 int		is_all_space(char *format, int i)
 {
 	while (format[i])

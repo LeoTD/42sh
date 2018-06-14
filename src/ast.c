@@ -11,43 +11,18 @@ char	*g_cmd_symbols[] =
 	[CMD] = NULL
 };
 
-char	*g_cmd_names[] =
-{
-	[SEP] = "separator",
-	[AND] = "and_list",
-	[OR] = "or_list",
-	[NEGATE] = "negation",
-	[PIPE] = "pipe",
-	[CMD] = "simple_cmd"
-};
-
-t_ast	*ast_node(void)
+t_ast	*ast_node(char **args, int *tokens, int hp)
 {
 	t_ast *a;
 
 	a = ft_memalloc(sizeof(*a));
-	a->ok = 1;
-	return (a);
-}
-
-t_ast	*opnode(t_cmdtype type)
-{
-	t_ast *a;
-
-	a = ast_node();
-	a->type = type;
-	a->tokens = ft_memalloc(sizeof(char *) * 2);
-	a->tokens[0] = g_cmd_symbols[type];
-	return (a);
-}
-
-t_ast	*cmd_node(char **tokens)
-{
-	t_ast *a;
-
-	a = ast_node();
-	a->type = CMD;
-	a->tokens = tokens;
+	a->tokens = args;
+	a->lchild = NULL;
+	a->rchild = NULL;
+	a->type = hp;
+	a->ok = 0;
+	a->redirs = NULL;
+	tokens = tokens + 1;
 	return (a);
 }
 
@@ -59,11 +34,18 @@ t_redir	*new_redir(void)
 int		highest_prec(int *tokens, int len)
 {
 	int i;
+	int count;
 
-	i = -1;
+	i = -1;	
+	count = 0;
 	while (++i < len)
-		if (tokens[i] >= LIST_PRECEDENCE)
-			return (i);
+	{
+//		printf("HERE == %d\n", tokens[i]);
+		if (tokens[i] >= OR && tokens[i] <= SEP)
+			return (tokens[i]);
+	}
+	if (count > 0)
+		return (count);
 	i = -1;
 	while (++i < len)
 		if (tokens[i] >= PIPE)
@@ -71,13 +53,13 @@ int		highest_prec(int *tokens, int len)
 	return (-1);
 }
 
-t_ast	*create_tree(char **args, int *tokens, t_ast *head)
+t_ast	*create_tree(char **args, int *tokens, t_ast *head, int hp)
 {
-	int i;
-
-	i = highest_prec(tokens, arr_length(args));
+//	printf("%d\n", hp);
 	if (!head)
-		head = ast_node();
+	{
+		head = ast_node(args, tokens, hp);
+	}
 //	if (_op(tokens[i]))
 //	{
 //		

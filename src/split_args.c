@@ -32,9 +32,20 @@ int 		is_op(char *c)
 
 int			skip_char(char *format, int *i, char c)
 {
+	int r_count;
+	int l_count;
+
 	if (_op(c))
 		while (_op(format[*i]) && format[*i])
 			(*i)++;
+	else if (c == '>' && !(r_count = 0) && !(l_count = 0))
+	{
+		while (!_op(format[*i]) && !((r_count == 2 || l_count == 1) && _redir(format[*i])))
+		{
+			r_count += format[*i] == '>' ? 1 : 0;
+			l_count += format[(*i)++] == '<' ? 1 : 0;
+		}
+	}
 	else if (c == '"')
 		while (format[++(*i)] != c && format[*i])
 			 ;
@@ -49,28 +60,26 @@ int			skip_char(char *format, int *i, char c)
 
 char		*find_next(int *i, char *format, int end, char *tmp)
 {
+	int toggle;
+
 	while (format[*i] && *i < (int)ft_strlen(format))
 	{
+		toggle = 0;
 		end = *i;
 		if (format[*i] == ' ')
 			skip_char(format, i, ' ');
-		else if (is_op(format + *i) != -1 && skip_char(format, &end, format[end]))
-		{
+		else if (is_op(format + *i) != -1 &&
+				skip_char(format, &end, format[end]) && (toggle = 1))
 			tmp = ft_strsub(format, *i, end - *i);
-			break ;
-		}
-		else if (format[*i] == '"' && skip_char(format, &end, '"'))
-		{
+		else if (format[*i] == '"' && skip_char(format, &end, '"') && (toggle = 1))
 			tmp = ft_strsub(format, *i, ((end += 1) - *i));
-			break ;
-		}
-		else if (skip_char(format, &end, 'a'))
-		{
+		else if (is_shovel(format, *i) && skip_char(format, &end, '>')
+				&& (toggle = 1))
+				tmp = ft_strsub(format, *i, end - *i);
+		else if (skip_char(format, &end, 'a') && (toggle = 1))
 			tmp = ft_strsub(format, *i, end - *i);
-			break ;
- 		}
-		if (*i == (int)ft_strlen(format))
-			return (NULL);
+		if (toggle == 1)
+			break;
 	}
 	*i += (end - *i);
 	return (tmp);

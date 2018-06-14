@@ -48,7 +48,7 @@ int		is_operator(char *arg)
 	int i;
 
 	i = 0;
-	while (i < MAX_CMDTYPE)
+	while (i <= MAX_CMDTYPE)
 	{
 		if (g_ops[i] && !ft_strcmp(arg, g_ops[i]))
 			return (i);
