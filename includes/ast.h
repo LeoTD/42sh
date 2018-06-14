@@ -73,6 +73,7 @@ typedef struct	s_redir
 }				t_redir;
 
 extern char		*g_cmd_symbols[MAX_CMDTYPE + 1];
+extern char		*g_nodetype_names[MAX_CMDTYPE + 1];
 
 /* AST functions */
 

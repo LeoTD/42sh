@@ -77,7 +77,11 @@ void	print_tree(t_ast *ast, int i)
 {
 	if (ast)
 	{
-		printf("type = %s level %d\n", *(ast->tokens), i);
+		fprintf(stderr, "[lvl %d]: node type %s, tokens: ", i,
+			   g_nodetype_names[ast->type] ? g_nodetype_names[ast->type] : "CMD");
+		for (int j = 0; ast->tokens[j]; j++)
+			fprintf(stderr, "%s, ", ast->tokens[j]);
+		fputs("\n", stderr);
 		i += 1;
 		if (ast->lchild)
 		{
@@ -107,7 +111,7 @@ void	create_tree(char **args, int *tokens, t_ast **head, int hp)
 	}
 	else
 		*head = parsed_ast_node(args, tokens, hp);
-//	print_tree(head);
+	print_tree(*head, 1);
 //	printf("%s \n%s \n%s\n", head->tokens[0], head->lchild->tokens[0], head->rchild->tokens[0]);
 //	return (head);
 }

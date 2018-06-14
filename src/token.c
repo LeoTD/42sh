@@ -11,7 +11,7 @@ char	*g_commands[] = {
 	[END] = "end"
 };
 
-char	*g_ops[] = {
+char	*g_nodetype_names[] = {
 	[SEP] = ";",
 	[AND] = "&&",
 	[OR] = "||",
@@ -51,7 +51,7 @@ int		is_operator(char *arg)
 	i = 0;
 	while (i <= MAX_CMDTYPE)
 	{
-		if (g_ops[i] && !ft_strcmp(arg, g_ops[i]))
+		if (g_nodetype_names[i] && !ft_strcmp(arg, g_nodetype_names[i]))
 			return (i);
 		i++;
 	}
