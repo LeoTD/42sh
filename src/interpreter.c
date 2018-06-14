@@ -41,7 +41,10 @@ void	interpret_simple_cmd(t_ast *a)
 //	for (int i = 0; a->tokens[i]; i++)
 //		fprintf(stderr, "a->tokens[i] = %s\n", a->tokens[i]);
 //	execvp(a->tokens[0], a->tokens);
-	ft_exec(a);
+	if (access(a->tokens[0], X_OK) != -1)
+		execve(a->tokens[0], a->tokens, environ);
+	else
+		ft_exec(a);
 	_exit(1);
 }
 
