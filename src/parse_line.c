@@ -45,8 +45,6 @@
 */
 
 
-
-
 #define DQUOTE '\"'
 #define QUOTE '\''
 #define BQUOTE '`'
@@ -68,51 +66,6 @@
 #define STRNWL(x, y) ft_strjoin_newline(x, y)
 #define ALLO_AND_FREE(dest, x, y) dest = STRNWL(x, y); free(x); free(y)
 
-/*
-char	*ft_strjoin_newline(char const *s1, char const *s2)
-{
-	char	*tmp;
-	int		len;
-	int		i;
-
-	if (!s1 || !s2)
-		return (0);
-	i = -1;
-	len = ft_strlen(s1) + ft_strlen(s2) + 1; // for the newline
-	tmp = ft_strnew(len);
-	if (!tmp)
-		return (0);
-	while (*s1)
-		*(tmp + ++i) = *(s1++);
-	*(tmp + ++i) = '\n';
-	while (*s2)
-		*(tmp + ++i) = *(s2++);
-//	printf("printing str :|%s|\n", tmp);
-	return (tmp);
-}
-*/
-
-char	*ft_strjoin_newline(char const *s1, char const *s2)
-{
-	char	*tmp;
-	int		len;
-	int		i;
-
-	if (!s1 || !s2)
-		return (0);
-	i = -1;
-	len = ft_strlen(s1) + ft_strlen(s2) + 1; // for the newline
-	tmp = ft_strnew(len);
-	if (!tmp)
-		return (0);
-	while (*s1)
-		*(tmp + ++i) = *(s1++);
-	*(tmp + ++i) = '\n';
-	while (*s2)
-		*(tmp + ++i) = *(s2++);
-//	printf("printing str :|%s|\n", tmp);
-	return (tmp);
-}
 
 
 /*
@@ -158,8 +111,11 @@ char		*concatinated_string(char type)
 }
 
 /*
- *	you can use this thing recursively 
- */
+*	you can use this thing recursively 
+*/
+
+#define LAST_CHAR_BSLASH(x, i) (ft_strequ(ft_strstr(x + i, "\\"), "\\") == 1)
+#define N_SLASH(x, i) cont_nbr_backslashes(x, i)
 
 char		*concatined_newline(int i) // this can be void
 {
@@ -171,50 +127,25 @@ char		*concatined_newline(int i) // this can be void
 
 	e = -1;
 	temp = ft_prompt(NEWLINE_PROMPT);
-	if (ft_strequ(ft_strstr(temp + i, "\\"), "\\") == 1 && \
-		((cont_nbr_backslashes(temp, i) % 2 == 0) || \
-		(cont_nbr_backslashes(temp, i) == 0)))
+	if (LAST_CHAR_BSLASH(temp, i) && ((N_SLASH(temp, i) % 2 == 0 ) || \
+		(N_SLASH(temp, i) == 0)))
 	{
 		concat = ft_prompt(NEWLINE_PROMPT);
 		while (concat[++e])
 			if (concat[e] == '\\')
-				if (ft_strequ(ft_strstr(concat + e, "\\"), "\\") == 1 && \
-				((cont_nbr_backslashes(concat, e) % 2 == 0) || \
-				(cont_nbr_backslashes(concat, e) == 0)))
+				if (LAST_CHAR_BSLASH(concat, e) && \
+				((N_SLASH(concat, e) % 2 == 0 ) || (N_SLASH(concat, e) == 0)))
 				{
 					extra = concatined_newline(e);
 					ALLO_AND_FREE(join, concat, extra);
 					concat = join;
-					join = NULL;
 				}
-		join = ft_strjoin_newline(temp, concat);
-		free(temp);
-		free(concat);
+		ALLO_AND_FREE(join, temp, concat);
 		temp = join;
 	}
 	return (temp);
 }
 
-void		cont_chars_capsules(char *str, char schar, int *cont)
-{
-	int		i;
-
-	i = 0;
-	while(str[i])
-	{
-		if (str[i] == schar)
-		{
-			if (i == 0)
-				(*cont)++;
-			else
-				if (str[i - 1] == '\\')
-					;
-				else
-					(*cont)++;
-		}
-		i++;
-	}
-}
 
 char		is_capsule_incomplete(char *str, char **temp)
 {
@@ -224,44 +155,30 @@ char		is_capsule_incomplete(char *str, char **temp)
 	char	*concat;
 	char	*tmp;
 
-	get_capsule = 0;
+//	get_capsule = 0;
 	i = 0;
 	cont_nbr_capsule = 0;
-//	printf("str to look at: |%s|\n", str);
 	while(str[i])
 	{
 		if (IS_CAPSULE)
 		{
 			get_capsule = str[i];
-//			printf("CAPSULE_INCOMPLETE - cont_nbr = %d\n", cont_nbr_capsule);
 			cont_chars_capsules(str, get_capsule, &(cont_nbr_capsule));
-//			printf("CAPSULE_INCOMPLETE - cont_nbr = %d\n", cont_nbr_capsule);
 			if (cont_nbr_capsule % 2 == 1)
 			{
-				concat = concatinated_string(get_capsule);// string to concatinate
-				// find begining of capsule, and see if it has and end,
-				// otherwise, find the latest 
-				tmp = ft_strjoin_newline(str, concat);
-				free(str);
-				free(concat);
+				concat = concatinated_string(get_capsule);
+				ALLO_AND_FREE(tmp, str, concat);
 				str = tmp;
 			}
 			cont_nbr_capsule = 0;
 		}
 		else if (IS_BRACK_NL)
 		{
-			// str[ft_strlen(str)] == '\\' <- should work
-			// if ft_strlen(str) >= 2 then if (str[ft_strlen(str) - 1] == '\\') <- if this is true, exit
-			// this can be inner check
-			//	function: COUNT_NBR backslashes then nrb % 1
-			if (ft_strequ(ft_strstr(str + i, "\\"), "\\") == 1 && \
-				((cont_nbr_backslashes(str, i) % 2 == 0) || \
-				(cont_nbr_backslashes(str, i) == 0)))
+			if (LAST_CHAR_BSLASH(str, i) && ((N_SLASH(str, i) % 2 == 0 ) || \
+			(N_SLASH(str, i) == 0)))
 			{
 				concat = concatined_newline(i);
-				tmp = ft_strjoin_newline(str, concat);
-				free(str);
-				free(concat);
+				ALLO_AND_FREE(tmp, str, concat);
 				str = tmp;
 			}
 		}

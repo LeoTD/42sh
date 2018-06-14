@@ -154,14 +154,14 @@ int						ftsh_exit(char **args);
 
 int						cont_nbr_backslashes(char *str, int i);
 char					*get_type_prompt(char value);
+void					cont_chars_capsules(char *str, char schar, int *cont);
+char					*ft_strjoin_newline(char const *s1, char const *s2);
 
 /*
 ** PARSE_LINE.c
 */
 
-char					*ft_strjoin_newline(char const *s1, char const *s2);
 char					*concatinated_string(char type);
-void					cont_chars_capsules(char *str, char schar, int *cont);
 char					is_capsule_incomplete(char *str, char **temp);
 char					*parse_line(char *str);
 
