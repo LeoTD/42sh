@@ -80,6 +80,7 @@ int						ftsh_exit(char **args);
 char					**split_args(char *format);
 char					*find_next(int *i, char *format, int end, char *tmp);
 
+int						op_error_handle(char *c);
 int						is_op(char *c);
 int						op_len(char *c);
 t_ast					*ast_init(void);
