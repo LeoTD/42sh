@@ -31,6 +31,7 @@ FILES		= main.c \
 			  parse.c \
 			  parse_line.c \
 			  helpers_parser.c \
+			  brackets_parse_line.c \
 			  temp_parser.c \
 			  builtins.c \
 			  builtin_util.c \

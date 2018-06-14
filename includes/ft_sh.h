@@ -119,5 +119,10 @@ char					*concatinated_string(char type);
 void					is_capsule_incomplete(char *str, char **temp);
 char					*parse_line(char *str);
 
+/*
+** BRACKETS_PARSE_LINE.c
+*/
+
+char					correct_syntax(char *str);
 
 #endif
