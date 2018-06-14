@@ -1,4 +1,5 @@
 #include "ft_sh.h"
+#include "ast.h"
 
 char	*g_commands[] = {
 	[ECH] = "echo",
@@ -10,7 +11,7 @@ char	*g_commands[] = {
 	[END] = "end"
 };
 
-char	*g_ops[] = {
+char	*g_nodetype_names[] = {
 	[SEP] = ";",
 	[AND] = "&&",
 	[OR] = "||",
@@ -22,7 +23,7 @@ char	*g_ops[] = {
 int		arr_length(char **format)
 {
 	int i;
-	
+
 	i = 0;
 	while (format[i])
 		i++;
@@ -37,7 +38,8 @@ int		is_command(char *arg)
 	while (g_commands[i])
 	{
 		if (!ft_strcmp(arg, g_commands[i]))
-			return (i + (MAX_CMDTYPE + 1));
+			return 1;
+			//return (i + (MAX_CMDTYPE + 1));
 		i++;
 	}
 	return (-1);
@@ -50,7 +52,7 @@ int		is_operator(char *arg)
 	i = 0;
 	while (i <= MAX_CMDTYPE)
 	{
-		if (g_ops[i] && !ft_strcmp(arg, g_ops[i]))
+		if (g_nodetype_names[i] && !ft_strcmp(arg, g_nodetype_names[i]))
 			return (i);
 		i++;
 	}
@@ -76,7 +78,5 @@ int		*tokenize(char **format)
 			token[i] = CMD;
 		i++;
 	}
-	for (int x = 0; x < arr_length(format); x++)
-		printf("%d %s\n", token[x], format[x]);
 	return (token);
 }

@@ -1,4 +1,5 @@
 #include "ft_sh.h"
+#include "ast.h"
 
 int			main(int argc, char **argv)
 {
@@ -14,7 +15,7 @@ int			main(int argc, char **argv)
 		args = split_args(argv[1]);
 		tokens = tokenize(args);
 		create_tree(args, tokens, &ast, highest_prec(tokens));
-//		print_tree(ast, 1);
+		print_tree(ast, 1);
 		return (0);
 	}
 
@@ -44,8 +45,7 @@ int			main(int argc, char **argv)
 		}
 		free(line);
 	}
-//	shell_init();
-//	prompt(g_shell);
+	argc = 0;
 	argv = 0;
 	return (0);
 }
