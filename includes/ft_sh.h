@@ -62,5 +62,4 @@ int						ftsh_cd(char **args);
 int						ftsh_help(char **args);
 int						ftsh_exit(char **args);
 
-
 #endif

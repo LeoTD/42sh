@@ -93,7 +93,7 @@ void	ft_exec(t_ast *a)
 
 	char	**all_bin_paths;
 	char	**bin_paths_plus_file;
-	
+
 	if (temp)
 	{
 		all_bin_paths = strsplit_paths(temp + 5);
@@ -118,7 +118,7 @@ void	ft_exec(t_ast *a)
 
 	execute = ft_strnew(0);
 	int j = 0;
-	
+
 	while (bin_paths_plus_file[i])
 	{
 		if (access(bin_paths_plus_file[i], X_OK) != -1)
@@ -142,7 +142,7 @@ void	ft_exec(t_ast *a)
 			execve("/nfs/2016/e/eliu/starfleet/starfleet_github/leo42sh/interpreter/helpers/write_and_exit", a->tokens, environ);
 		}
 	else
-		fprintf(stderr, "else statement\n");	
+		fprintf(stderr, "else statement\n");
 /*
 	// while trying all paths, if found an executable binary, execute, break and exit
 	// if not, break and exit
@@ -150,7 +150,7 @@ void	ft_exec(t_ast *a)
 //	execvp(a->tokens[0], a->tokens);
 
 	// Iterate through environ g_variable to see if PATH= exists.
-	// DONE	
+	// DONE
 
 	// If it does, store all possible paths inside 2d char array.
 	// DONE
@@ -160,7 +160,7 @@ void	ft_exec(t_ast *a)
 
 	// Concatenate the name of the PATH + EXECUTABLE_NAME eg: /usr/bin/ls
 	// Use access to see if it can be accessible, otherwise move onto next bin and see if can be found or executed
-	// if execute, stop search and return 
+	// if execute, stop search and return
 
 	// If it is, execute the function with execve.
 
