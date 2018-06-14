@@ -1,7 +1,8 @@
 #include "ft_sh.h"
 #include "ast.h"
 
-char			*g_cmd_symbols[] = {
+char	*g_cmd_symbols[] =
+{
 	[SEP] = ";",
 	[AND] = "&&",
 	[OR] = "||",
@@ -10,7 +11,8 @@ char			*g_cmd_symbols[] = {
 	[CMD] = NULL
 };
 
-char			*g_cmd_names[] = {
+char	*g_cmd_names[] =
+{
 	[SEP] = "separator",
 	[AND] = "and_list",
 	[OR] = "or_list",
@@ -24,6 +26,7 @@ t_ast	*ast_node(void)
 	t_ast *a;
 
 	a = ft_memalloc(sizeof(*a));
+	a->ok = 1;
 	return (a);
 }
 
@@ -48,13 +51,37 @@ t_ast	*cmd_node(char **tokens)
 	return (a);
 }
 
-t_ast	*quick_cmd_node(char *s1, char *s2, char *s3)
+t_redir	*new_redir(void)
 {
-	char **tokens;
+	return ((t_redir *)ft_memalloc(sizeof(t_redir)));
+}
 
-	tokens = ft_memalloc(sizeof(char *) * 4);
-	tokens[0] = s1;
-	tokens[1] = s2;
-	tokens[2] = s3;
-	return (cmd_node(tokens));
+t_redir			*quick_redir(int to_fd, enum e_redirect op, char *from, int is_fd)
+{
+	t_redir *r;
+
+	r = new_redir();
+	r->to_fd = to_fd;
+	r->op = op;
+	r->from_file = ft_strdup(from);
+	r->file_string_represents_fd = is_fd;
+	return (r);
+}
+
+void			append_redir(int to_fd, enum e_redirect op,
+		char *from, int is_fd, t_ast *a)
+{
+	t_list	*newredir;
+	t_list	*iter;
+
+	newredir = ft_lstnew(quick_redir(to_fd, op, from, is_fd), sizeof(t_redir));
+	if (!a->redirs)
+		a->redirs = newredir;
+	else
+	{
+		iter = a->redirs;
+		while (iter->next)
+			iter = iter->next;
+		iter->next = newredir;
+	}
 }

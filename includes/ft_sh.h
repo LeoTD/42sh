@@ -3,6 +3,7 @@
 
 # include "libft.h"
 # include "ft_printf.h"
+# include "ft_prompt.h"
 # include <termcap.h>
 # include <sys/ioctl.h>
 # include <stdio.h>
@@ -25,35 +26,6 @@ extern char						**environ;
 /*
 ** Structs
 */
-
-/*
-** POSIX standard redirect types. We don't (yet?) handle all of them.
-** pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_07
-**	in	out	noclobber	append	heredoc		in_dup	out_dup	rdwr
-**	<	>	|>			>>		<< or <<-	&<		&>		<>
-*/
-
-typedef enum					e_redir_op
-{
-	INPUT,
-	OUTPUT,
-	OUTPUT_NOCLOBBLER,
-	OUTPUT_APPEND,
-	HEREDOC,
-	INPUT_DUP,
-	OUTPUT_DUP,
-	RDWR
-}								t_redir_op;
-
-typedef struct					s_term
-{
-	char				*name;
-	struct termios		normal;
-	struct termios		custom;
-	int					fd;
-	int					height;
-	int					width;
-}								t_term;
 
 typedef struct					s_shell
 {
@@ -107,20 +79,6 @@ void					update_size(t_term *t);
 void					shell_init(void);
 void					prompt(t_shell *s);
 void					parse_commands(t_shell *s, char *buf);
-
-/*
-** Input functions.
-*/
-
-char					*ft_prompt(char *prompt_str);
-
-/*
-**  Parser functions:
-*/
-
-t_proc					*process_init(void);
-t_job					*job_init(void);
-char					**split_args(char *format);
 
 /*
 ** Builtin Function Declarations.
