@@ -7,8 +7,15 @@ int 		is_op(char *c)
 		return (-1);
 	if (op_len(c) == 1)
 	{
-		if (*c == ';' || *c == '|')
-			return (*c == '|' ? PIPE : SEP);
+		if (*c == ';' || *c == '|' || *c == '!')
+		{
+		 	if (*c == '|')
+			 return (PIPE);
+			else if (*c == '!')
+				return (*c == NEGATE);
+			else if (*c == ';')
+				return (SEP);
+		}
 		else
 			ft_printf("sh: parse error near `%.1s'\n", c);
 	}

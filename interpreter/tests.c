@@ -1,5 +1,6 @@
 #include "ast.h"
 #include "stdio.h"
+#include "ft_sh.h"
 #include "_interpreter_dev.h"
 
 char	test_output_file[200];
@@ -107,7 +108,7 @@ void	do_redir_test(char **tok, enum e_redirect op,
 			int opt_fd, char *word, int is_fd)
 {
 
-	t_redir *r = make_redir(opt_fd, op, word, is_fd);
+	t_redir *r = quick_redir(opt_fd, op, word, is_fd);
 	examine_redir(r);
 	t_list *lst = ft_lstnew(r, sizeof(*r));
 	t_ast *c = cmd_node(tok);
@@ -115,6 +116,58 @@ void	do_redir_test(char **tok, enum e_redirect op,
 	handle_redirs(c);
 	interpret_tree(c);
 }
+
+void	big_test()
+{
+	// rm -f empty empty2; echo "firstline" > threelines; echo capital hello world | tr a-z A-Z > afile || echo "THIS DOESNT HAPPEN" >&2 && cat < afile | sed s/HELLO/HI SECOND LINE >> threelines; echo "thirdline, not on stdout" 2>>threelines >empty >empty2 >>&2
+
+	t_ast *rm = cmd_node(quickstrs(4, "rm", "-f", "empty", "empty2"));
+	t_ast *sep1 = opnode(SEP);
+	t_ast *echofirst = cmd_node(quickstrs(2, "echo", "firstline"));
+	append_redir(1, TRUNC, "threelines", 0, echofirst);
+	t_ast *sep2 = opnode(SEP);
+	t_ast *echocaps = cmd_node(quickstrs(4, "echo", "capital", "hello", "world"));
+	t_ast *pipe1 = opnode(PIPE);
+	t_ast *traz = cmd_node(quickstrs(3, "tr", "a-z", "A-Z"));
+	append_redir(1, TRUNC, "afile", 0, traz);
+	t_ast *or1 = opnode(OR);
+	t_ast *echodoesnt = cmd_node(quickstrs(2, "echo", "THIS DOESNT PPEN"));
+	append_redir(1, TRUNC, "&2", 1, echodoesnt);
+	t_ast *and1 = opnode(AND);
+	t_ast *catafilein = cmd_node(quickstrs(1, "cat"));
+	append_redir(0, INPUT, "afile", 0, catafilein);
+	t_ast *pipe2 = opnode(PIPE);
+	t_ast *sedhellohi = cmd_node(quickstrs(2, "sed", "s/HELLO/HI SECOND LINE/"));
+	append_redir(1, APPEND, "threelines", 0, sedhellohi);
+	t_ast *sep3 = opnode(SEP);
+	t_ast *echothirdline = cmd_node(quickstrs(2, "echo", "thirdline, not on stdout"));
+	append_redir(2, APPEND, "threelines", 0, echothirdline);
+	append_redir(1, TRUNC, "empty", 0, echothirdline);
+	append_redir(1, TRUNC, "empty2", 0, echothirdline);
+	append_redir(1, APPEND, "&2", 1, echothirdline);
+
+	t_ast *curr, *head;
+
+	curr = head = sep1;
+	curr->lchild = rm;
+	curr = (curr->rchild = sep2);
+	curr->lchild = echofirst;
+	curr = (curr->rchild = or1);
+	curr->lchild = pipe1;
+	curr->lchild->lchild = echocaps;
+	curr->lchild->rchild = traz;
+	curr = (curr->rchild = and1);
+	curr->lchild = echodoesnt;
+	curr = (curr->rchild = sep3);
+	curr->lchild = pipe2;
+	curr->lchild->lchild = catafilein;
+	curr->lchild->rchild = sedhellohi;
+	curr->rchild = echothirdline;
+
+	fprintf(stderr, "\nRan interpreter hard test -- check relevant files for output ?\n");
+	interpret_tree(head);
+}
+
 
 #define WRAP(function_call) if (fork() == 0) {	function_call; exit(0); } else { wait(0); }
 
@@ -137,6 +190,8 @@ int		main(void)
 
 	WRAP(list_test_mixed_with_negates();)
 	WRAP(list_simple_ors_test();)
+
+	WRAP(big_test());
 
 	return 0;
 }

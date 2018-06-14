@@ -1,4 +1,5 @@
 #include "ft_sh.h"
+#include "ast.h"
 
 int			main(int argc, char **argv)
 {
@@ -44,8 +45,7 @@ int			main(int argc, char **argv)
 		}
 		free(line);
 	}
-//	shell_init();
-//	prompt(g_shell);
+	argc = 0;
 	argv = 0;
 	return (0);
 }

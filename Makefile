@@ -5,7 +5,7 @@ CFLAGS		= -Wall -Werror -Wextra -ltermcap
 INC_FLAGS	= -I libft/includes -I includes
 
 # -g for lldb
-DEBUG		= #-g
+DEBUG		= -g
 
 # Cosmetics Section:
 OK_COLOR	= \033[38;5;105;1m
@@ -34,7 +34,9 @@ FILES		= main.c \
 			  temp_parser.c \
 			  builtins.c \
 			  builtin_util.c \
-			  ast.c  \
+			  interpreter.c \
+			  ast.c \
+			  redir.c \
 
 SRC			= $(addprefix src/, $(FILES))
 

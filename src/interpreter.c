@@ -1,6 +1,5 @@
 #include "ft_sh.h"
 #include "ast.h"
-#include "_interpreter_dev.h"
 
 /*
 ** Interpreting the AST form of a parsed command.
@@ -36,6 +35,7 @@
 
 void	interpret_simple_cmd(t_ast *a)
 {
+	//fputs("interpret simple command", stderr);
 	handle_redirs(a);
 	execvp(a->tokens[0], a->tokens);
 	_exit(1);
@@ -53,6 +53,7 @@ int		encounter_pipe(t_ast *a)
 	int			status;
 	int			fd[2];
 
+	//fputs("encounter pipe", stderr);
 	if (a->type == NEGATE)
 		return (encounter_pipe(a->rchild));
 	status = 0;
@@ -113,6 +114,7 @@ void	encounter_new_list(t_ast *a, t_ast *prev)
 {
 	int		status;
 	int		ok;
+	//fputs("encounter new list", stderr);
 
 	if (!a)
 		return ;
