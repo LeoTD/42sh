@@ -13,23 +13,23 @@ char	*g_cmd_symbols[] =
 
 char	**fetch_tokens(char **args)
 {
-  char	**ptr;
-  int	i;
-
-  i = 0;
-  if ((ptr = (char **)malloc(sizeof(char *) * arr_length(args))))
-    return (NULL);
-  while (*(args) && !_op(*(args[0])))
-    ptr[i++] = ft_strdup(*(args));
-  ptr[i] = NULL;
-  return (ptr);
+	char	**ptr;
+	int	i;
+	
+	i = 0;
+	if ((ptr = (char **)malloc(sizeof(char *) * arr_length(args))))
+		return (NULL);
+	while (*(args) && !_op(*(args[0])))
+		ptr[i++] = ft_strdup(*(args));
+	ptr[i] = NULL;
+	return (ptr);
 }
 
 t_ast	*parsed_ast_node(char **args, int *tokens, int hp)
 {
 	t_ast *a;
 
-	//printf("args = %s\n", *args);
+	printf("args = %s\n", args[0]);
 	a = ft_memalloc(sizeof(*a));
 	if (_op((*(args))[0]))
 	  {
@@ -68,22 +68,25 @@ int		highest_prec(int *tokens)
 	return (0);
 }
 
-void	print_tree(t_ast *ast, int i)
+void	print_tree(t_ast *ast, int i, int lr)
 {
 	if (ast)
 	{
-	  		printf("type = %s level %d\n\n", *(ast->tokens), i);
+		if (lr == -1)
+			printf("type = %s___ level = %d ___ top\n", *(ast->tokens), i);
+		else
+			printf("type = %s ___ level = %d ___ left | right = %c\n", *(ast->tokens), i, lr ? 'l' : 'r');
 		for (int x = 0; ast->tokens[x]; x++)
 		  printf("token %d == %s\n", x, ast->tokens[x]);
 		ft_putendl("");
 		i += 1;
 		if (ast->lchild)
 		{
-			print_tree(ast->lchild, i);
+			print_tree(ast->lchild, i, 1);
 		}
 		if (ast->rchild)
 		{
-			print_tree(ast->rchild, i);
+			print_tree(ast->rchild, 0, 0);
 		}
 	}
 }
@@ -92,7 +95,7 @@ void	create_tree(char **args, int *tokens, t_ast **head, int hp)
 {
 	t_ast *ast;
 
-	if (hp != 0)
+	if (*args && (hp != 0 || _op((*args)[0])))
 	{
 		*head = parsed_ast_node(args+hp, tokens, hp);
 		ast = *head;
@@ -102,8 +105,6 @@ void	create_tree(char **args, int *tokens, t_ast **head, int hp)
 		if (args+hp)
 			create_tree(args+(hp + 1), tokens+(hp + 1), &(ast->rchild), highest_prec(tokens + (hp + 1)));
 	}
-	else
+	else if (*args)
 		*head = parsed_ast_node(args, tokens, hp);
-//	printf("%s \n%s \n%s\n", head->tokens[0], head->lchild->tokens[0], head->rchild->tokens[0]);
-//	return (head);
 }
