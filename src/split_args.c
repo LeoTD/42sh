@@ -30,7 +30,7 @@ int 		is_op(char *c)
 	{
 		if (*c == ';' || *c == '|')
 			return (*c == '|' ? PIPE : SEP);
-		else if (*c == '!')
+		else if (*c == '!' && *(c + 1) == 32)
 			return (NEGATE);
 		else
 			ft_printf("sh: parse error near `%.1s'\n", c);

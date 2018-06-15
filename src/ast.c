@@ -29,7 +29,6 @@ t_ast	*parsed_ast_node(char **args, int *tokens, int hp)
 {
 	t_ast *a;
 
-	printf("args = %s\n", args[0]);
 	a = ft_memalloc(sizeof(*a));
 	if (_op((*(args))[0]))
 	  {
@@ -86,7 +85,7 @@ void	print_tree(t_ast *ast, int i, int lr)
 		}
 		if (ast->rchild)
 		{
-			print_tree(ast->rchild, 0, 0);
+			print_tree(ast->rchild, i, 0);
 		}
 	}
 }
