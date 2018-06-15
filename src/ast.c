@@ -72,21 +72,17 @@ void	print_tree(t_ast *ast, int i, int lr)
 	if (ast)
 	{
 		if (lr == -1)
-			printf("type = %s___ level = %d ___ top\n", *(ast->tokens), i);
+			ft_printf("type = %s___ level = %d ___ top\n", *(ast->tokens), i);
 		else
-			printf("type = %s ___ level = %d ___ left | right = %c\n", *(ast->tokens), i, lr ? 'l' : 'r');
+			ft_printf("type = %s ___ level = %d ___ left | right = %c\n", *(ast->tokens), i, lr ? 'l' : 'r');
 		for (int x = 0; ast->tokens[x]; x++)
-		  printf("token %d == %s\n", x, ast->tokens[x]);
+			ft_printf("token %d == %s\n", x, ast->tokens[x]);
 		ft_putendl("");
-		i += 1;
+		i++;
 		if (ast->lchild)
-		{
 			print_tree(ast->lchild, i, 1);
-		}
 		if (ast->rchild)
-		{
 			print_tree(ast->rchild, i, 0);
-		}
 	}
 }
 
