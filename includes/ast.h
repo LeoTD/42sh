@@ -66,4 +66,6 @@ void			interpret_tree(t_ast *tree);
 void			handle_redirs(t_ast *leaf);
 
 t_redir			*new_redir(void);
+void			env_exec(t_ast *a);
+
 #endif

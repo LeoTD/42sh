@@ -76,5 +76,38 @@ int						*tokenize(char **format);
 int						arr_length(char **format);
 int						is_operator(char *arg);
 int						is_command(char *arg);
+#define DQUOTE '\"'
+#define QUOTE '\''
+#define BQUOTE '`'
+#define SUBSH '('
+#define NEWLINE '\\'
+#define DQUOTE_PROMPT "dquote> "
+#define QUOTE_PROMPT "quote> "
+#define BQUOTE_PROMPT "bquote> "
+#define SUBSH_PROMPT "subsh> "
+#define NEWLINE_PROMPT "> "
+
+/*
+** HELPERS_PARSER.c
+*/
+
+int						cont_nbr_backslashes(char *str, int i);
+char					*get_type_prompt(char value);
+void					cont_chars_capsules(char *str, char schar, int *cont);
+char					*ft_strjoin_newline(char const *s1, char const *s2);
+
+/*
+** PARSE_LINE.c
+*/
+
+char					*concatinated_string(char type);
+void					is_capsule_incomplete(char *str, char **temp);
+char					*parse_line(char *str);
+
+/*
+** BRACKETS_PARSE_LINE.c
+*/
+
+char					correct_syntax(char *str);
 
 #endif

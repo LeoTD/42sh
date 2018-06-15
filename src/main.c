@@ -12,18 +12,25 @@ int			main(int argc, char **argv)
 	while (1)
 	{
 		line = ft_prompt("echo_sh $> ");
-		ft_prompt_history_add(line);
 		if (!ft_strcmp(line, "exit"))
 		{
 			free(line);
 			break ;
 		}
-		if ((args = split_args(line)))
+		line = parse_line(line);
+		ft_prompt_history_add(line);
+		if (correct_syntax(line) == 0)
 		{
-			tokens = tokenize(args);
-			create_tree(args, tokens, &ast, highest_prec(tokens));
-			interpret_tree(ast);
+			if ((args = split_args(line)))
+			{
+				tokens = tokenize(args);
+				create_tree(args, tokens, &ast, highest_prec(tokens));
+				interpret_tree(ast);
+			}
 		}
+		else
+			ft_putendl("La pendejada tiene un syntax incorrecto");
+// TODO: Free more things. The tree, notably; but anything where we allocated a string needs looking at.
 		free(line);
 	}
 	argc = 0;

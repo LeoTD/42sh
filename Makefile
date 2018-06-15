@@ -29,11 +29,15 @@ FILES		= main.c \
 			  split_args.c \
 			  parse_help.c \
 			  token.c \
-			  builtins.c \
-			  builtin_util.c \
 			  interpreter.c \
 			  ast.c \
 			  redir.c \
+			  parse_line.c \
+			  helpers_parser.c \
+			  brackets_parse_line.c \
+			  builtins.c \
+			  builtin_util.c \
+			  env_exec.c \
 
 SRC			= $(addprefix src/, $(FILES))
 
