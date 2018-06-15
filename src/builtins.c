@@ -3,7 +3,7 @@
 int			ftsh_cd(char **args)
 {
 	if (args[1] == NULL)
-		ft_putstr_fd("lsh: expected argument to \"cd\"\n", STDERR_FILENO);
+		ft_putstr_fd("expected argument to \"cd\"\n", STDERR_FILENO);
 	else 
 	{
 		if (chdir(args[1]) != 0)

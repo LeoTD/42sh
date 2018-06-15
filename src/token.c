@@ -39,7 +39,6 @@ int		is_command(char *arg)
 	{
 		if (!ft_strcmp(arg, g_commands[i]))
 			return 1;
-			//return (i + (MAX_CMDTYPE + 1));
 		i++;
 	}
 	return (-1);

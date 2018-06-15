@@ -35,6 +35,11 @@
 
 void	interpret_simple_cmd(t_ast *a)
 {
+
+/*
+** TODO: Handle builtins (see builtin_util.c)
+*/
+
 	//fputs("interpret simple command", stderr);
 	handle_redirs(a);
 	execvp(a->tokens[0], a->tokens);
@@ -140,5 +145,8 @@ void	encounter_new_list(t_ast *a, t_ast *prev)
 
 void	interpret_tree(t_ast *tree)
 {
-	encounter_new_list(tree, NULL);
+	if (!fork())
+		encounter_new_list(tree, NULL);
+	else
+		wait(0);
 }

@@ -26,12 +26,9 @@ INCLUDES	= libft/includes/libft.h \
 
 # Add source files here: (files assumed to be in ./src folder)
 FILES		= main.c \
-			  setup.c \
-			  prompt.c \
 			  split_args.c \
 			  parse_help.c \
 			  token.c \
-			  temp_parser.c \
 			  builtins.c \
 			  builtin_util.c \
 			  interpreter.c \

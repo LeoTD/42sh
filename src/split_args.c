@@ -9,7 +9,7 @@ int			op_error_handle(char *c)
 		if (!ft_strncmp(c, "||", 2) || !ft_strncmp(c, "&&", 2))
 			return (!ft_strncmp(c, "||", 2) ? OR : AND);
 		else if (ft_printf("sh: parse error near `%.2s'\n", c))
-			exit(1);
+			return (PARSE_ERROR);
 	}
 	else if (op_len(c) != 2)
 	{
@@ -17,15 +17,15 @@ int			op_error_handle(char *c)
 			ft_printf("sh: parse error near `%.1s'\n", c + 2);
 		else if (op_len(c) >= 4)
 			ft_printf("sh: parse error near `%.2s'\n", c + 2);
-		exit(1);
+		return (PARSE_ERROR);
 	}
-	return (-1);
+	return (NOT_OP);
 }
 
 int 		is_op(char *c)
 {
 	if (!_op(*c))
-		return (-1);
+		return (NOT_OP);
 	if (op_len(c) == 1)
 	{
 		if (*c == ';' || *c == '|')
@@ -74,9 +74,11 @@ char		*find_next(int *i, char *format, int end, char *tmp)
 	{
 		toggle = 0;
 		end = *i;
+		if (is_op(format + *i) == PARSE_ERROR)
+			return (NULL);
 		if (format[*i] == ' ')
 			skip_char(format, i, ' ');
-		else if (is_op(format + *i) != -1 &&
+		else if (is_op(format + *i) != NOT_OP &&
 				skip_char(format, &end, format[end]) && (toggle = 1))
 			tmp = ft_strsub(format, *i, end - *i);
 		else if (format[*i] == '"' && skip_char(format, &end, '"') && (toggle = 1))
@@ -100,14 +102,18 @@ char		**split_args(char *format)
 	int			k;
 	int			hold;
 
-	st_init(&i, &k, &hold);
+	i = 0;
+	k = 0;
+	hold = 0;
 	if (!(tmp = st_strptrnew(ft_strlen(format) / 2)))
 		return (0);
 	while (format[i] && i < (int)ft_strlen(format))
 	{
 		if (is_all_space(format, i))
 			break ;
-		tmp[k++] = find_next(&i, format, 0, NULL);
+		if (!(tmp[k++] = find_next(&i, format, 0, NULL)))
+			return (NULL);
+		// TODO: free this shit when error ^
 	}
 	tmp[k] = NULL;
 	return (tmp);

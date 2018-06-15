@@ -26,16 +26,6 @@
 # define _op(x) (x == '|' || x == '&' || x == ';' || x == '!')
 # define _redir(x) (x == '>' || x == '<')
 
-/*
-** Structs
-*/
-
-/*
-** Declaration of environ.
-** Contains environment variables in the form:
-** NAME=VAL
-*/
-
 extern char				**environ;
 
 typedef struct			s_shell
@@ -45,18 +35,6 @@ typedef struct			s_shell
 	char				**temp_args;
 }						t_shell;
 
-/*
-** Global pointer for signal handling.
-** For future development.
-*/
-
-t_shell					g_shellinit;
-t_shell					*g_shell;
-
-/*
-** Function declarations:
-*/
-
 void					update_size(t_term *t);
 void					restore_defaults(t_term *t);
 
@@ -64,9 +42,7 @@ void					shell_init(void);
 void					prompt(t_shell *s);
 void					parse_commands(t_shell *s, char *buf);
 
-/*
-** Builtin Function Declarations.
-*/
+/* Builtins */
 
 int						run_builtin(int id, char **args);
 int						is_builtin(char *str);
@@ -76,6 +52,9 @@ int						ftsh_help(char **args);
 int						ftsh_exit(char **args);
 
 /* Parser Functions */
+
+#define PARSE_ERROR -2
+#define NOT_OP -1
 
 char					**split_args(char *format);
 char					*find_next(int *i, char *format, int end, char *tmp);

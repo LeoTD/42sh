@@ -38,4 +38,8 @@ void	run_interpreter_tests(void);
 void	examine_redir(t_redir *r);
 
 char	**quickstrs(int nstrs, ...);
+t_redir			*quick_redir(int to_fd, enum e_redirect op,
+				char *from, int is_fd);
+void			append_redir(int to_fd, enum e_redirect op,
+				char *from, int is_fd, t_ast *a);
 #endif

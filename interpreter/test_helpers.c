@@ -171,3 +171,33 @@ char	**quickstrs(int nstrs, ...)
 	va_end(args);
 	return (strs);
 }
+
+t_redir	*quick_redir(int to_fd, enum e_redirect op, char *from, int is_fd)
+{
+	t_redir *r;
+
+	r = new_redir();
+	r->to_fd = to_fd;
+	r->op = op;
+	r->from_file = ft_strdup(from);
+	r->file_string_represents_fd = is_fd;
+	return (r);
+}
+
+void                   append_redir(int to_fd, enum e_redirect op,
+		char *from, int is_fd, t_ast *a)
+{
+	t_list  *newredir;
+	t_list  *iter;
+
+	newredir = ft_lstnew(quick_redir(to_fd, op, from, is_fd), sizeof(t_redir));
+	if (!a->redirs)
+		a->redirs = newredir;
+	else
+	{
+		iter = a->redirs;
+		while (iter->next)
+			iter = iter->next;
+		iter->next = newredir;
+	}
+}
