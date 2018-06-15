@@ -49,10 +49,10 @@ int		encounter_pipe(t_ast *a)
 		close(STDIN_FILENO);
 		dup(fd[0]);
 		close(fd[0]);
-		if (a->type != CMD)
-			encounter_pipe(a->rchild);
 		if (waitpid(pid, &status, 0) != pid)
 			status = -1;
+		if (a->type != CMD)
+			return (encounter_pipe(a->rchild));
 	}
 	return (status);
 }
