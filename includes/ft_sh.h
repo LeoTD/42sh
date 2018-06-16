@@ -27,7 +27,7 @@
 ** todo: norm wants g_environ, but that's just not a thing.
 */
 
-extern char				**environ;
+extern char				**g_environ;
 
 typedef struct			s_shell
 {

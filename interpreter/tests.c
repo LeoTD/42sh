@@ -2,7 +2,9 @@
 #include "stdio.h"
 #include "ft_sh.h"
 #include "_interpreter_dev.h"
+#include <crt_externs.h>
 
+char	**g_environ;
 char	test_output_file[200];
 
 typedef t_ast	*node_factory(void);
@@ -173,6 +175,7 @@ void	big_test()
 
 int		main(void)
 {
+	g_environ = *_NSGetEnviron();
 	char *t1[] = { "echo", "redirect testing is fun", NULL };
 	char *t2[] = { "tr", "a-z", "A-Z", NULL };
 

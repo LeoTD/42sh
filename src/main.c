@@ -1,11 +1,14 @@
 #include "ft_sh.h"
 #include "ast.h"
+#include <crt_externs.h>
 
 /*
 ** TODO:
 ** todo1 free strings and tree
 ** todo2 pick split_args error message
 */
+
+char		**g_environ;
 
 void		parse_and_interpret(char **args)
 {
@@ -26,6 +29,7 @@ int			main(void)
 	char	**args;
 	char	*line;
 
+	g_environ = *_NSGetEnviron();
 	ft_prompt_history_set_len(200);
 	while (1)
 	{
