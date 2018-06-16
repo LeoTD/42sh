@@ -7,12 +7,10 @@
 # include "ft_prompt.h"
 # include <termcap.h>
 # include <sys/ioctl.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <termios.h>
 # include <fcntl.h>
-# include <assert.h>
 
 # define TERM_FD g_shell->term.fd
 
@@ -22,10 +20,6 @@
 
 # define OPCHAR(x) (x == '|' || x == '&' || x == ';' || x == '!')
 # define REDIR_CHAR(x) (x == '>' || x == '<')
-
-/*
-** todo: norm wants g_environ, but that's just not a thing.
-*/
 
 extern char				**g_environ;
 
