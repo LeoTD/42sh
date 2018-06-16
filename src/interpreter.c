@@ -89,8 +89,19 @@ void	encounter_new_list(t_ast *a, t_ast *prev)
 
 void	interpret_tree(t_ast *tree)
 {
-	if (!fork())
+	pid_t		pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		fprintf(stderr, "Fork error\n");
+		_exit(1);
+	}
+	else if (!pid)
+	{
+		signal(SIGINT, SIG_DFL);
 		encounter_new_list(tree, NULL);
+	}
 	else
-		wait(0);
+		waitpid(pid, NULL, 0);
 }

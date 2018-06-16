@@ -31,6 +31,7 @@ int			main(void)
 
 	g_environ = *_NSGetEnviron();
 	ft_prompt_history_set_len(200);
+	signal(SIGINT, SIG_IGN);
 	while (1)
 	{
 		line = ft_prompt("echo_sh $> ");
