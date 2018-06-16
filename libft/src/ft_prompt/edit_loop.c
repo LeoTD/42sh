@@ -60,19 +60,18 @@ int				line_edit_loop(t_prompt *p)
 	{
 		c = 0;
 		read(p->ifd, &c, 8);
-//		printf("%ld\n\r", c);
 		if (c == ESC)
-			;//Escape Sequences!
+			;
 		else if (c == UP_ARR || c == DOWN_ARR)
-			status = move_through_history(p, (c == UP_ARR ? 1 : -1));//Handle history.
+			status = move_through_history(p, (c == UP_ARR ? 1 : -1));
 		else if (c == LEFT_ARR || c == RIGHT_ARR)
-			status = cursor_move(p, c);//Handle cursor movement
+			status = cursor_move(p, c);
 		else if (c == DELETE || c == BACKSPACE)
-			status = edit_delete(p, c);//Handle deletion
+			status = edit_delete(p, c);
 		else if (c >= 32 && c <= 126)
-			status = edit_insert(p, c);//Add ("type") to buffer.
+			status = edit_insert(p, c);
 		else if (c == ENTER)
-			return (forget_most_recent());//Send command
+			return (forget_most_recent());
 	}
 	return (status);
 }

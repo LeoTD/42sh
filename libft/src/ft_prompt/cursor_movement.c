@@ -16,10 +16,10 @@ int				cursor_move(t_prompt *p, long c)
 {
 	if (c == LEFT_ARR)
 		if (p->pos > 0)
-        	p->pos--;
+			p->pos--;
 	if (c == RIGHT_ARR)
 		if (p->pos != p->len)
-        	p->pos++;
+			p->pos++;
 	if (c == UP_ARR)
 		p->pos = 0;
 	if (c == DOWN_ARR)

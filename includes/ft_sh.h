@@ -20,11 +20,12 @@
 ** Function-y macros for terminal and cursor manipulation.
 */
 
-# define _term_do(x) tputs(tgetstr(x, NULL), 1, ft_weirdchar)
-# define _goto(x, y) tputs(tgoto(tgetstr("cm", NULL), x, y), 1, ft_weirdchar)
-# define _put(x) ft_putstr_fd(x, TERM_FD)
-# define _op(x) (x == '|' || x == '&' || x == ';' || x == '!')
-# define _redir(x) (x == '>' || x == '<')
+# define OPCHAR(x) (x == '|' || x == '&' || x == ';' || x == '!')
+# define REDIR_CHAR(x) (x == '>' || x == '<')
+
+/*
+** todo: norm wants g_environ, but that's just not a thing.
+*/
 
 extern char				**environ;
 
@@ -42,7 +43,9 @@ void					shell_init(void);
 void					prompt(t_shell *s);
 void					parse_commands(t_shell *s, char *buf);
 
-/* Builtins */
+/*
+** Builtins
+*/
 
 # define NUM_HANDLED_BUILTINS 3
 
@@ -53,7 +56,9 @@ int						ftsh_cd(char **args);
 int						ftsh_help(char **args);
 int						ftsh_exit(char **args);
 
-/* Parser Functions */
+/*
+** Parser Functions
+*/
 
 # define PARSE_ERROR -2
 # define NOT_OP -1
@@ -72,7 +77,9 @@ int						is_all_space(char *format, int i);
 void					st_init(int *i, int *k, int *hold);
 int						skip_char(char *format, int *i, char c);
 
-/* Tokenizer Functions */
+/*
+** Tokenizer Functions
+*/
 
 int						*tokenize(char **format);
 int						arr_length(char **format);

@@ -19,7 +19,7 @@ char	**fetch_tokens(char **args)
 	i = 0;
 	if ((ptr = (char **)malloc(sizeof(char *) * arr_length(args))))
 		return (NULL);
-	while (*(args) && !_op(*(args[0])))
+	while (*(args) && !OPCHAR(*(args[0])))
 		ptr[i++] = ft_strdup(*(args));
 	ptr[i] = NULL;
 	return (ptr);
@@ -30,7 +30,7 @@ t_ast	*parsed_ast_node(char **args, int *tokens, int hp)
 	t_ast *a;
 
 	a = ft_memalloc(sizeof(*a));
-	if (_op((*(args))[0]))
+	if (OPCHAR((*(args))[0]))
 	{
 		if (!(a->tokens = st_strptrnew(2)))
 			return (NULL);
@@ -66,7 +66,7 @@ void	create_tree(char **args, int *tokens, t_ast **head, int hp)
 {
 	t_ast *ast;
 
-	if (*args && (hp != 0 || _op((*args)[0])))
+	if (*args && (hp != 0 || OPCHAR((*args)[0])))
 	{
 		*head = parsed_ast_node(args + hp, tokens, hp);
 		ast = *head;

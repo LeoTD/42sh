@@ -23,7 +23,7 @@ int			op_error_handle(char *c)
 
 int			is_op(char *c)
 {
-	if (!_op(*c))
+	if (!OPCHAR(*c))
 		return (NOT_OP);
 	if (op_len(c) == 1)
 	{
@@ -44,12 +44,12 @@ int			skip_char(char *format, int *i, char c)
 
 	r_count = 0;
 	l_count = 0;
-	if (_op(c))
-		while (_op(format[*i]) && format[*i])
+	if (OPCHAR(c))
+		while (OPCHAR(format[*i]) && format[*i])
 			(*i)++;
 	else if (c == '>')
-		while (!_op(format[*i])
-				&& !((r_count == 2 || l_count == 1) && _redir(format[*i])))
+		while (!OPCHAR(format[*i])
+				&& !((r_count == 2 || l_count == 1) && REDIR_CHAR(format[*i])))
 		{
 			r_count += format[*i] == '>' ? 1 : 0;
 			l_count += format[(*i)++] == '<' ? 1 : 0;
@@ -61,7 +61,7 @@ int			skip_char(char *format, int *i, char c)
 		while (format[*i] == c && format[*i])
 			(*i)++;
 	else
-		while (!_op(format[*i]) && format[*i] != ' ' && format[*i])
+		while (!OPCHAR(format[*i]) && format[*i] != ' ' && format[*i])
 			(*i)++;
 	return (1);
 }

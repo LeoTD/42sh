@@ -3,9 +3,9 @@
 int		is_shovel(char *format, int i)
 {
 	if (format[i] && format[i + 1] &&
-		ft_isdigit(format[i]) && _redir(format[i + 1]))
+		ft_isdigit(format[i]) && REDIR_CHAR(format[i + 1]))
 		return (1);
-	else if (_redir(format[i]))
+	else if (REDIR_CHAR(format[i]))
 		return (1);
 	return (0);
 }
@@ -50,7 +50,7 @@ int		op_len(char *c)
 	int	i;
 
 	i = 0;
-	while (c[i] && _op(c[i]))
+	while (c[i] && OPCHAR(c[i]))
 		i++;
 	return (i);
 }
