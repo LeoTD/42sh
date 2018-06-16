@@ -108,6 +108,6 @@ char					*parse_line(char *str);
 ** BRACKETS_PARSE_LINE.c
 */
 
-char					correct_syntax(char *str);
+int						syntax_error(char *str);
 
 #endif

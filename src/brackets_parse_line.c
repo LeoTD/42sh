@@ -64,7 +64,7 @@ int		check_brackets(char *str)
 // correct_syntax does the brackets on this string are correctly close
 
 
-char		correct_syntax(char *str)
+int			syntax_error(char *str)
 {
 	int		i;
 	char	inside_quotes;
