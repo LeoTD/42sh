@@ -56,13 +56,13 @@ extern char		*g_nodetype_names[MAX_CMDTYPE + 1];
 
 t_ast			*parsed_ast_node(char **args, int *tokens, int hp);
 int				highest_prec(int *tokens);
-void			print_tree(t_ast *ast, int i, int lr);
 void			create_tree(char **args, int *tokens, t_ast **head, int hp);
 t_ast			*ast_node(void);
 t_ast			*opnode(t_cmdtype type);
 t_ast			*cmd_node(char **tokens);
 
 void			interpret_tree(t_ast *tree);
+int				encounter_pipe(t_ast *a);
 void			handle_redirs(t_ast *leaf);
 
 t_redir			*new_redir(void);

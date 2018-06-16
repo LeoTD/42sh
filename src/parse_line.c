@@ -29,7 +29,7 @@ char		*concatinated_string(char type)
 }
 
 /*
-**	recursively solution for the inhbitors in the '\' 
+**	recursively solution for the inhbitors in the '\'
 */
 
 #define LAST_CHAR_BSLASH(x, i) (ft_strequ(ft_strstr(x + i, "\\"), "\\") == 1)
@@ -45,14 +45,14 @@ char		*concatined_newline(int i)
 
 	e = -1;
 	temp = ft_prompt(NEWLINE_PROMPT);
-	if (LAST_CHAR_BSLASH(temp, i) && ((N_SLASH(temp, i) % 2 == 0 ) || \
+	if (LAST_CHAR_BSLASH(temp, i) && ((N_SLASH(temp, i) % 2 == 0) || \
 		(N_SLASH(temp, i) == 0)))
 	{
 		concat = ft_prompt(NEWLINE_PROMPT);
 		while (concat[++e])
 			if (concat[e] == '\\')
 				if (LAST_CHAR_BSLASH(concat, e) && \
-				((N_SLASH(concat, e) % 2 == 0 ) || (N_SLASH(concat, e) == 0)))
+				((N_SLASH(concat, e) % 2 == 0) || (N_SLASH(concat, e) == 0)))
 				{
 					extra = concatined_newline(e);
 					ALLO_AND_FREE(join, concat, extra);
@@ -91,12 +91,12 @@ void		is_capsule_incomplete(char *str, char **temp)
 
 	i = -1;
 	cont_nbr_capsule = 0;
-	while(str[++i])
+	while (str[++i])
 	{
 		if (IS_CAPSULE)
 			wrap_quotes(&(str), i);
 		else if (IS_BRACK_NL)
-			if (LAST_CHAR_BSLASH(str, i) && ((N_SLASH(str, i) % 2 == 0 ) || \
+			if (LAST_CHAR_BSLASH(str, i) && ((N_SLASH(str, i) % 2 == 0) || \
 			(N_SLASH(str, i) == 0)))
 			{
 				concat = concatined_newline(i);
@@ -106,7 +106,6 @@ void		is_capsule_incomplete(char *str, char **temp)
 	}
 	*temp = str;
 }
-
 
 char		*parse_line(char *str)
 {

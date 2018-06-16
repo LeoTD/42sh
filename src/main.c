@@ -37,10 +37,10 @@ int			main(void)
 		if (syntax_error(line))
 			ft_putendl("La pendejada tiene un syntax incorrecto");
 		else if (!(args = split_args(line)))
-			; // t2
+			;
 		else
 			parse_and_interpret(args);
-		free(line); // t1
+		free(line);
 	}
 	return (0);
 }

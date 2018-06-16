@@ -4,7 +4,7 @@ int			ftsh_cd(char **args)
 {
 	if (args[1] == NULL)
 		ft_putstr_fd("expected argument to \"cd\"\n", STDERR_FILENO);
-	else 
+	else
 	{
 		if (chdir(args[1]) != 0)
 			perror("42sh");

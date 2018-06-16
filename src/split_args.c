@@ -1,7 +1,6 @@
 #include "ft_sh.h"
 #include "ast.h"
 
-
 int			op_error_handle(char *c)
 {
 	if (op_len(c) == 2)
@@ -22,7 +21,7 @@ int			op_error_handle(char *c)
 	return (NOT_OP);
 }
 
-int 		is_op(char *c)
+int			is_op(char *c)
 {
 	if (!_op(*c))
 		return (NOT_OP);
@@ -43,20 +42,21 @@ int			skip_char(char *format, int *i, char c)
 	int r_count;
 	int l_count;
 
+	r_count = 0;
+	l_count = 0;
 	if (_op(c))
 		while (_op(format[*i]) && format[*i])
 			(*i)++;
-	else if (c == '>' && !(r_count = 0) && !(l_count = 0))
-	{
-		while (!_op(format[*i]) && !((r_count == 2 || l_count == 1) && _redir(format[*i])))
+	else if (c == '>')
+		while (!_op(format[*i])
+				&& !((r_count == 2 || l_count == 1) && _redir(format[*i])))
 		{
 			r_count += format[*i] == '>' ? 1 : 0;
 			l_count += format[(*i)++] == '<' ? 1 : 0;
 		}
-	}
 	else if (c == '"')
 		while (format[++(*i)] != c && format[*i])
-			 ;
+			;
 	else if (c == ' ')
 		while (format[*i] == c && format[*i])
 			(*i)++;
@@ -70,9 +70,8 @@ char		*find_next(int *i, char *format, int end, char *tmp)
 {
 	int toggle;
 
-	while (format[*i] && *i < (int)ft_strlen(format))
+	while (format[*i] && *i < (int)ft_strlen(format) && !(toggle = 0))
 	{
-		toggle = 0;
 		end = *i;
 		if (is_op(format + *i) == PARSE_ERROR)
 			return (NULL);
@@ -81,19 +80,24 @@ char		*find_next(int *i, char *format, int end, char *tmp)
 		else if (is_op(format + *i) != NOT_OP &&
 				skip_char(format, &end, format[end]) && (toggle = 1))
 			tmp = ft_strsub(format, *i, end - *i);
-		else if (format[*i] == '"' && skip_char(format, &end, '"') && (toggle = 1))
+		else if (format[*i] == '"' && skip_char(format, &end, '"')
+				&& (toggle = 1))
 			tmp = ft_strsub(format, *i, ((end += 1) - *i));
 		else if (is_shovel(format, *i) && skip_char(format, &end, '>')
 				&& (toggle = 1))
-				tmp = ft_strsub(format, *i, end - *i);
+			tmp = ft_strsub(format, *i, end - *i);
 		else if (skip_char(format, &end, 'a') && (toggle = 1))
 			tmp = ft_strsub(format, *i, end - *i);
 		if (toggle == 1)
-			break;
+			break ;
 	}
 	*i += (end - *i);
 	return (tmp);
 }
+
+/*
+** todo: free tmp in split_args if returning early
+*/
 
 char		**split_args(char *format)
 {
@@ -113,7 +117,6 @@ char		**split_args(char *format)
 			break ;
 		if (!(tmp[k++] = find_next(&i, format, 0, NULL)))
 			return (NULL);
-		// TODO: free this shit when error ^
 	}
 	tmp[k] = NULL;
 	return (tmp);

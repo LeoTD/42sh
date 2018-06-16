@@ -1,54 +1,28 @@
 #include "ft_sh.h"
 #include "ast.h"
 
-void	interpret_simple_cmd(t_ast *a)
-{
-
 /* TODO: Handle builtins (see builtin_util.c)
 ** TODO: Don't check PATH if there's a forward slash -- see man 2 execve
 ** TODO: Print a message when file not found or not executable
 */
 
-	handle_redirs(a);
-	if (access(a->tokens[0], X_OK) != -1)
-		execve(a->tokens[0], a->tokens, environ);
-	else
-		env_exec(a);
-	_exit(1);
-}
-
-int		encounter_pipe(t_ast *a)
+int		await_exit_status(pid_t pid, int fd[2], t_ast *a)
 {
-	pid_t		pid;
-	int			status;
-	int			fd[2];
+	int status;
 
-	if (a->type == NEGATE)
-		return (encounter_pipe(a->rchild));
 	status = 0;
-	pipe(fd);
-	pid = fork();
 	if (pid == 0)
 	{
 		if (a->type == CMD)
-			interpret_simple_cmd(a);
+			env_exec(a);
 		close(fd[0]);
-		close(STDOUT_FILENO);
-		dup(fd[1]);
-		close(fd[1]);
-		interpret_simple_cmd(a->lchild);
-	}
-	else if (pid == -1)
-	{
-		fprintf(stderr, "Fork error\n");
-		_exit(1);
+		dup2(fd[1], STDOUT_FILENO);
+		env_exec(a->lchild);
 	}
 	else
 	{
 		close(fd[1]);
-		close(STDIN_FILENO);
-		dup(fd[0]);
-		close(fd[0]);
+		dup2(fd[0], STDIN_FILENO);
 		if (waitpid(pid, &status, 0) != pid)
 			status = -1;
 		if (a->type != CMD)
@@ -57,16 +31,30 @@ int		encounter_pipe(t_ast *a)
 	return (status);
 }
 
+int		encounter_pipe(t_ast *a)
+{
+	pid_t		pid;
+	int			fd[2];
+
+	if (a->type == NEGATE)
+		return (encounter_pipe(a->rchild));
+	pipe(fd);
+	pid = fork();
+	if (pid == -1)
+	{
+		fprintf(stderr, "Fork error\n");
+		_exit(1);
+	}
+	return (await_exit_status(pid, fd, a));
+}
+
 int		ok_next_list(t_ast *a, int exit_status)
 {
 	int		ok;
 
 	if (a->type == SEP)
 		return (1);
-	if (a->type == OR)
-		ok = (exit_status != 0);
-	else
-		ok = (exit_status == 0);
+	ok = a->type == OR ? exit_status != 0 : exit_status == 0;
 	if (a->lchild->type == NEGATE)
 		ok = !ok;
 	return (ok);

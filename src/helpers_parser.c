@@ -21,7 +21,7 @@ char	*ft_strjoin_newline(char const *s1, char const *s2)
 	return (tmp);
 }
 
-int			cont_nbr_backslashes(char *str, int i)
+int		cont_nbr_backslashes(char *str, int i)
 {
 	int		nbr_backslashes;
 
@@ -35,7 +35,7 @@ int			cont_nbr_backslashes(char *str, int i)
 	return (nbr_backslashes);
 }
 
-char		*get_type_prompt(char value)
+char	*get_type_prompt(char value)
 {
 	if (value == DQUOTE)
 		return (DQUOTE_PROMPT);
@@ -49,22 +49,21 @@ char		*get_type_prompt(char value)
 		return (NULL);
 }
 
-void		cont_chars_capsules(char *str, char schar, int *cont)
+void	cont_chars_capsules(char *str, char schar, int *cont)
 {
 	int		i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == schar)
 		{
 			if (i == 0)
 				(*cont)++;
+			else if (str[i - 1] == '\\')
+				;
 			else
-				if (str[i - 1] == '\\')
-					;
-				else
-					(*cont)++;
+				(*cont)++;
 		}
 		i++;
 	}

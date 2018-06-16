@@ -44,6 +44,8 @@ void					parse_commands(t_shell *s, char *buf);
 
 /* Builtins */
 
+# define NUM_HANDLED_BUILTINS 3
+
 int						run_builtin(int id, char **args);
 int						is_builtin(char *str);
 
@@ -53,8 +55,8 @@ int						ftsh_exit(char **args);
 
 /* Parser Functions */
 
-#define PARSE_ERROR -2
-#define NOT_OP -1
+# define PARSE_ERROR -2
+# define NOT_OP -1
 
 char					**split_args(char *format);
 char					*find_next(int *i, char *format, int end, char *tmp);
@@ -76,16 +78,16 @@ int						*tokenize(char **format);
 int						arr_length(char **format);
 int						is_operator(char *arg);
 int						is_command(char *arg);
-#define DQUOTE '\"'
-#define QUOTE '\''
-#define BQUOTE '`'
-#define SUBSH '('
-#define NEWLINE '\\'
-#define DQUOTE_PROMPT "dquote> "
-#define QUOTE_PROMPT "quote> "
-#define BQUOTE_PROMPT "bquote> "
-#define SUBSH_PROMPT "subsh> "
-#define NEWLINE_PROMPT "> "
+# define DQUOTE '\"'
+# define QUOTE '\''
+# define BQUOTE '`'
+# define SUBSH '('
+# define NEWLINE '\\'
+# define DQUOTE_PROMPT "dquote> "
+# define QUOTE_PROMPT "quote> "
+# define BQUOTE_PROMPT "bquote> "
+# define SUBSH_PROMPT "subsh> "
+# define NEWLINE_PROMPT "> "
 
 /*
 ** HELPERS_PARSER.c
