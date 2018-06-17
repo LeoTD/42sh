@@ -1,7 +1,8 @@
 NAME		= 42sh
 
 CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra -ltermcap
+#CFLAGS		= -Wall -Werror -Wextra -ltermcap
+CFLAGS		= -ltermcap
 INC_FLAGS	= -I libft/includes -I includes
 
 # -g for lldb
@@ -45,7 +46,7 @@ all: $(NAME)
 
 $(NAME): $(LIBS) $(SRC) $(INCLUDES)
 	@printf "%b" "$(LIB_COLOR)Compiling: $(OK_COLOR)$@\n$(NO_COLOR)"
-	@$(CC) $(DEBUG) $(CFLAGS) $(INC_FLAGS) -o $(NAME) $(SRC) $(LIBS)
+	@$(CC) $(DEBUG) $(CFLAGS) $(INC_FLAGS) -o $(NAME) $(SRC) $(LIBS) -lcurses
 
 $(LIBS):
 	@make -C libft

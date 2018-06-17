@@ -6,14 +6,15 @@
 #    By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 19:18:37 by ltanenba          #+#    #+#              #
-#    Updated: 2018/06/14 03:57:37 by eliu             ###   ########.fr        #
+#    Updated: 2018/06/17 04:41:40 by regien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= libft.a
 
 CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra -I includes
+#CFLAGS		= -Wall -Werror -Wextra -I includes
+CFLAGS		= -I includes
 INCLUDES	= includes/libft.h \
 			  includes/ft_printf.h \
 			  includes/ft_prompt.h
