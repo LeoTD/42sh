@@ -34,7 +34,7 @@ size_t			get_cols(void)
 	struct winsize		w;
 
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-    return (w.ws_col);
+	return (w.ws_col);
 }
 
 int				prompt_init(t_prompt *p, char *pstr)

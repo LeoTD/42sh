@@ -1,6 +1,6 @@
 #include "ft_sh.h"
 
-int			get_brackets_type(char a)
+int		get_brackets_type(char a)
 {
 	if (a == '(')
 		return (2);
@@ -54,17 +54,15 @@ int		check_brackets(char *str)
 			break ;
 		i++;
 	}
-	if (res == 1.00)
-		return (0);
-	else
-		return (1);
+	return (res != 1.00);
 }
 
-// boolean
-// correct_syntax does the brackets on this string are correctly close
+/*
+** boolean
+** correct_syntax does the brackets on this string are correctly close
+*/
 
-
-char		correct_syntax(char *str)
+int		syntax_error(char *str)
 {
 	int		i;
 	char	inside_quotes;

@@ -3,10 +3,15 @@
 #include <fcntl.h>
 
 /*
-** Handling redirections for individual command nodes.
-*/
+ ** Handling redirections for individual command nodes.
+ */
 
-static int		oflags[3] =
+t_redir	*new_redir(void)
+{
+	return ((t_redir *)ft_memalloc(sizeof(t_redir)));
+}
+
+static int		g_oflags[3] =
 {
 	[INPUT] = O_RDONLY,
 	[TRUNC] = O_CREAT | O_TRUNC | O_WRONLY,
@@ -20,9 +25,9 @@ int		redir_source_fd(t_redir *redir)
 	if (redir->file_string_represents_fd)
 		fd = redir->from_file[1] - '0';
 	else if (redir->op == INPUT)
-		fd = open(redir->from_file, oflags[redir->op]);
+		fd = open(redir->from_file, g_oflags[redir->op]);
 	else
-		fd = open(redir->from_file, oflags[redir->op],
+		fd = open(redir->from_file, g_oflags[redir->op],
 				S_IWUSR | S_IRUSR | S_IRGRP | S_IROTH);
 	return (fd);
 }

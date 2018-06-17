@@ -1,0 +1,2 @@
+#!/bin/bash
+find . -type f \( -name "*.[ch]" -o -name "Makefile" \) -exec grep -i todo {} \; -exec echo -n ^ \; -print -exec echo "" \;

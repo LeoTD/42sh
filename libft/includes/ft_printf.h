@@ -15,7 +15,6 @@
 
 # include "libft.h"
 # include <stdarg.h>
-# include <stdio.h>
 # include <stdint.h>
 # include <wchar.h>
 # include <locale.h>

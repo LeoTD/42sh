@@ -6,7 +6,7 @@ CFLAGS		= -ltermcap
 INC_FLAGS	= -I libft/includes -I includes
 
 # -g for lldb
-DEBUG		= #-g
+DEBUG		= -g
 
 # Cosmetics Section:
 OK_COLOR	= \033[38;5;105;1m
@@ -27,16 +27,18 @@ INCLUDES	= libft/includes/libft.h \
 
 # Add source files here: (files assumed to be in ./src folder)
 FILES		= main.c \
-			  setup.c \
-			  prompt.c \
-			  parse.c \
+			  split_args.c \
+			  parse_help.c \
+			  token.c \
+			  interpreter.c \
+			  ast.c \
+			  redir.c \
 			  parse_line.c \
 			  helpers_parser.c \
 			  brackets_parse_line.c \
-			  temp_parser.c \
 			  builtins.c \
 			  builtin_util.c \
-			  ast.c 
+			  env_exec.c \
 
 SRC			= $(addprefix src/, $(FILES))
 

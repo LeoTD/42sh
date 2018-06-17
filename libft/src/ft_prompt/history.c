@@ -59,13 +59,14 @@ int				ft_prompt_history_add(char *str)
 			return (0);
 		ft_bzero(g_history, (sizeof(char *) * g_history_max_len));
 	}
-    if (g_history_len && !ft_strcmp(g_history[0], str))
+	if (g_history_len && !ft_strcmp(g_history[0], str))
 		return (0);
 	if (!(tmp = ft_strdup(str)))
 		return (0);
 	if (g_history_len == g_history_max_len)
 		free(g_history[--g_history_len]);
-	ft_memmove(g_history + 1, g_history, sizeof(char *) * (g_history_max_len - 1));
+	ft_memmove(g_history + 1, g_history,
+			sizeof(char *) * (g_history_max_len - 1));
 	g_history[0] = tmp;
 	g_history_len++;
 	return (1);
@@ -82,7 +83,8 @@ int				ft_prompt_history_set_len(int len)
 int				forget_most_recent(void)
 {
 	free(g_history[0]);
-	ft_memmove(g_history, g_history + 1, sizeof(char *) * (g_history_max_len - 1));
+	ft_memmove(g_history, g_history + 1,
+			sizeof(char *) * (g_history_max_len - 1));
 	g_history_len--;
 	return (0);
 }

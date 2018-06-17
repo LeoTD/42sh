@@ -13,23 +13,21 @@
 #include "ft_prompt.h"
 
 static t_term	g_term;
-static int		exit_ready = 0;
 
 void		reset_term(t_term *t)
 {
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, &t->normal);
-//	_term_do("ve");
 }
 
 void		ft_prompt_cleanup(void)
 {
-//	reset_term(&g_term);
 	cleanup_history();
 }
 
 char		*ft_prompt(char *prompt_str)
 {
 	t_prompt	p_state;
+	static int	exit_ready = 0;
 
 	if (!isatty(STDIN_FILENO))
 		return (0);

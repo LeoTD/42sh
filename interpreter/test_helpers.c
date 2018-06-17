@@ -1,6 +1,21 @@
 #include "ast.h"
 #include "_interpreter_dev.h"
 
+t_ast	*opnode(t_cmdtype t)
+{
+	t_ast *a = ft_memalloc(sizeof(*a));
+	a->type = t;
+	a->ok = 1;
+	return (a);
+}
+
+t_ast	*cmd_node(char **tokens)
+{
+	t_ast *a = opnode(CMD);
+	a->tokens = tokens;
+	return a;
+}
+
 enum			okstate { OK, FAIL };
 static char		_ok_label[] = 	"OK   A, ";
 static char		_fail_label[] = "FAIL A, ";
@@ -127,6 +142,18 @@ t_redir	*make_redir(int left, enum e_redirect op, char *right, int is_fd)
 	return (r);
 }
 
+void	examine_redir(t_redir *r)
+{
+	static char	*redir_op_names[] =
+	{
+		[TRUNC] = ">",
+		[APPEND] = ">>",
+		[INPUT] = "<",
+	};
+	fprintf(stderr, "%d %s %s %s\n",
+			r->to_fd, redir_op_names[r->op], r->from_file, r->file_string_represents_fd ? "(fd)" : "");
+}
+
 char	**quickstrs(int nstrs, ...)
 {
 	va_list	args;
@@ -143,4 +170,34 @@ char	**quickstrs(int nstrs, ...)
 	}
 	va_end(args);
 	return (strs);
+}
+
+t_redir	*quick_redir(int to_fd, enum e_redirect op, char *from, int is_fd)
+{
+	t_redir *r;
+
+	r = new_redir();
+	r->to_fd = to_fd;
+	r->op = op;
+	r->from_file = ft_strdup(from);
+	r->file_string_represents_fd = is_fd;
+	return (r);
+}
+
+void                   append_redir(int to_fd, enum e_redirect op,
+		char *from, int is_fd, t_ast *a)
+{
+	t_list  *newredir;
+	t_list  *iter;
+
+	newredir = ft_lstnew(quick_redir(to_fd, op, from, is_fd), sizeof(t_redir));
+	if (!a->redirs)
+		a->redirs = newredir;
+	else
+	{
+		iter = a->redirs;
+		while (iter->next)
+			iter = iter->next;
+		iter->next = newredir;
+	}
 }
