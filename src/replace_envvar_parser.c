@@ -116,11 +116,14 @@ int			*length_of_envars(char *str, int *positions, int size_positions)
 	return (length_of_vars);
 }
 
-
+char		*replaced_string(char *str, int *post, int *post_len)
+{
+	
+}
 
 void		look_and_replace_vars(char *str, char **temp)
 {
-	int		i;
+//	int		i;
 	int		*positions;
 	int		*length_positions;
 
@@ -131,7 +134,6 @@ void		look_and_replace_vars(char *str, char **temp)
 	length_positions = length_of_envars;
 	if (length_positions == NULL)
 		return ;
-	i = -1;
 	// look for positions - checking that they are not in QUOTES or have a
 	// backslash behind them
 	*temp = ;// function that handle this shit

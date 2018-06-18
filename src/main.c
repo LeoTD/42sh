@@ -35,6 +35,8 @@ int			main(int argc, char **argv)
 **	Sets the max length of the history log.	*/
 	ft_prompt_history_set_len(200);
 
+	ft_printf("prueba = |%s|\n", ft_strsub("PENDEJADA", 0, ft_strlen("PENDEJADA") - 1));
+
 	while (1)
 	{
 /*		ft_prompt returns [ NULL ] on error.
