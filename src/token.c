@@ -20,16 +20,6 @@ char	*g_nodetype_names[] = {
 	[CMD] = NULL
 };
 
-int		arr_length(char **format)
-{
-	int i;
-
-	i = 0;
-	while (format[i])
-		i++;
-	return (i);
-}
-
 int		is_command(char *arg)
 {
 	int i;

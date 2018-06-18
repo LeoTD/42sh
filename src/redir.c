@@ -6,18 +6,6 @@
  ** Handling redirections for individual command nodes.
  */
 
-t_redir	*new_redir(void)
-{
-	return ((t_redir *)ft_memalloc(sizeof(t_redir)));
-}
-
-static int		g_oflags[3] =
-{
-	[INPUT] = O_RDONLY,
-	[TRUNC] = O_CREAT | O_TRUNC | O_WRONLY,
-	[APPEND] = O_CREAT | O_APPEND | O_WRONLY,
-};
-
 int		redir_source_fd(t_redir *redir)
 {
 	int		fd;

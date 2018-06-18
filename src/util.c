@@ -40,3 +40,27 @@ char		*ft_atos(char **a)
 	return (s);
 }
 
+int			arr_length(char **a)
+{
+	int i;
+
+	i = 0;
+	while (a[i])
+		i++;
+	return (i);
+}
+
+void		ft_lstaddback(t_list **lst, t_list *new)
+{
+	t_list	*iter;
+
+	if (!*lst)
+		*lst = new;
+	else
+	{
+		iter = *lst;
+		while (iter->next)
+			iter = iter->next;
+		iter->next = new;
+	}
+}

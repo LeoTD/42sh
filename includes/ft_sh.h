@@ -5,7 +5,6 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "ft_prompt.h"
-# include "debug.h"
 # include <termcap.h>
 # include <sys/ioctl.h>
 # include <stdlib.h>
@@ -77,7 +76,6 @@ int						skip_char(char *format, int *i, char c);
 */
 
 int						*tokenize(char **format);
-int						arr_length(char **format);
 int						is_operator(char *arg);
 int						is_command(char *arg);
 # define DQUOTE '\"'
@@ -114,4 +112,12 @@ char					*parse_line(char *str);
 
 int						syntax_error(char *str);
 
+/*
+** General utility functions
+*/
+
+size_t		ft_strlens(char **strings, int *pcount);
+char		*ft_atos(char **strings);
+int			arr_length(char **a);
+void		ft_lstaddback(t_list **lst, t_list *add);
 #endif

@@ -23,7 +23,6 @@ LIBS		= libft/libft.a \
 INCLUDES	= libft/includes/libft.h \
 			  includes/ft_sh.h \
 			  includes/ast.h \
-			  includes/debug.h \
 
 # Add source files here: (files assumed to be in ./src folder)
 FILES		= main.c \
@@ -39,7 +38,8 @@ FILES		= main.c \
 			  builtins.c \
 			  builtin_util.c \
 			  env_exec.c \
-			  debug.c \
+			  util.c \
+			  extract_redirs.c \
 
 SRC			= $(addprefix src/, $(FILES))
 

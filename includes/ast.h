@@ -43,6 +43,8 @@ enum			e_redirect
 	APPEND,
 };
 
+extern int		g_oflags[3];
+
 typedef struct	s_redir
 {
 	enum e_redirect		op;
@@ -64,6 +66,7 @@ t_ast			*cmd_node(char **tokens);
 void			interpret_tree(t_ast *tree);
 int				encounter_pipe(t_ast *a);
 void			handle_redirs(t_ast *leaf);
+void			extract_redirs(t_ast *a);
 
 t_redir			*new_redir(void);
 void			env_exec(t_ast *a);

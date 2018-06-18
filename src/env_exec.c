@@ -122,6 +122,7 @@ void			env_exec(t_ast *a)
 	char	**environment_copy;
 	char	*temp;
 
+	extract_redirs(a);
 	handle_redirs(a);
 	if (access(a->tokens[0], X_OK) != -1)
 		execve(a->tokens[0], a->tokens, g_environ);
