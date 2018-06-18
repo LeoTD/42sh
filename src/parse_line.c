@@ -30,6 +30,7 @@ char		*concatinated_string(char type)
 
 /*
 **	recursively solution for the inhbitors in the '\' 
+**	norm solution - this can be changed to char array[4]
 */
 
 #define LAST_CHAR_BSLASH(x, i) (ft_strequ(ft_strstr(x + i, "\\"), "\\") == 1)
@@ -44,20 +45,17 @@ char		*concatined_newline(int i)
 	char	*extra;
 
 	e = -1;
-	printf("Entering in concatined_newline\n");
 	temp = ft_prompt(NEWLINE_PROMPT);
 	if (LAST_CHAR_BSLASH(temp, i) && ((N_SLASH(temp, i) % 2 == 0 ) || \
 		(N_SLASH(temp, i) == 0)))
 	{
 		concat = ft_prompt(NEWLINE_PROMPT);
-		printf("concatinting string BEFORE\n");
 		while (concat[++e])
 			if (concat[e] == '\\')
 				if (LAST_CHAR_BSLASH(concat, e) && \
 				((N_SLASH(concat, e) % 2 == 0 ) || (N_SLASH(concat, e) == 0)))
 				{
 					extra = concatined_newline(e);
-					printf("concatinting string\n");
 					concat = ft_strsub_free(&concat, 0, ft_strlen(concat) - 1);
 					ALLO_AND_FREE(join, concat, extra);
 					concat = join;
