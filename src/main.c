@@ -18,6 +18,7 @@ void		parse_and_interpret(char **args)
 	ast = NULL;
 	if (!(tokens = tokenize(args)))
 		return ;
+	ft_putstr_fd(ft_atos(args), 2);
 	create_tree(args, tokens, &ast, highest_prec(tokens));
 	if (ast)
 		interpret_tree(ast);
