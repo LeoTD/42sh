@@ -35,7 +35,6 @@ char		*concatinated_string(char type)
 #define LAST_CHAR_BSLASH(x, i) (ft_strequ(ft_strstr(x + i, "\\"), "\\") == 1)
 #define N_SLASH(x, i) cont_nbr_backslashes(x, i)
 
-/*
 char		*concatined_newline(int i)
 {
 	char	*temp;
@@ -43,9 +42,6 @@ char		*concatined_newline(int i)
 	char	*join;
 	int		e;
 	char	*extra;
-
-	char	*test1;
-	char	*test2;
 
 	e = -1;
 	printf("Entering in concatined_newline\n");
@@ -62,57 +58,12 @@ char		*concatined_newline(int i)
 				{
 					extra = concatined_newline(e);
 					printf("concatinting string\n");
-					test1 = ft_strsub(concat, 0, ft_strlen(concat) - 1);
-//					ALLO_AND_FREE(join, concat, extra);
-					ALLO_AND_FREE(join, test1, extra);
-					concat = join;
-				}
-		test2 = ft_strsub(temp, 0, ft_strlen(temp) - 1);
-		printf("test2 = |%s|\n", test2);
-//		ALLO_AND_FREE(join, temp, concat);
-		ALLO_AND_FREE(join, test2, concat);
-		temp = join;
-	}
-	return (temp);
-}
-*/
-
-char		*concatined_newline(int i)
-{
-	char	*temp;
-	char	*concat;
-	char	*join;
-	int		e;
-	char	*extra;
-
-//	char	*test1;
-//	char	*test2;
-
-	e = -1;
-	printf("Entering in concatined_newline\n");
-	temp = ft_prompt(NEWLINE_PROMPT);
-	if (LAST_CHAR_BSLASH(temp, i) && ((N_SLASH(temp, i) % 2 == 0 ) || \
-		(N_SLASH(temp, i) == 0)))
-	{
-		concat = ft_prompt(NEWLINE_PROMPT);
-		printf("concatinting string BEFORE\n");
-		while (concat[++e])
-			if (concat[e] == '\\')
-				if (LAST_CHAR_BSLASH(concat, e) && \
-				((N_SLASH(concat, e) % 2 == 0 ) || (N_SLASH(concat, e) == 0)))
-				{
-					extra = concatined_newline(e);
-					printf("concatinting string\n");
-//					test1 = ft_strsub(concat, 0, ft_strlen(concat) - 1);
 					concat = ft_strsub_free(&concat, 0, ft_strlen(concat) - 1);
 					ALLO_AND_FREE(join, concat, extra);
-//					ALLO_AND_FREE(join, test1, extra);
 					concat = join;
 				}
-//		test2 = ft_strsub(temp, 0, ft_strlen(temp) - 1);
 		temp = ft_strsub_free(&temp, 0, ft_strlen(temp) - 1);
 		ALLO_AND_FREE(join, temp, concat);
-//		ALLO_AND_FREE(join, test2, concat);
 		temp = join;
 	}
 	return (temp);
@@ -143,8 +94,6 @@ void		is_capsule_incomplete(char *str, char **temp)
 	char	*concat;
 	char	*tmp;
 
-//	char	*test1;
-
 	i = -1;
 	cont_nbr_capsule = 0;
 	while(str[++i])
@@ -156,10 +105,8 @@ void		is_capsule_incomplete(char *str, char **temp)
 			(N_SLASH(str, i) == 0)))
 			{
 				concat = concatined_newline(i);
-//				concat = ft_prompt(NEWLINE_PROMPT);
 				str = ft_strsub_free(&str, 0, ft_strlen(str) - 1);
 				ALLO_AND_FREE(tmp, str, concat);
-//				ALLO_AND_FREE(tmp, test1, concat);
 				str = tmp;
 			}
 	}
