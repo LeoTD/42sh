@@ -53,9 +53,9 @@ int		parse_and_interpret(char **args)
 
 	ast = NULL;
 	if (catch_unforkable(args))
-		return (0);
-	if (!(tokens = tokenize(args)))
 		return (1);
+	if (!(tokens = tokenize(args)))
+		return (0);
 	create_tree(args, tokens, &ast, highest_prec(tokens));
 	if (ast)
 		interpret_tree(ast);
