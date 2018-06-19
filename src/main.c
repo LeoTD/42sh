@@ -1,6 +1,6 @@
 #include "ft_sh.h"
 #include "ast.h"
-#include <crt_externs.h>
+//#include <crt_externs.h>
 
 /*
 ** TODO:
@@ -8,7 +8,8 @@
 ** todo2 pick split_args error message
 */
 
-char		**g_environ;
+//char		**g_environ;
+extern char		**environ;
 
 void		parse_and_interpret(char **args)
 {
@@ -29,7 +30,7 @@ int			main(void)
 	char	**args;
 	char	*line;
 
-	g_environ = *_NSGetEnviron();
+//	g_environ = *_NSGetEnviron();
 	ft_prompt_history_set_len(200);
 	signal(SIGINT, SIG_IGN);
 	while (1)

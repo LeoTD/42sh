@@ -12,6 +12,9 @@
 # include <termios.h>
 # include <fcntl.h>
 
+# include <signal.h>
+# include <stdio.h>
+
 # define TERM_FD g_shell->term.fd
 
 /*
@@ -21,7 +24,7 @@
 # define OPCHAR(x) (x == '|' || x == '&' || x == ';' || x == '!')
 # define REDIR_CHAR(x) (x == '>' || x == '<')
 
-extern char				**g_environ;
+extern char				**environ;
 
 typedef struct			s_shell
 {

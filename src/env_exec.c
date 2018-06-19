@@ -63,14 +63,14 @@ char			**copy_environ_variables(void)
 	char		**new;
 
 	i = 0;
-	while (g_environ[i])
+	while (environ[i])
 		i++;
 	if (!(new = (char**)malloc(sizeof(char*) * (i + 1))))
 		return (NULL);
 	i = 0;
-	while (g_environ[i])
+	while (environ[i])
 	{
-		new[i] = ft_strdup(g_environ[i]);
+		new[i] = ft_strdup(environ[i]);
 		i++;
 	}
 	new[i] = NULL;
@@ -102,7 +102,7 @@ void			search_and_execute(char **all_bin_paths, t_ast *a)
 	{
 		if (access(all_bin_paths[i], X_OK) != -1)
 		{
-			execve(all_bin_paths[i], a->tokens, g_environ);
+			execve(all_bin_paths[i], a->tokens, environ);
 			break ;
 		}
 		i++;
@@ -124,7 +124,7 @@ void			env_exec(t_ast *a)
 
 	handle_redirs(a);
 	if (access(a->tokens[0], X_OK) != -1)
-		execve(a->tokens[0], a->tokens, g_environ);
+		execve(a->tokens[0], a->tokens, environ);
 	else
 	{
 		i = 0;
