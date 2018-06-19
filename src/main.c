@@ -60,7 +60,7 @@ int		parse_and_interpret(char **args)
 	if (ast)
 		interpret_tree(ast);
 	free(ast);
-	return (0);
+	return (1);
 }
 
 int			main(int argc, char **argv, char **environ)
