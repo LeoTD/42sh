@@ -11,12 +11,33 @@
 
 char		**g_environ;
 
+int			catch_unforkable(char **args)
+{
+	int		i;
+
+	i = 0;
+	while (i < NUM_HANDLED_BUILTINS)
+	{
+		if (i != BIN_ECHO && i != BIN_ENV
+				&& !ft_strcmp(args[0], g_builtin_str[i]))
+		{
+			g_builtins_dispatch[i](args + 1);
+			return (1);
+		}
+		++i;
+	}
+	return (0);
+}
+
 void		parse_and_interpret(char **args)
 {
 	t_ast	*ast;
 	int		*tokens;
 
 	ast = NULL;
+
+	if (catch_unforkable(args))
+		return ;
 	if (!(tokens = tokenize(args)))
 		return ;
 	create_tree(args, tokens, &ast, highest_prec(tokens));
@@ -30,7 +51,7 @@ int			main(int argc, char **argv, char **environ)
 	char	**args;
 	char	*line;
 
-	g_environ = environ;
+	g_environ = ft_strdup_2d(environ);
 	ft_prompt_history_set_len(200);
 	signal(SIGINT, SIG_IGN);
 	while (1)

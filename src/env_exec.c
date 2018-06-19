@@ -124,7 +124,6 @@ void			env_exec(t_ast *a)
 
 	extract_redirs(a);
 	handle_redirs(a);
-	try_builtin(a);
 	if (access(a->tokens[0], X_OK) != -1)
 		execve(a->tokens[0], a->tokens, g_environ);
 	else

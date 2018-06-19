@@ -53,16 +53,3 @@ void		builtin_cd(char **args)
 	}
 	exit(0);
 }
-
-void		try_builtin(t_ast *a)
-{
-	int		i;
-
-	i = 0;
-	while (i < NUM_HANDLED_BUILTINS)
-	{
-		if (ft_strcmp(a->tokens[0], g_builtin_str[i]) == 0)
-			g_builtins_dispatch[i](a->tokens + 1);
-		++i;
-	}
-}
