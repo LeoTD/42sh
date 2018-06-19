@@ -6,6 +6,7 @@
 ** TODO:
 ** todo1 free strings and tree
 ** todo2 pick split_args error message
+** todo better exit: handle `false || exit && echo hi`
 */
 
 char		**g_environ;
@@ -35,15 +36,12 @@ int			main(int argc, char **argv, char **environ)
 	while (1)
 	{
 		line = ft_prompt("echo_sh $> ");
-		if (!ft_strcmp(line, "exit"))
+		if (!ft_strspacecmp(line, "exit"))
 			exit(0);
 		line = parse_line(line);
 		ft_prompt_history_add(line);
 		if (syntax_error(line))
-		{
 			ft_putendl("La pendejada tiene un syntax incorrecto");
-			sleep(1);
-		}
 		else if (!(args = split_args(line)))
 			;
 		else

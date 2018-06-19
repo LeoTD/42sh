@@ -15,17 +15,6 @@ typedef enum	e_cmdtype
 # define LIST_PRECEDENCE OR
 # define MAX_CMDTYPE SEP
 
-typedef enum					e_cmdname
-{
-	ECH,
-	CD,
-	EXIT,
-	ENV,
-	SETENV,
-	UNSETENV,
-	END
-}								t_cmdname;
-
 typedef struct	s_ast
 {
 	char			**tokens;

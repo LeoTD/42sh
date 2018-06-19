@@ -41,14 +41,25 @@ void					parse_commands(t_shell *s, char *buf);
 ** Builtins
 */
 
-# define NUM_HANDLED_BUILTINS 3
+enum					e_builtin
+{
+	BIN_ECHO,
+	BIN_CD,
+	BIN_ENV,
+	BIN_SETENV,
+	BIN_UNSETENV,
+	NUM_HANDLED_BUILTINS
+};
 
-int						run_builtin(int id, char **args);
-int						is_builtin(char *str);
+typedef void t_builtin(char **args);
 
-int						ftsh_cd(char **args);
-int						ftsh_help(char **args);
-int						ftsh_exit(char **args);
+t_builtin				builtin_cd;
+t_builtin				builtin_env;
+t_builtin				builtin_setenv;
+t_builtin				builtin_unsetenv;
+t_builtin				builtin_echo;
+
+void					try_builtin(t_ast *a);
 
 /*
 ** Parser Functions
@@ -119,5 +130,6 @@ int						syntax_error(char *str);
 size_t		ft_strlens(char **strings, int *pcount);
 char		*ft_atos(char **strings);
 int			arr_length(char **a);
+int			ft_strspacecmp(char *s1, char *s2);
 void		ft_lstaddback(t_list **lst, t_list *add);
 #endif
