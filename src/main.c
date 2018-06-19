@@ -8,8 +8,7 @@
 ** todo2 pick split_args error message
 */
 
-//char		**g_environ;
-extern char		**environ;
+char		**g_environ;
 
 void		parse_and_interpret(char **args)
 {
