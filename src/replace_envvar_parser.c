@@ -1,5 +1,23 @@
 #include "ft_sh.h"
 
+char	*ft_get_env(char *name, char **env)
+{
+	int		i;
+
+	i = -1;
+	while (env[++i])
+	{
+		if (ft_strncmp(name, env[i], ft_strlen(name)) != 0)
+			;
+		else
+		{
+			if (env[i][ft_strlen(name) + 1] == '=')
+				return (env[i] + ft_strlen(name) + 1);
+		}
+	}
+	return (NULL);
+}
+
 
 /*
 ** ASSUMING THAT ENV, the one we are modiying

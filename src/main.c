@@ -22,6 +22,7 @@ void		parse_and_interpret(char **args)
 	if (ast)
 		interpret_tree(ast);
 	free(ast);
+	free(tokens);
 }
 
 int			main(int argc, char **argv, char **environ)
