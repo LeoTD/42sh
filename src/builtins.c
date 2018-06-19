@@ -44,12 +44,11 @@ void		builtin_echo(char **args)
 
 void		builtin_cd(char **args)
 {
-	if (args[1] == NULL)
+	if (args[0] == NULL)
 		ft_putstr_fd("expected argument to \"cd\"\n", STDERR_FILENO);
 	else
 	{
-		if (chdir(args[1]) != 0)
+		if (chdir(args[0]) != 0)
 			perror("42sh");
 	}
-	exit(0);
 }

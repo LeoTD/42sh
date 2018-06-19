@@ -18,8 +18,7 @@ int			catch_unforkable(char **args)
 	i = 0;
 	while (i < NUM_HANDLED_BUILTINS)
 	{
-		if (i != BIN_ECHO && i != BIN_ENV
-				&& !ft_strcmp(args[0], g_builtin_str[i]))
+		if (i != BIN_ECHO && !ft_strcmp(args[0], g_builtin_str[i]))
 		{
 			g_builtins_dispatch[i](args + 1);
 			return (1);

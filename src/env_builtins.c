@@ -4,6 +4,7 @@
  ** todo: free old key in setenv?
  ** TODO: handle case where key not already in env
  ** TODO: reserve extra space instead of reallocing entire env on every addition
+ ** TODO: much memory leaked in builtin_env
  */
 
 void	printenv(void)
@@ -36,13 +37,31 @@ void	add_env_entry(char *entry)
 
 void	builtin_env(char **args)
 {
+	char	**store_env;
+	char	**setenv_args;
+	char	*eq;
+	int		i;
+
 	if (args[0] == NULL)
 	{
 		printenv();
 		return ;
 	}
-	exit(0);
-	args = NULL;
+	i = 0;
+	store_env = ft_strdup_2d(g_environ);
+	setenv_args = ft_memalloc(3 * sizeof(char *));
+	while (args[i] && (eq = ft_strchr(args[i], '=')))
+	{
+		setenv_args[1] = ft_strdup(eq + 1);
+		ft_strclr(eq);
+		setenv_args[0] = ft_strdup(args[i++]);
+		builtin_setenv(setenv_args);
+	}
+	if (i > 0 && args[i] == NULL)
+		printenv();
+	else if (args[i])
+		parse_and_interpret(args + i);
+	g_environ = store_env;
 }
 
 void	builtin_setenv(char **args)
