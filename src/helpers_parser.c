@@ -21,7 +21,30 @@ char	*ft_strjoin_newline(char const *s1, char const *s2)
 	return (tmp);
 }
 
-int		cont_nbr_backslashes(char *str, int i)
+char	*ft_strsub_free(char **se, unsigned int start, size_t len)
+{
+	unsigned int		i;
+	char				*tmp;
+	char				*s;
+
+	s = *se;
+	if (!s)
+		return (0);
+	i = 0;
+	tmp = ft_strnew(len);
+	if (!tmp)
+		return (0);
+	while (i < len)
+	{
+		*(tmp + i) = *(s + start + i);
+		i++;
+	}
+	free(*se);
+	return (tmp);
+}
+
+
+int			cont_nbr_backslashes(char *str, int i)
 {
 	int		nbr_backslashes;
 

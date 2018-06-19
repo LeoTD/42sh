@@ -29,7 +29,8 @@ char		*concatinated_string(char type)
 }
 
 /*
-**	recursively solution for the inhbitors in the '\'
+**	recursively solution for the inhbitors in the '\' 
+**	norm solution - this can be changed to char array[4]
 */
 
 #define LAST_CHAR_BSLASH(x, i) (ft_strequ(ft_strstr(x + i, "\\"), "\\") == 1)
@@ -55,9 +56,11 @@ char		*concatined_newline(int i)
 				((N_SLASH(concat, e) % 2 == 0) || (N_SLASH(concat, e) == 0)))
 				{
 					extra = concatined_newline(e);
+					concat = ft_strsub_free(&concat, 0, ft_strlen(concat) - 1);
 					ALLO_AND_FREE(join, concat, extra);
 					concat = join;
 				}
+		temp = ft_strsub_free(&temp, 0, ft_strlen(temp) - 1);
 		ALLO_AND_FREE(join, temp, concat);
 		temp = join;
 	}
@@ -100,6 +103,7 @@ void		is_capsule_incomplete(char *str, char **temp)
 			(N_SLASH(str, i) == 0)))
 			{
 				concat = concatined_newline(i);
+				str = ft_strsub_free(&str, 0, ft_strlen(str) - 1);
 				ALLO_AND_FREE(tmp, str, concat);
 				str = tmp;
 			}

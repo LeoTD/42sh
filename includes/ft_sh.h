@@ -101,6 +101,7 @@ int						cont_nbr_backslashes(char *str, int i);
 char					*get_type_prompt(char value);
 void					cont_chars_capsules(char *str, char schar, int *cont);
 char					*ft_strjoin_newline(char const *s1, char const *s2);
+char					*ft_strsub_free(char **se, unsigned int start, size_t len);
 
 /*
 ** PARSE_LINE.c
