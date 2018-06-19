@@ -1,13 +1,10 @@
 #!/bin/bash
 
 function reportit() {
-	ours="$1"
-	theirs="$2"
-	[[ "$ours" == "$theirs" ]] && ok=1 || ok=0
-	if [[ $ok ]]; then
-		echo "ok: $ours"
+	if [[ "$1" == "$2" ]]; then
+		echo "ok: $1"
 	else
-		echo "fail: $ours != $theirs"
+		printf "fail:\n\texpected '$2'\n\tgot '$1'\n"
 	fi
 }
 
@@ -22,13 +19,19 @@ function testit() {
 	while read -r line2; do
 		theirary+=("$line2")
 	done < <(eval "$1")
-	reportit "${ourary[*]}" "${theirary[*]}"
+
+	oursjoined=$( IFS=, ; echo "${ourary[*]}" )
+	theirsjoined=$( IFS=, ; echo "${theirary[*]}" )
+
+	reportit "$oursjoined" "$theirsjoined"
 }
 
 function testem() {
 	testit "echo hello world";
 	testit "echo hello world | tr a-z A-Z";
 	testit "echo hw | grep nope && echo no || echo yes"
+	testit "echo a && echo b && echo c || echo d || echo e && echo f"
+	testit "echo hw 2>&1 >afile; cat afile"
 };
 
 testem
