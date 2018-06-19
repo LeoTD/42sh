@@ -1,0 +1,34 @@
+#!/bin/bash
+
+function reportit() {
+	ours="$1"
+	theirs="$2"
+	[[ "$ours" == "$theirs" ]] && ok=1 || ok=0
+	if [[ $ok ]]; then
+		echo "ok: $ours"
+	else
+		echo "fail: $ours != $theirs"
+	fi
+}
+
+function testit() {
+	declare -a ourary
+	declare -a theirary
+
+	while read -r line; do
+		ourary+=("$line")
+	done < <(../42sh $1)
+
+	while read -r line2; do
+		theirary+=("$line2")
+	done < <(eval "$1")
+	reportit "${ourary[*]}" "${theirary[*]}"
+}
+
+function testem() {
+	testit "echo hello world";
+	testit "echo hello world | tr a-z A-Z";
+	testit "echo hw | grep nope && echo no || echo yes"
+};
+
+testem
