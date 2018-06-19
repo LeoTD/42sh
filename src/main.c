@@ -28,47 +28,57 @@ int			catch_unforkable(char **args)
 	return (0);
 }
 
-void		parse_and_interpret(char **args)
+char	**split_valid_line(char *line)
+{
+	char	**args;
+
+	if (!ft_strspacecmp(line, "exit"))
+		exit(0);
+	line = parse_line(line);
+	if (syntax_error(line))
+	{
+		ft_putendl("La pendejada tiene un syntax incorrecto");
+		return (NULL);
+	}
+	else if (!(args = split_args(line)))
+		return (NULL);
+	free(line);
+	return (args);
+}
+
+int		parse_and_interpret(char **args)
 {
 	t_ast	*ast;
 	int		*tokens;
 
 	ast = NULL;
-
 	if (catch_unforkable(args))
-		return ;
+		return (0);
 	if (!(tokens = tokenize(args)))
-		return ;
+		return (1);
 	create_tree(args, tokens, &ast, highest_prec(tokens));
 	if (ast)
 		interpret_tree(ast);
 	free(ast);
+	return (0);
 }
 
 int			main(int argc, char **argv, char **environ)
 {
-	char	**args;
 	char	*line;
+	char	**args;
 
 	g_environ = ft_strdup_2d(environ);
-	ft_prompt_history_set_len(200);
 	signal(SIGINT, SIG_IGN);
+	if (argc > 1)
+		return (parse_and_interpret(argv + 1));
+	ft_prompt_history_set_len(200);
 	while (1)
 	{
 		line = ft_prompt("echo_sh $> ");
-		if (!ft_strspacecmp(line, "exit"))
-			exit(0);
-		line = parse_line(line);
 		ft_prompt_history_add(line);
-		if (syntax_error(line))
-			ft_putendl("La pendejada tiene un syntax incorrecto");
-		else if (!(args = split_args(line)))
-			;
-		else
-			parse_and_interpret(args);
-		free(line);
+		if (!(args = split_valid_line(line)) || !(parse_and_interpret(args)))
+			ft_putstr_fd("Parse error\n", 2);
 	}
-	argc = 0;
-	argv = 0;
 	return (0);
 }

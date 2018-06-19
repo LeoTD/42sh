@@ -52,7 +52,7 @@ t_ast			*ast_node(void);
 t_ast			*opnode(t_cmdtype type);
 t_ast			*cmd_node(char **tokens);
 
-void			parse_and_interpret(char **args);
+int				parse_and_interpret(char **args);
 void			interpret_tree(t_ast *tree);
 int				encounter_pipe(t_ast *a);
 void			handle_redirs(t_ast *leaf);
