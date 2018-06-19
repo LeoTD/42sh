@@ -39,6 +39,8 @@ FILES		= main.c \
 			  builtins.c \
 			  builtin_util.c \
 			  env_exec.c \
+			  util.c \
+			  extract_redirs.c \
 
 SRC			= $(addprefix src/, $(FILES))
 

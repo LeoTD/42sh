@@ -25,12 +25,12 @@ void		parse_and_interpret(char **args)
 	free(ast);
 }
 
-int			main(void)
+int			main(int argc, char **argv, char **environ)
 {
 	char	**args;
 	char	*line;
 
-//	g_environ = *_NSGetEnviron();
+	g_environ = environ;
 	ft_prompt_history_set_len(200);
 	signal(SIGINT, SIG_IGN);
 	while (1)
@@ -41,12 +41,17 @@ int			main(void)
 		line = parse_line(line);
 		ft_prompt_history_add(line);
 		if (syntax_error(line))
+		{
 			ft_putendl("La pendejada tiene un syntax incorrecto");
+			sleep(1);
+		}
 		else if (!(args = split_args(line)))
 			;
 		else
 			parse_and_interpret(args);
 		free(line);
 	}
+	argc = 0;
+	argv = 0;
 	return (0);
 }

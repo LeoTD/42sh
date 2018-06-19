@@ -42,7 +42,6 @@ int		encounter_pipe(t_ast *a)
 	pid = fork();
 	if (pid == -1)
 	{
-		fprintf(stderr, "Fork error\n");
 		_exit(1);
 	}
 	return (await_exit_status(pid, fd, a));
@@ -94,7 +93,6 @@ void	interpret_tree(t_ast *tree)
 	pid = fork();
 	if (pid == -1)
 	{
-		fprintf(stderr, "Fork error\n");
 		_exit(1);
 	}
 	else if (!pid)
