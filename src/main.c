@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/20 07:56:40 by eliu              #+#    #+#             */
+/*   Updated: 2018/06/20 08:33:48 by eliu             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_sh.h"
 #include "ast.h"
 #include <crt_externs.h>
@@ -28,7 +40,7 @@ int			catch_unforkable(char **args)
 	return (0);
 }
 
-char	**split_valid_line(char *line)
+char		**split_valid_line(char *line)
 {
 	char	**args;
 
@@ -37,7 +49,7 @@ char	**split_valid_line(char *line)
 	line = parse_line(line);
 	if (syntax_error(line))
 	{
-		ft_putendl("La pendejada tiene un syntax incorrecto");
+		ft_putendl("./42sh Invalid syntax");
 		return (NULL);
 	}
 	else if (!(args = split_args(line)))
@@ -46,7 +58,7 @@ char	**split_valid_line(char *line)
 	return (args);
 }
 
-int		parse_and_interpret(char **args)
+int			parse_and_interpret(char **args)
 {
 	t_ast	*ast;
 	int		*tokens;

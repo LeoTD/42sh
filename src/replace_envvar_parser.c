@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   replace_envvar_parser.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/20 07:53:09 by eliu              #+#    #+#             */
+/*   Updated: 2018/06/20 07:55:51 by eliu             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_sh.h"
 
 char	*ft_get_env(char *name, char **env)
@@ -39,7 +51,7 @@ void	ft_set_env(char *name, char *val, char **env)
 {
 	int		i;
 	size_t	len;
-	char *entry;
+	char	*entry;
 
 	entry = ft_strjoinv(2, "=", name, val);
 	i = -1;
@@ -47,11 +59,11 @@ void	ft_set_env(char *name, char *val, char **env)
 	while (env[++i])
 	{
 		if (ft_strlen(env[i]) >= len)
-		if (!(ft_strncmp(env[i], name, len)) && env[i][len] == '=')
-		{
-			env[i] = entry;
-			return ;
-		}
+			if (!(ft_strncmp(env[i], name, len)) && env[i][len] == '=')
+			{
+				env[i] = entry;
+				return ;
+			}
 	}
 	add_env_entry(entry);
 }

@@ -39,6 +39,7 @@ FILES		= main.c \
 			  env_builtins.c \
 			  env_exec.c \
 			  util.c \
+			  util2.c \
 			  extract_redirs.c \
 			  replace_envvar_parser.c \
 

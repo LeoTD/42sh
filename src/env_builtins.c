@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_builtins.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/20 07:56:19 by eliu              #+#    #+#             */
+/*   Updated: 2018/06/20 08:41:54 by eliu             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_sh.h"
 
 /*
- ** todo: free old key in setenv?
- ** TODO: handle case where key not already in env
- ** TODO: reserve extra space instead of reallocing entire env on every addition
- ** TODO: much memory leaked in builtin_env
- */
+** todo: free old key in setenv?
+** TODO: handle case where key not already in env
+** TODO: reserve extra space instead of reallocing entire env on every addition
+** TODO: much memory leaked in builtin_env
+*/
 
 void	printenv(void)
 {
@@ -16,7 +28,7 @@ void	printenv(void)
 		ft_putendl(g_environ[i++]);
 }
 
-void	builtin_env(char **args)
+void	g_builtin_env(char **args)
 {
 	char	**store_env;
 	char	**setenv_args;
@@ -36,7 +48,7 @@ void	builtin_env(char **args)
 		setenv_args[1] = ft_strdup(eq + 1);
 		ft_strclr(eq);
 		setenv_args[0] = ft_strdup(args[i++]);
-		builtin_setenv(setenv_args);
+		g_builtin_setenv(setenv_args);
 	}
 	if (i > 0 && args[i] == NULL)
 		printenv();
@@ -45,7 +57,7 @@ void	builtin_env(char **args)
 	g_environ = store_env;
 }
 
-void	builtin_setenv(char **args)
+void	g_builtin_setenv(char **args)
 {
 	int		i;
 	char	*val;
@@ -60,7 +72,7 @@ void	builtin_setenv(char **args)
 	ft_set_env(args[0], val, g_environ);
 }
 
-void	builtin_unsetenv(char **args)
+void	g_builtin_unsetenv(char **args)
 {
 	int		i;
 	size_t	keylen;

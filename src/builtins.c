@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/20 08:02:17 by eliu              #+#    #+#             */
+/*   Updated: 2018/06/20 08:41:29 by eliu             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_sh.h"
 #include <sys/param.h>
 
@@ -10,11 +22,11 @@ char		*g_builtin_str[NUM_HANDLED_BUILTINS] = {
 };
 
 t_builtin	*g_builtins_dispatch[NUM_HANDLED_BUILTINS] = {
-	[BIN_CD] = builtin_cd,
-	[BIN_ENV] = builtin_env,
-	[BIN_ECHO] = builtin_echo,
-	[BIN_SETENV] = builtin_setenv,
-	[BIN_UNSETENV] = builtin_unsetenv,
+	[BIN_CD] = g_builtin_cd,
+	[BIN_ENV] = g_builtin_env,
+	[BIN_ECHO] = g_builtin_echo,
+	[BIN_SETENV] = g_builtin_setenv,
+	[BIN_UNSETENV] = g_builtin_unsetenv,
 };
 
 /*
@@ -29,7 +41,7 @@ t_builtin	*g_builtins_dispatch[NUM_HANDLED_BUILTINS] = {
 ** todo: handle echo -n flag
 */
 
-void		builtin_echo(char **args)
+void		g_builtin_echo(char **args)
 {
 	int fd;
 
@@ -45,7 +57,7 @@ void		builtin_echo(char **args)
 	exit(0);
 }
 
-void		builtin_cd(char **args)
+void		g_builtin_cd(char **args)
 {
 	char	*dest;
 	char	*cwd;

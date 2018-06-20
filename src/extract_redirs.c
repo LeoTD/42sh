@@ -1,6 +1,19 @@
-#include "ft_sh.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extract_redirs.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/20 07:56:29 by eliu              #+#    #+#             */
+/*   Updated: 2018/06/20 08:34:40 by eliu             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	g_oflags[3] =
+#include "ft_sh.h"
+#define REDIR(x, y)	(redir_start = ft_strchr(x, y))
+
+int				g_oflags[3] =
 {
 	[INPUT] = O_RDONLY,
 	[TRUNC] = O_CREAT | O_TRUNC | O_WRONLY,
@@ -12,10 +25,10 @@ t_redir			*new_redir(void)
 	return ((t_redir *)ft_memalloc(sizeof(t_redir)));
 }
 
-t_redir			*new_full_redir(int left, enum e_redirect op, char *right,
-		int is_fd)
+t_redir			*new_full_redir(int left, enum e_redirect op, char *right, \
+				int is_fd)
 {
-	t_redir *r;
+	t_redir		*r;
 
 	r = new_redir();
 	r->to_fd = left;
@@ -27,19 +40,24 @@ t_redir			*new_full_redir(int left, enum e_redirect op, char *right,
 
 void			append_redir(t_ast *a, t_redir *r)
 {
-	t_list	*lst;
+	t_list		*lst;
 
 	lst = ft_lstnew(r, sizeof(*r));
 	ft_lstaddback(&(a->redirs), lst);
 }
 
-static t_redir	*get_redir_match(char *s)
-{
-	char	*redir_start;
-	t_redir	*r;
+/*
+**	if (!(redir_start = ft_strchr(s, '>')
+**	&& !(redir_start = ft_strchr(s, '<')))
+**		return (NULL);
+*/
 
-	if (!(redir_start = ft_strchr(s, '>'))
-			&& !(redir_start = ft_strchr(s, '<')))
+t_redir			*get_redir_match(char *s)
+{
+	char		*redir_start;
+	t_redir		*r;
+
+	if (!(REDIR(s, '>') && !(REDIR(s, '<'))))
 		return (NULL);
 	if (!(ft_strchr("1234567890 \t", *(redir_start - 1))))
 		return (NULL);
@@ -65,10 +83,10 @@ static t_redir	*get_redir_match(char *s)
 
 void			extract_redirs(t_ast *a)
 {
-	char	**cmd;
-	char	**filtered;
-	int		i;
-	t_redir	*r;
+	char		**cmd;
+	char		**filtered;
+	int			i;
+	t_redir		*r;
 
 	cmd = a->tokens;
 	filtered = ft_memalloc((arr_length(cmd) + 1) * sizeof(*cmd));

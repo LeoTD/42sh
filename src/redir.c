@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/20 07:57:00 by eliu              #+#    #+#             */
+/*   Updated: 2018/06/20 08:01:49 by eliu             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ast.h"
 #include <unistd.h>
 #include <fcntl.h>
 
 /*
- ** Handling redirections for individual command nodes.
- */
+** Handling redirections for individual command nodes.
+*/
 
 int		redir_source_fd(t_redir *redir)
 {

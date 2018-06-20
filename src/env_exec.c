@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_exec.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/20 07:56:25 by eliu              #+#    #+#             */
+/*   Updated: 2018/06/20 08:32:40 by eliu             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_sh.h"
 #include "ast.h"
 #include "libft.h"
@@ -97,16 +109,13 @@ void			search_and_execute(char **all_bin_paths, t_ast *a)
 		free(temp);
 		i++;
 	}
-	i = 0;
-	while (all_bin_paths[i])
-	{
+	i = -1;
+	while (all_bin_paths[++i])
 		if (access(all_bin_paths[i], X_OK) != -1)
 		{
 			execve(all_bin_paths[i], a->tokens, g_environ);
 			break ;
 		}
-		i++;
-	}
 }
 
 /*
@@ -125,20 +134,17 @@ void			env_exec(t_ast *a)
 	extract_redirs(a);
 	handle_redirs(a);
 	if (!ft_strcmp(a->tokens[0], g_builtin_str[BIN_ECHO]))
-		builtin_echo(a->tokens + 1);
+		g_builtin_echo(a->tokens + 1);
 	if (access(a->tokens[0], X_OK) != -1)
 		execve(a->tokens[0], a->tokens, g_environ);
 	else
 	{
-		i = 0;
+		i = -1;
 		temp = NULL;
 		environment_copy = copy_environ_variables();
-		while (environment_copy && environment_copy[i])
-		{
+		while (environment_copy && environment_copy[++i])
 			if (ft_strnstr(environment_copy[i], "PATH=", 5))
 				temp = ft_strdup(environment_copy[i]);
-			i++;
-		}
 		if (temp)
 			search_and_execute(strsplit_paths(temp + 5, 0, 0), a);
 		else

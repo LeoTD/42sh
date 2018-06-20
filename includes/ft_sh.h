@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_sh.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/20 08:00:31 by eliu              #+#    #+#             */
+/*   Updated: 2018/06/20 08:26:26 by eliu             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_SH_H
 # define FT_SH_H
 
@@ -51,16 +63,16 @@ enum					e_builtin
 	NUM_HANDLED_BUILTINS
 };
 
-typedef void t_builtin(char **args);
+typedef void			t_builtin(char **args);
 
 extern char				*g_builtin_str[NUM_HANDLED_BUILTINS];
 extern t_builtin		*g_builtins_dispatch[NUM_HANDLED_BUILTINS];
 
-t_builtin				builtin_cd;
-t_builtin				builtin_env;
-t_builtin				builtin_setenv;
-t_builtin				builtin_unsetenv;
-t_builtin				builtin_echo;
+t_builtin				g_builtin_cd;
+t_builtin				g_builtin_env;
+t_builtin				g_builtin_setenv;
+t_builtin				g_builtin_unsetenv;
+t_builtin				g_builtin_echo;
 
 /*
 ** Parser Functions
@@ -128,16 +140,16 @@ int						syntax_error(char *str);
 ** General utility functions
 */
 
-size_t		ft_strlens(char **strings, int *pcount);
-char		*ft_atos(char **strings);
-int			arr_length(char **a);
-int			ft_strspacecmp(char *s1, char *s2);
-void		ft_lstaddback(t_list **lst, t_list *add);
-char		*ft_strjoinv(int nstr, char *sep, ...);
-void		ft_strcpy_2d(char **dst, char **src);
-char		**ft_strdup_2d(char **src);
-void		ft_swap_str(char **s1, char **s2);
-char		*ft_get_env(char *name, char **env);
-void		add_env_entry(char *entry);
-void		ft_set_env(char *name, char *val, char **env);
+size_t					ft_strlens(char **strings, int *pcount);
+char					*ft_atos(char **strings);
+int						arr_length(char **a);
+int						ft_strspacecmp(char *s1, char *s2);
+void					ft_lstaddback(t_list **lst, t_list *add);
+char					*ft_strjoinv(int nstr, char *sep, ...);
+void					ft_strcpy_2d(char **dst, char **src);
+char					**ft_strdup_2d(char **src);
+void					ft_swap_str(char **s1, char **s2);
+char					*ft_get_env(char *name, char **env);
+void					add_env_entry(char *entry);
+void					ft_set_env(char *name, char *val, char **env);
 #endif
