@@ -124,6 +124,8 @@ void			env_exec(t_ast *a)
 
 	extract_redirs(a);
 	handle_redirs(a);
+	if (!ft_strcmp(a->tokens[0], g_builtin_str[BIN_ECHO]))
+		builtin_echo(a->tokens + 1);
 	if (access(a->tokens[0], X_OK) != -1)
 		execve(a->tokens[0], a->tokens, g_environ);
 	else

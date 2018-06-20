@@ -14,7 +14,7 @@ function testit() {
 
 	while read -r line; do
 		ourary+=("$line")
-	done < <(../42sh $1)
+	done < <(./42sh $1)
 
 	while read -r line2; do
 		theirary+=("$line2")

@@ -30,7 +30,9 @@ t_builtin	*g_builtins_dispatch[NUM_HANDLED_BUILTINS] = {
 
 void		builtin_echo(char **args)
 {
-	int fd = dup(1);
+	int fd;
+
+	fd = dup(1);
 	while (*args)
 	{
 		ft_putstr_fd(*args, fd);
