@@ -1,4 +1,5 @@
 #include "ft_sh.h"
+#include <sys/param.h>
 
 char		*g_builtin_str[NUM_HANDLED_BUILTINS] = {
 	[BIN_CD] = "cd",
@@ -46,11 +47,21 @@ void		builtin_echo(char **args)
 
 void		builtin_cd(char **args)
 {
+	char	*dest;
+	char	*cwd;
+
+	cwd = getcwd(NULL, MAXPATHLEN);
 	if (args[0] == NULL)
-		ft_putstr_fd("expected argument to \"cd\"\n", STDERR_FILENO);
+		dest = ft_get_env("HOME", g_environ);
+	else if (!ft_strcmp(args[0], "-"))
+		dest = ft_get_env("OLDPWD", g_environ);
+	else
+		dest = args[0];
+	if (chdir(dest) != 0)
+		perror("42sh");
 	else
 	{
-		if (chdir(args[0]) != 0)
-			perror("42sh");
+		ft_set_env("OLDPWD", cwd, g_environ);
+		ft_set_env("PWD", getcwd(NULL, MAXPATHLEN), g_environ);
 	}
 }

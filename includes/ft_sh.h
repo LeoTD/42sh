@@ -136,4 +136,8 @@ void		ft_lstaddback(t_list **lst, t_list *add);
 char		*ft_strjoinv(int nstr, char *sep, ...);
 void		ft_strcpy_2d(char **dst, char **src);
 char		**ft_strdup_2d(char **src);
+void		ft_swap_str(char **s1, char **s2);
+char		*ft_get_env(char *name, char **env);
+void		add_env_entry(char *entry);
+void		ft_set_env(char *name, char *val, char **env);
 #endif

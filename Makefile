@@ -40,6 +40,7 @@ FILES		= main.c \
 			  env_exec.c \
 			  util.c \
 			  extract_redirs.c \
+			  replace_envvar_parser.c \
 
 SRC			= $(addprefix src/, $(FILES))
 

@@ -127,3 +127,12 @@ char		**ft_strdup_2d(char **src)
 	ft_strcpy_2d(dst, src);
 	return (dst);
 }
+
+void		ft_swap_str(char **s1, char **s2)
+{
+	char *tmp;
+
+	tmp = *s1;
+	*s1 = *s2;
+	*s2 = tmp;
+}
