@@ -29,7 +29,7 @@ char	*ft_get_env(char *name, char **env)
 #define IS_ENV_VAR(x, y) (x[y] == '$')
 #define IS_CAPSULE (str[i] == '\"' || str[i] == '\'' || str[i] == '`')
 
-int			nbr_positions(char *str)
+int			nbr_positions_f(char *str)
 {
 	int		i;
 	int		nbr_positions;
@@ -55,7 +55,7 @@ int			nbr_positions(char *str)
 	return (nbr_positions);
 }
 
-int			*look_for_positions(char *str)
+int			*look_for_positions(char *str, int nbr_positions)
 {
 	int		*positions;
 	int		i;
@@ -65,7 +65,7 @@ int			*look_for_positions(char *str)
 	e = 0;
 	i = -1;
 	inside_quotes = 0;
-	positions = (int*)ft_memalloc(sizeof(int) * nbr_positions(str));
+	positions = (int*)ft_memalloc(sizeof(int) * nbr_positions);
 	while (str[++i])
 	{
 		if (IS_CAPSULE && ((i == 0) || (str[i - 1] != '\\')))
@@ -74,7 +74,7 @@ int			*look_for_positions(char *str)
 			else
 				inside_quotes = 0;
 		else if (IS_ENV_VAR(str, i) && ((i == 0) || (str[i - 1] != '\\')) \
-				&& (inside_quotes == 0) \
+				&& (inside_quotes == 0) && \
 				(str[i + 1] != '\0' || str[i + 1] != '$'))
 		{
 			positions[e] = i;
@@ -127,7 +127,7 @@ int			*length_of_envars(char *str, int *positions, int size_positions)
 			length++;
 			e++;
 		}
-		length_of_vars = length;
+		length_of_vars[i] = length;
 	}
 	// a while throught the positions to find the end or end of the string
 	// basically str[i] != WHITESPACES || str[i] != '\0'
@@ -136,7 +136,10 @@ int			*length_of_envars(char *str, int *positions, int size_positions)
 
 char		*replaced_string(char *str, int *post, int *post_len)
 {
-	
+//	char	*temp;
+
+
+//	return (temp);
 }
 
 void		look_and_replace_vars(char *str, char **temp)
@@ -144,19 +147,39 @@ void		look_and_replace_vars(char *str, char **temp)
 //	int		i;
 	int		*positions;
 	int		*length_positions;
+	int		nbr_positions;
 
+	nbr_positions = nbr_positions_f(str); //testing
 	*temp = str;
-	positions = look_for_positions(str);
+	positions = look_for_positions(str, nbr_positions);
 	if (positions == NULL)
 		return ;
-	length_positions = length_of_envars;
+	length_positions = length_of_envars(str, positions, nbr_positions);
 	if (length_positions == NULL)
 		return ;
 	// look for positions - checking that they are not in QUOTES or have a
 	// backslash behind them
-	*temp = ;// function that handle this shit
+	// TESTING PRINT
+	int		i;
+
+	i = -1;
+	while (++i < nbr_positions)
+		printf("testing positions = |%d|\n", positions[i]);
+	i = -1;
+	while (++i < nbr_positions)
+		printf("testing len = |%d|\n", length_positions[i]);
+
+//	*temp = ;// function that handle this shit
+
 	free(positions);
+	free(length_positions);
 }
+
+/*
+** maybe you can call **str so after you replace the string you
+** can free the address
+*/
+
 
 char		*replace_env_vars(char *str)
 {

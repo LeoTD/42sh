@@ -40,6 +40,8 @@ int			main(int argc, char **argv, char **environ)
 			exit(0);
 		line = parse_line(line);
 		ft_prompt_history_add(line);
+		line = replace_env_vars(line); // testing function
+		printf("%s\n", line); // testing line
 		if (syntax_error(line))
 		{
 			ft_putendl("La pendejada tiene un syntax incorrecto");

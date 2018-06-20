@@ -117,6 +117,12 @@ char					*parse_line(char *str);
 int						syntax_error(char *str);
 
 /*
+** REPLACE_ENVVAR_PARSER.c*
+*/
+
+char		*replace_env_vars(char *str);
+
+/*
 ** General utility functions
 */
 

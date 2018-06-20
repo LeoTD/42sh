@@ -34,6 +34,7 @@ FILES		= main.c \
 			  ast.c \
 			  redir.c \
 			  parse_line.c \
+			  replace_envvar_parser.c \
 			  helpers_parser.c \
 			  brackets_parse_line.c \
 			  builtins.c \
