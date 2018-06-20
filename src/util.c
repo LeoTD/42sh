@@ -1,24 +1,34 @@
 #include "libft.h"
 #include <stdarg.h>
+#include <stdio.h>
 
 int			ft_strspacecmp(char *s1, char *s2)
 {
-	int	i;
-	int	j;
+	size_t	i;
+	size_t	j;
 
-	while (ft_isspace(*s1))
+	while (*s1 && ft_isspace(*s1))
 		++s1;
-	while (ft_isspace(*s2))
+	while (*s2 && ft_isspace(*s2))
 		++s2;
-	i = 0;
-	while (!(ft_isspace(s1[i])))
-		++i;
-	j = 0;
-	while (!(ft_isspace(s2[j])))
-		++j;
-	if (i < j)
-		return (ft_strncmp(s1, s2, i));
-	return (ft_strncmp(s1, s2, j));
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	while (i > 0 && ft_isspace(s1[i - 1]))
+		--i;
+	while (j > 0 && ft_isspace(s2[j - 1]))
+		--j;
+	while (i && j && *s1 == *s2)
+	{
+		++s1;
+		++s2;
+		--i;
+		--j;
+	}
+	if (i == 0 && j == 0)
+		return (0);
+	if (i == 0)
+		return (*s2);
+	return (*s1);
 }
 
 size_t		ft_strlens(char **a, int *pcount)

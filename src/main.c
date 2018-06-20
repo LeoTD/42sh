@@ -76,6 +76,8 @@ int			main(int argc, char **argv, char **environ)
 	while (1)
 	{
 		line = ft_prompt("echo_sh $> ");
+		if (!ft_strlen(line) || !ft_strspacecmp(line, ""))
+			continue ;
 		ft_prompt_history_add(line);
 		if (!(args = split_valid_line(line)) || !(parse_and_interpret(args)))
 			ft_putstr_fd("Parse error\n", 2);
