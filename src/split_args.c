@@ -55,8 +55,8 @@ int			skip_char(char *format, int *i, char c)
 			l_count += format[(*i)++] == '<' ? 1 : 0;
 		}
 	else if (c == '"')
-		while (format[++(*i)] != c && format[*i])
-			;
+		while (format[(*i) + 1] != c && format[*i])
+		  (*i)++;
 	else if (c == ' ')
 		while (format[*i] == c && format[*i])
 			(*i)++;
@@ -82,7 +82,7 @@ char		*find_next(int *i, char *format, int end, char *tmp)
 			tmp = ft_strsub(format, *i, end - *i);
 		else if (format[*i] == '"' && skip_char(format, &end, '"')
 				&& (toggle = 1))
-			tmp = ft_strsub(format, *i, ((end += 1) - *i));
+		  tmp = ft_strsub(format, (*i + 1), ((end += 1) - *i) - 1);
 		else if (is_shovel(format, *i) && skip_char(format, &end, '>')
 				&& (toggle = 1))
 			tmp = ft_strsub(format, *i, end - *i);

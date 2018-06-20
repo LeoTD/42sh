@@ -1,16 +1,6 @@
 #include "ft_sh.h"
 #include "ast.h"
 
-char	*g_cmd_symbols[] =
-{
-	[SEP] = ";",
-	[AND] = "&&",
-	[OR] = "||",
-	[NEGATE] = "!",
-	[PIPE] = "|",
-	[CMD] = NULL
-};
-
 char	**fetch_tokens(char **args)
 {
 	char	**ptr;

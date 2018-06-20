@@ -38,7 +38,7 @@ FILES		= main.c \
 			  helpers_parser.c \
 			  brackets_parse_line.c \
 			  builtins.c \
-			  builtin_util.c \
+			  env_builtins.c \
 			  env_exec.c \
 			  util.c \
 			  extract_redirs.c \

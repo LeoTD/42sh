@@ -25,6 +25,7 @@
 # define REDIR_CHAR(x) (x == '>' || x == '<')
 
 extern char				**environ;
+extern char				**g_environ;
 
 typedef struct			s_shell
 {
@@ -44,14 +45,26 @@ void					parse_commands(t_shell *s, char *buf);
 ** Builtins
 */
 
-# define NUM_HANDLED_BUILTINS 3
+enum					e_builtin
+{
+	BIN_ECHO,
+	BIN_CD,
+	BIN_ENV,
+	BIN_SETENV,
+	BIN_UNSETENV,
+	NUM_HANDLED_BUILTINS
+};
 
-int						run_builtin(int id, char **args);
-int						is_builtin(char *str);
+typedef void t_builtin(char **args);
 
-int						ftsh_cd(char **args);
-int						ftsh_help(char **args);
-int						ftsh_exit(char **args);
+extern char				*g_builtin_str[NUM_HANDLED_BUILTINS];
+extern t_builtin		*g_builtins_dispatch[NUM_HANDLED_BUILTINS];
+
+t_builtin				builtin_cd;
+t_builtin				builtin_env;
+t_builtin				builtin_setenv;
+t_builtin				builtin_unsetenv;
+t_builtin				builtin_echo;
 
 /*
 ** Parser Functions
@@ -129,5 +142,9 @@ char		*replace_env_vars(char *str);
 size_t		ft_strlens(char **strings, int *pcount);
 char		*ft_atos(char **strings);
 int			arr_length(char **a);
+int			ft_strspacecmp(char *s1, char *s2);
 void		ft_lstaddback(t_list **lst, t_list *add);
+char		*ft_strjoinv(int nstr, char *sep, ...);
+void		ft_strcpy_2d(char **dst, char **src);
+char		**ft_strdup_2d(char **src);
 #endif
