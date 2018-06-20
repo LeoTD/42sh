@@ -27,11 +27,18 @@ function testit() {
 }
 
 function testem() {
+	# Quotes are always screwed up when testing this way, whether they work
+	# in the interactive shell or not. Also, in here we have to leave spaces
+	# around &&, || and semicolon. Not true in the actual program.
 	testit "echo hello world";
 	testit "echo hello world | tr a-z A-Z";
 	testit "echo hw | grep nope && echo no || echo yes"
 	testit "echo a && echo b && echo c || echo d || echo e && echo f"
-	testit "echo hw 2>&1 >afile; cat afile"
+	testit "echo simple trunc redirect | sed s/trunc// >afile ; cat afile"
+	testit "cat < author"
+	testit "echo trunc > afile ; echo append >> afile ; cat afile"
+	testit "echo redirect with fds 2>&1 >afile ; cat afile"
+	rm afile
 };
 
 testem
