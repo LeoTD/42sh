@@ -6,7 +6,7 @@
 /*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:56:37 by eliu              #+#    #+#             */
-/*   Updated: 2018/06/27 02:03:34 by jgelbard         ###   ########.fr       */
+/*   Updated: 2018/06/27 02:26:17 by jgelbard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		encounter_pipe(t_ast *a)
 	{
 		_exit(1);
 	}
-	exit(await_exit_status(pid, fd, a));
+	return (await_exit_status(pid, fd, a));
 }
 
 int		ok_next_list(t_ast *a, int exit_status)
@@ -90,7 +90,8 @@ void	encounter_new_list(t_ast *a, t_ast *prev)
 	}
 	else if (a->type < LIST_PRECEDENCE)
 	{
-		encounter_pipe(a);
+		status = encounter_pipe(a);
+		exit(status);
 	}
 	else
 	{
