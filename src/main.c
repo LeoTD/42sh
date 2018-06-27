@@ -6,7 +6,7 @@
 /*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:56:40 by eliu              #+#    #+#             */
-/*   Updated: 2018/06/20 08:33:48 by eliu             ###   ########.fr       */
+/*   Updated: 2018/06/27 01:57:28 by jgelbard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int			main(int argc, char **argv, char **environ)
 	ft_prompt_history_set_len(200);
 	while (1)
 	{
-		line = ft_prompt("echo_sh $> ");
+		line = ft_prompt("42sh $> ");
 		if (!ft_strlen(line) || !ft_strspacecmp(line, ""))
 			continue ;
 		ft_prompt_history_add(line);
