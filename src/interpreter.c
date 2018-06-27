@@ -6,7 +6,7 @@
 /*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:56:37 by eliu              #+#    #+#             */
-/*   Updated: 2018/06/20 08:05:59 by eliu             ###   ########.fr       */
+/*   Updated: 2018/06/27 02:03:34 by jgelbard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		encounter_pipe(t_ast *a)
 	{
 		_exit(1);
 	}
-	exit (await_exit_status(pid, fd, a));
+	exit(await_exit_status(pid, fd, a));
 }
 
 int		ok_next_list(t_ast *a, int exit_status)
