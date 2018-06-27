@@ -6,7 +6,7 @@
 /*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:56:25 by eliu              #+#    #+#             */
-/*   Updated: 2018/06/20 08:32:40 by eliu             ###   ########.fr       */
+/*   Updated: 2018/06/27 00:10:55 by eliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,8 @@ void			search_and_execute(char **all_bin_paths, t_ast *a)
 	i = -1;
 	while (all_bin_paths[++i])
 		if (access(all_bin_paths[i], X_OK) != -1)
-		{
 			execve(all_bin_paths[i], a->tokens, g_environ);
-			break ;
-		}
+	ft_printf("Error: Command %s not found\n", a->token[0]);
 }
 
 /*
@@ -147,8 +145,6 @@ void			env_exec(t_ast *a)
 				temp = ft_strdup(environment_copy[i]);
 		if (temp)
 			search_and_execute(strsplit_paths(temp + 5, 0, 0), a);
-		else
-			ft_printf("Command %s not found\n", a->tokens[0]);
 	}
 	_exit(1);
 }
