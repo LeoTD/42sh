@@ -6,7 +6,7 @@
 /*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:56:25 by eliu              #+#    #+#             */
-/*   Updated: 2018/06/27 00:12:48 by eliu             ###   ########.fr       */
+/*   Updated: 2018/06/27 00:41:57 by eliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void			search_and_execute(char **all_bin_paths, t_ast *a)
 	while (all_bin_paths[++i])
 		if (access(all_bin_paths[i], X_OK) != -1)
 			execve(all_bin_paths[i], a->tokens, g_environ);
-	ft_printf("Error: Command %s not found\n", a->tokens[0]);
+	ft_printf("42sh: command not found: %s\n", a->tokens[0]);
 }
 
 /*
