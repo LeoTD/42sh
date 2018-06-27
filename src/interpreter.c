@@ -30,16 +30,17 @@ int		await_exit_status(pid_t pid, int fd[2], t_ast *a)
 			env_exec(a);
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
 		env_exec(a->lchild);
 	}
 	else
 	{
 		close(fd[1]);
 		dup2(fd[0], STDIN_FILENO);
-		if (waitpid(pid, &status, 0) != pid)
-			status = -1;
+		close(fd[0]);
 		if (a->type != CMD)
-			return (encounter_pipe(a->rchild));
+			encounter_pipe(a->rchild);
+		waitpid(pid, &status, 0);
 	}
 	return (status);
 }
@@ -57,7 +58,7 @@ int		encounter_pipe(t_ast *a)
 	{
 		_exit(1);
 	}
-	return (await_exit_status(pid, fd, a));
+	exit (await_exit_status(pid, fd, a));
 }
 
 int		ok_next_list(t_ast *a, int exit_status)
