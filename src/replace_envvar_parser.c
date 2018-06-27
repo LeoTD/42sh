@@ -134,6 +134,8 @@ int			*length_of_envars(char *str, int *positions, int size_positions)
 	return (length_of_vars);
 }
 
+// comenting this string because it wont compile - INCOMPLETE FUNCTION
+/*
 char		*replaced_string(char *str, int *post, int *post_len)
 {
 //	char	*temp;
@@ -141,6 +143,7 @@ char		*replaced_string(char *str, int *post, int *post_len)
 
 //	return (temp);
 }
+*/
 
 void		look_and_replace_vars(char *str, char **temp)
 {
