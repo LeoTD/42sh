@@ -42,9 +42,8 @@ int		*tokenize(char **format)
 	int i;
 
 	i = 0;
-	if (!(token = (int *)malloc(sizeof(int) * arr_length(format))))
+	if (!(token = (int *)ft_memalloc(sizeof(int) * (arr_length(format) + 1))))
 		return (NULL);
-	ft_bzero(token, arr_length(format));
 	while (i < arr_length(format))
 	{
 		if (is_operator(format[i]) != -1)
