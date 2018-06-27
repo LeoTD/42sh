@@ -6,7 +6,7 @@
 /*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:56:29 by eliu              #+#    #+#             */
-/*   Updated: 2018/06/20 08:34:40 by eliu             ###   ########.fr       */
+/*   Updated: 2018/06/27 03:00:12 by jgelbard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_redir			*get_redir_match(char *s)
 	char		*redir_start;
 	t_redir		*r;
 
-	if (!(REDIR(s, '>') && !(REDIR(s, '<'))))
+	if ((!(REDIR(s, '>')) && !(REDIR(s, '<'))))
 		return (NULL);
 	if (!(ft_strchr("1234567890 \t", *(redir_start - 1))))
 		return (NULL);
