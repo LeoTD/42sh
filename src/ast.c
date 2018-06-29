@@ -40,7 +40,7 @@ t_ast	*parsed_ast_node(char **args, int *tokens, int hp)
 		*args = NULL;
 	}
 	else
-		a->tokens = args;
+		a->tokens = ft_strdup_2d(args);
 	a->type = tokens[hp];
 	a->ok = 0;
 	a->lchild = NULL;
@@ -83,4 +83,28 @@ void	create_tree(char **args, int *tokens, t_ast **head, int hp)
 	}
 	else if (*args)
 		*head = parsed_ast_node(args, tokens, hp);
+}
+
+void	free_tree(t_ast *a)
+{
+	t_list	*redirs;
+	t_list	*tmp;
+	t_redir	*r;
+
+	if (a == NULL)
+		return ;
+	free_tree(a->lchild);
+	free_tree(a->rchild);
+	free_string_array(a->tokens);
+	redirs = a->redirs;
+	while (redirs)
+	{
+		tmp = redirs;
+		redirs = redirs->next;
+		r = (t_redir *)tmp->content;
+		free(r->from_file);
+		free(r);
+		free(tmp);
+	}
+	free(a);
 }

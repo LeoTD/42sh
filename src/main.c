@@ -6,7 +6,7 @@
 /*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:56:40 by eliu              #+#    #+#             */
-/*   Updated: 2018/06/27 01:57:28 by jgelbard         ###   ########.fr       */
+/*   Updated: 2018/06/29 00:13:20 by jgelbard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 /*
 ** TODO:
-** todo1 free strings and tree
 ** todo2 pick split_args error message
 ** todo better exit: handle `false || exit && echo hi`
 */
@@ -71,7 +70,7 @@ int			parse_and_interpret(char **args)
 	create_tree(args, tokens, &ast, highest_prec(tokens));
 	if (ast)
 		interpret_tree(ast);
-	free(ast);
+	free_tree(ast);
 	return (1);
 }
 
