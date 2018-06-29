@@ -13,12 +13,11 @@
 #include "ft_prompt.h"
 
 /*
- **	Signal is sent to copy the line. Take the current line that is inside
- **	ft_prompt, and store it into a temporary buffer.
- **	If a temporary buffer exists, free and clear the old one and realloc
- **	a new space for it.
- **	
- */
+** Signal is sent to copy the line. Take the current line that is inside
+** ft_prompt, and store it into a temporary buffer.
+** If a temporary buffer exists, free and clear the old one and realloc
+** a new space for it.
+*/
 
 int		copy_line(t_prompt *p)
 {
@@ -30,10 +29,10 @@ int		copy_line(t_prompt *p)
 }
 
 /*
- **	Signal is sent to paste the line. Take the current prompt and 
- **	concatenate with the clipboard. If the clipboard is empty, do nothing.
- **	Call edit insert for the length of the string to be concatentated.
- */
+**	Signal is sent to paste the line. Take the current prompt and
+**	concatenate with the clipboard. If the clipboard is empty, do nothing
+**	Call edit insert for the length of the string to be concatentated
+*/
 
 int		paste_line(t_prompt *p)
 {

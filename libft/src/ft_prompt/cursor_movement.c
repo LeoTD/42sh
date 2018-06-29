@@ -24,6 +24,10 @@ int				cursor_move(t_prompt *p, long c)
 		p->pos = 0;
 	if (c == DOWN_ARR)
 		p->pos = p->len;
+	if (c == CTRL_A)
+		p->pos = 0;
+	if (c == CTRL_E)
+		p->pos = ft_strlen(p->buf);
 	ERR_CHECK(print_line(p));
 	return (0);
 }
