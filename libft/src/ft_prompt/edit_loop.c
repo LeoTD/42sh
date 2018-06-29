@@ -48,12 +48,8 @@ int				edit_insert(t_prompt *p, long c)
 	return (0);
 }
 
-int				line_edit_loop(t_prompt *p)
+int				line_edit_loop(t_prompt *p, int status, long c)
 {
-	long		c;
-	int			status;
-
-	status = 0;
 	ft_prompt_history_add("");
 	print_line(p);
 	while (!status)
@@ -62,6 +58,10 @@ int				line_edit_loop(t_prompt *p)
 		read(p->ifd, &c, 8);
 		if (c == ESC)
 			;
+		else if (c == CTRL_K)
+			status = copy_line(p);
+		else if (c == CTRL_P)
+			status = paste_line(p);
 		else if (c == UP_ARR || c == DOWN_ARR)
 			status = move_through_history(p, (c == UP_ARR ? 1 : -1));
 		else if (c == LEFT_ARR || c == RIGHT_ARR)

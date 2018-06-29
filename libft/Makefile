@@ -111,7 +111,8 @@ PROMPT_SRC	= cursor_movement.c \
 			  ft_prompt.c \
 			  history.c \
 			  print.c \
-			  setup.c
+			  setup.c \
+			  copy_line.c
 
 PF_SRC		= $(addprefix ft_printf/, $(PRINTF_SRC))
 PRT_SRC		= $(addprefix ft_prompt/, $(PROMPT_SRC))

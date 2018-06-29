@@ -42,7 +42,7 @@ char		*ft_prompt(char *prompt_str)
 		atexit(ft_prompt_cleanup);
 		exit_ready = 1;
 	}
-	if (line_edit_loop(&p_state) == -1)
+	if (line_edit_loop(&p_state, 0, 0) == -1)
 	{
 		reset_term(&g_term);
 		return (0);

@@ -44,6 +44,7 @@ int				prompt_init(t_prompt *p, char *pstr)
 	MALL_CHECK(p->pstr = ft_strdup(pstr));
 	p->plen = ft_strlen(pstr);
 	MALL_CHECK(p->buf = ft_strnew(LINE_START_SIZE));
+	MALL_CHECK(p->clipboard = ft_strnew(0));
 	p->buf_size = LINE_START_SIZE;
 	p->len = 0;
 	p->cols = get_cols();

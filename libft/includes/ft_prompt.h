@@ -83,6 +83,7 @@ typedef struct			s_prompt
 	char				*buf;
 	size_t				buf_size;
 	size_t				len;
+	char				*clipboard;
 	size_t				cols;
 	size_t				pos;
 	int					his_idx;
@@ -103,7 +104,7 @@ typedef struct			s_term
 */
 
 char					*ft_prompt(char *prompt_str);
-int						line_edit_loop(t_prompt *p);
+int						line_edit_loop(t_prompt *p, int status, long c);
 int						term_init(t_term *t);
 int						prompt_init(t_prompt *p, char *pstr);
 int						print_line(t_prompt *p);
@@ -132,5 +133,12 @@ void					ft_prompt_cleanup(void);
 int						forget_most_recent(void);
 void					cleanup_history(void);
 void					reset_term(t_term *t);
+
+/*
+**	paste_line.c
+*/
+
+int						copy_line(t_prompt *p);
+int						paste_line(t_prompt *p);
 
 #endif
