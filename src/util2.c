@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include <stdarg.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 int			arr_length(char **a)
@@ -46,4 +47,14 @@ void		ft_swap_str(char **s1, char **s2)
 	tmp = *s1;
 	*s1 = *s2;
 	*s2 = tmp;
+}
+
+void		free_string_array(char **ary)
+{
+	char **iter;
+
+	iter = ary;
+	while (*iter)
+		free(*iter++);
+	free(ary);
 }
