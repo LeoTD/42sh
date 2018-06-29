@@ -55,6 +55,7 @@ void	ft_set_env(char *name, char *val, char **env)
 		if (ft_strlen(env[i]) >= len)
 			if (!(ft_strncmp(env[i], name, len)) && env[i][len] == '=')
 			{
+				free(env[i]);
 				env[i] = entry;
 				return ;
 			}
