@@ -32,18 +32,12 @@ void	add_env_entry(char *entry)
 {
 	size_t	envsize;
 	char	**new_env;
-	int		i;
 
 	envsize = arr_length(g_environ);
 	new_env = ft_memalloc((envsize + 2) * sizeof(*new_env));
-	i = 0;
-	while (g_environ[i])
-	{
-		new_env[i] = g_environ[i];
-		++i;
-	}
-	new_env[i] = entry;
-	free(g_environ);
+	ft_strcpy_2d(new_env, g_environ);
+	new_env[envsize] = entry;
+	free_string_array(g_environ);
 	g_environ = new_env;
 }
 
