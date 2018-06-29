@@ -66,30 +66,6 @@ char			**strsplit_paths(char *str, int i, int j)
 }
 
 /*
-**	Creating a duplicate environment so that we can search through paths.
-*/
-
-char			**copy_environ_variables(void)
-{
-	int			i;
-	char		**new;
-
-	i = 0;
-	while (g_environ[i])
-		i++;
-	if (!(new = (char**)malloc(sizeof(char*) * (i + 1))))
-		return (NULL);
-	i = 0;
-	while (g_environ[i])
-	{
-		new[i] = ft_strdup(g_environ[i]);
-		i++;
-	}
-	new[i] = NULL;
-	return (new);
-}
-
-/*
 ** todo: free all_bin_paths ?
 */
 
@@ -139,7 +115,7 @@ void			env_exec(t_ast *a)
 	{
 		i = -1;
 		temp = NULL;
-		environment_copy = copy_environ_variables();
+		environment_copy = ft_strdup_2d(g_environ);
 		while (environment_copy && environment_copy[++i])
 			if (ft_strnstr(environment_copy[i], "PATH=", 5))
 				temp = ft_strdup(environment_copy[i]);
