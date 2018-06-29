@@ -18,6 +18,7 @@
 ** TODO:
 ** todo2 pick split_args error message
 ** todo better exit: handle `false || exit && echo hi`
+** todo remove `if argc > 1`...
 */
 
 char		**g_environ;
@@ -82,7 +83,7 @@ int			main(int argc, char **argv, char **environ)
 	g_environ = ft_strdup_2d(environ);
 	signal(SIGINT, SIG_IGN);
 	if (argc > 1)
-		return (parse_and_interpret(argv + 1));
+		return (parse_and_interpret(ft_strdup_2d(argv + 1)));
 	ft_prompt_history_set_len(200);
 	while (1)
 	{
