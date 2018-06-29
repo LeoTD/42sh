@@ -53,7 +53,8 @@ void		free_string_array(char **ary)
 {
 	char **iter;
 
-	iter = ary;
+	if (!(iter = ary))
+		return ;
 	while (*iter)
 		free(*iter++);
 	free(ary);

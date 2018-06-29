@@ -152,4 +152,5 @@ void					ft_swap_str(char **s1, char **s2);
 char					*ft_get_env(char *name, char **env);
 void					add_env_entry(char *entry);
 void					ft_set_env(char *name, char *val, char **env);
+void					free_string_array(char **ary);
 #endif
