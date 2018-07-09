@@ -6,7 +6,7 @@
 #    By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/21 19:18:37 by ltanenba          #+#    #+#              #
-#    Updated: 2018/06/14 03:57:37 by eliu             ###   ########.fr        #
+#    Updated: 2018/06/15 23:52:45 by ltanenba         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,6 +110,7 @@ PROMPT_SRC	= cursor_movement.c \
 			  edit_loop.c \
 			  ft_prompt.c \
 			  history.c \
+			  multi_print.c \
 			  print.c \
 			  setup.c
 

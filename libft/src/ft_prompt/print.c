@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/08 01:52:34 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/08 21:09:32 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/16 11:47:38 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,14 @@ int				append_cursor_pos(char **dst, int n)
 	return (0);
 }
 
+int				print_single_line(t_prompt *p);
+
 int				print_line(t_prompt *p)
+{
+	return(print_multiline(p));
+}
+
+int				print_single_line(t_prompt *p)
 {
 	char		esc[64];
 	char		*line;

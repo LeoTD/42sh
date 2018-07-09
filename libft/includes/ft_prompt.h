@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 22:14:36 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/09 07:28:31 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/06/16 12:02:22 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,16 @@
 # define MALL_CHECK(x) if (!(x)) return (-1)
 # define ERR_CHECK(x) if ((x) == -1) return (-1)
 
-/* Deletes from the cursor until end of term */
+/* Save cursor position */
+# define SAVE_CURSOR "\033[s"
+
+/* Restore cursor position */
+# define RECALL_CURSOR "\033[u"
+
+/* Deletes from the cursor until end of line */
+# define DEL_TERM_SEQ "\033[0J"
+
+/* Deletes from the cursor until end of line */
 # define DEL_END_SEQ "\033[0K"
 
 /* Reports the cursor position as: "ESC[x;yR" */
@@ -81,6 +90,8 @@ typedef struct					s_prompt
 	size_t				len;
 	size_t				cols;
 	size_t				pos;
+	size_t				oldpos;
+	size_t				maxrows;
 	int					his_idx;
 }								t_prompt;
 
@@ -102,7 +113,17 @@ char					*ft_prompt(char *prompt_str);
 int						line_edit_loop(t_prompt *p);
 int						term_init(t_term *t);
 int						prompt_init(t_prompt *p, char *pstr);
+
+/*
+** Printing Functions
+*/
+
 int						print_line(t_prompt *p);
+int						print_multiline(t_prompt *p);
+size_t					get_cols(void);
+int						append_substr(char **dst, char *src, size_t len);
+int						append_cursor_pos(char **dst, int n);
+int						append_cursor_up(char **dst, int n);
 
 /*
 ** Editing functions

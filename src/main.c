@@ -23,7 +23,7 @@ void		parse_and_interpret(char **args)
 
 int			main(void)
 {
-	char	**args;
+//	char	**args;
 	char	*line;
 
 	ft_prompt_history_set_len(200);
@@ -36,10 +36,12 @@ int			main(void)
 		ft_prompt_history_add(line);
 		if (syntax_error(line))
 			ft_putendl("La pendejada tiene un syntax incorrecto");
-		else if (!(args = split_args(line)))
-			;
 		else
-			parse_and_interpret(args);
+			ft_putendl(line);
+//		else if (!(args = split_args(line)))
+//			;
+//		else
+//			parse_and_interpret(args);
 		free(line);
 	}
 	return (0);

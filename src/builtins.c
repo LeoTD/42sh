@@ -45,6 +45,7 @@ int			ftsh_echo(char **args)
 ** setenv VAR [VALUE]
 */
 
+/*
 int			ftsh_setenv(char **args)
 {
 	int			i;
@@ -65,10 +66,11 @@ int			ftsh_setenv(char **args)
 		//environ[i] = 
 	}
 }
+
 int			ftsh_unsetenv(char **args)
 {
 
-}
+}*/
 
 int			ftsh_env(char **args)
 {
