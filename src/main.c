@@ -6,7 +6,7 @@
 /*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:56:40 by eliu              #+#    #+#             */
-/*   Updated: 2018/07/09 22:40:45 by gmalpart         ###   ########.fr       */
+/*   Updated: 2018/07/09 23:16:42 by gmalpart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@
 
 char		**g_environ;
 
-// added_protection from empty args[0];
+/*
+**	added_protection from empty args[0];
+*/
+
 int			catch_unforkable(char **args)
 {
 	int		i;

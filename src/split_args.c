@@ -6,7 +6,7 @@
 /*   By: lprior <lprior@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:57:06 by eliu              #+#    #+#             */
-/*   Updated: 2018/07/09 21:48:05 by gmalpart         ###   ########.fr       */
+/*   Updated: 2018/07/09 23:16:55 by gmalpart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			skip_char(char *format, int *i, char c)
 	else if (c == '"' || c == '\'')
 		while (format[(*i) + 1] != c && format[*i])
 			(*i)++;
-	else if (c == ' ')
+	else if (c == ' ' || c == '\t' || c == '\n')
 		while (format[*i] == c && format[*i])
 			(*i)++;
 	else
@@ -88,8 +88,8 @@ char		*find_next(int *i, char *format, int end, char *tmp)
 		end = *i;
 		if (is_op(format + *i) == PARSE_ERROR)
 			return (NULL);
-		if (format[*i] == ' ' || format[*i] == '\n' || format[*i] == '\t') // mod
-			skip_char(format, i, ' ');
+		if (format[*i] == ' ' || format[*i] == '\t' || format[*i] == '\n') // mod
+			skip_char(format, i, format[*i]);
 		else if (is_op(format + *i) != NOT_OP &&
 				skip_char(format, &end, format[end]) && (toggle = 1))
 			tmp = ft_strsub(format, *i, end - *i);
