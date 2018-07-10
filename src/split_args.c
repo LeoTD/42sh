@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: lprior <lprior@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:57:06 by eliu              #+#    #+#             */
-/*   Updated: 2018/06/20 08:00:01 by eliu             ###   ########.fr       */
+/*   Updated: 2018/07/09 19:41:02 by lprior           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char		*find_next(int *i, char *format, int end, char *tmp)
 			tmp = ft_strsub(format, *i, end - *i);
 		else if (format[*i] == '"' && skip_char(format, &end, '"')
 				&& (toggle = 1))
-			tmp = ft_strsub(format, (*i + 1), ((end += 1) - *i) - 1);
+			tmp = ft_strsub(format, (*i + 1), ((end += 2) - *i) - 2);
 		else if (is_shovel(format, *i) && skip_char(format, &end, '>')
 				&& (toggle = 1))
 			tmp = ft_strsub(format, *i, end - *i);
