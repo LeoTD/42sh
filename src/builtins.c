@@ -37,14 +37,18 @@ t_builtin	*g_builtins_dispatch[NUM_HANDLED_BUILTINS] = {
 ** be retried when possible.
 */
 
-/*
-** todo: handle echo -n flag
-*/
-
 void		g_builtin_echo(char **args)
 {
 	int fd;
+	int add_newline;
 
+	if (*args && !ft_strcmp("-n", *args))
+	{
+		add_newline = 0;
+		++args;
+	}
+	else
+		add_newline = 1;
 	fd = dup(1);
 	while (*args)
 	{
@@ -53,7 +57,8 @@ void		g_builtin_echo(char **args)
 			ft_putchar_fd(' ', fd);
 		++args;
 	}
-	ft_putchar_fd('\n', fd);
+	if (add_newline)
+		ft_putchar_fd('\n', fd);
 	exit(0);
 }
 
