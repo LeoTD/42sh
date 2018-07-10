@@ -51,6 +51,8 @@ int			nbr_positions_f(char *str)
 				&& (inside_quotes == 0) && \
 				(str[i + 1] != '\0' || str[i] != '$'))
 			nbr_positions++;
+			// add extra check for inner names and some pendejadas
+			// if a '$' is followed but a character - number or SP.chars
 	}
 	return (nbr_positions);
 }

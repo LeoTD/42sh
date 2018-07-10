@@ -1,0 +1,66 @@
+//( str[i] == ';' || '|' || '&' || '')
+
+basically everything out of the scope of characters and possible numbers
+env variables are somehow parser
+
+
+AUTOCOMPLETION:
+	getCWD();
+	- read the whole directory with opendir();
+	- read every item.
+	- kinda sort them and then using a function to match the content
+		must start with the varaibles specify:
+		example:
+			"star" -> key |||   item: starcraft, startlord, starstroker;
+	
+		sort them and then print them
+			-> MUST CAPTURE THE AUTOCOMPLETER FROM 'tab'
+
+		-> THE BEHAVIOR IS LIKE A BUILTIN FUNCTION
+
+		EXPECTED BEHAVIOR:
+			- is there is only one elmement then you replace the island with the element
+			
+			RELATED TO NCURSES;
+				NEED TO BE IMPLEMENTED ALONG WITH FT_PROMPT, inside
+					- cursor position tracker;
+						example:		word
+										1234
+								- tracker at postion 4, backtrack , until 0 or reach space;
+								then you make a SUBSTR(STR, space_or_beginning, actual_position);
+								
+								char	**ELEMENTS;
+								int		contador_matchs;
+								
+								contador_matchs = 0;
+							
+								// first count to see how many times it match;
+								while(ELEMENT)
+									if (FUNCTION_FOR_MATCH(SUBSTR, ELEMENT[i]) == 1)
+										contador_matchs++;
+
+								// second count to allocate a memory of array of ints;
+								int		index_found = ft_memalloc(sizeof(int) * contador_matchs);
+								while(ELEMENT)
+									if (FUNCTION_FOR_MATCH(SUBSTR, ELEMENT[i]) == 1)
+										index_found[e] = i;
+										++e;;
+
+								if (contador_matchs == 1)
+									replace_and_move(STR_MASTER, ELEMENT);
+								else
+									// print every ELEMENT that matches an index inside INDEX_FOUND;
+								
+								- END FUNCTION / CALL FT_PROMPT AGAIN,
+								- REPEAT IF THE GUY PRESS 'TAB'
+
+								- DO NOT CONSIDER BRACKETS OR QUOTES just autocomplete
+	
+		EDGE BEHAVIOR:
+			delimeted by a word,
+				WORD, an island of spaces definetely not inside a quotes;
+
+			--- not considering globing or brackets in general < --- | GLOOBING IS TOO BIG
+		
+		
+				
