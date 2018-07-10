@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sh.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: lprior <lprior@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 08:00:31 by eliu              #+#    #+#             */
-/*   Updated: 2018/06/20 08:26:26 by eliu             ###   ########.fr       */
+/*   Updated: 2018/07/09 20:02:37 by lprior           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 
 # define OPCHAR(x) (x == '|' || x == '&' || x == ';' || x == '!')
 # define REDIR_CHAR(x) (x == '>' || x == '<')
+# define SINGLE format[*i] == '\'' && skip_char(format, &end, '\'')
+# define DOUBLE format[*i] == '"' && skip_char(format, &end, '"')
 
 extern char				**g_environ;
 

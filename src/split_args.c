@@ -6,12 +6,13 @@
 /*   By: lprior <lprior@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:57:06 by eliu              #+#    #+#             */
-/*   Updated: 2018/07/09 19:41:02 by lprior           ###   ########.fr       */
+/*   Updated: 2018/07/09 20:02:35 by lprior           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_sh.h"
 #include "ast.h"
+
 
 int			op_error_handle(char *c)
 {
@@ -66,7 +67,7 @@ int			skip_char(char *format, int *i, char c)
 			r_count += format[*i] == '>' ? 1 : 0;
 			l_count += format[(*i)++] == '<' ? 1 : 0;
 		}
-	else if (c == '"')
+	else if (c == '"' || c == '\'')
 		while (format[(*i) + 1] != c && format[*i])
 			(*i)++;
 	else if (c == ' ')
@@ -92,7 +93,7 @@ char		*find_next(int *i, char *format, int end, char *tmp)
 		else if (is_op(format + *i) != NOT_OP &&
 				skip_char(format, &end, format[end]) && (toggle = 1))
 			tmp = ft_strsub(format, *i, end - *i);
-		else if (format[*i] == '"' && skip_char(format, &end, '"')
+		else if (((DOUBLE) || (SINGLE))
 				&& (toggle = 1))
 			tmp = ft_strsub(format, (*i + 1), ((end += 2) - *i) - 2);
 		else if (is_shovel(format, *i) && skip_char(format, &end, '>')
