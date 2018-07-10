@@ -6,7 +6,7 @@
 /*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:56:40 by eliu              #+#    #+#             */
-/*   Updated: 2018/06/29 00:13:20 by jgelbard         ###   ########.fr       */
+/*   Updated: 2018/07/09 22:40:45 by gmalpart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 char		**g_environ;
 
+// added_protection from empty args[0];
 int			catch_unforkable(char **args)
 {
 	int		i;
@@ -30,7 +31,7 @@ int			catch_unforkable(char **args)
 	i = 0;
 	while (i < NUM_HANDLED_BUILTINS)
 	{
-		if (i != BIN_ECHO && !ft_strcmp(args[0], g_builtin_str[i]))
+		if (i != BIN_ECHO && !ft_strcmp(args[0], g_builtin_str[i])) // mod
 		{
 			g_builtins_dispatch[i](args + 1);
 			return (1);

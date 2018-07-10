@@ -6,7 +6,7 @@
 /*   By: lprior <lprior@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 08:00:31 by eliu              #+#    #+#             */
-/*   Updated: 2018/07/09 20:02:37 by lprior           ###   ########.fr       */
+/*   Updated: 2018/07/09 20:48:12 by gmalpart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ int						cont_nbr_backslashes(char *str, int i);
 char					*get_type_prompt(char value);
 void					cont_chars_capsules(char *str, char schar, int *cont);
 char					*ft_strjoin_newline(char const *s1, char const *s2);
+//recently added
+char					*ft_strjoin_newline_back(char const *s1, char const *s2);
 
 /*
 ** PARSE_LINE.c

@@ -6,7 +6,7 @@
 /*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:56:33 by eliu              #+#    #+#             */
-/*   Updated: 2018/06/20 07:56:34 by eliu             ###   ########.fr       */
+/*   Updated: 2018/07/09 22:39:45 by gmalpart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,32 @@ char	*ft_strjoin_newline(char const *s1, char const *s2)
 	while (*s1)
 		*(tmp + ++i) = *(s1++);
 	*(tmp + ++i) = '\n';
+	while (*s2)
+		*(tmp + ++i) = *(s2++);
+	return (tmp);
+}
+
+/*
+** replace the '\\' with a newline
+*/
+
+char	*ft_strjoin_newline_back(char const *s1, char const *s2)
+{
+	char	*tmp;
+	int		len;
+	int		i;
+
+	if (!s1 || !s2)
+		return (0);
+	i = -1;
+	len = ft_strlen(s1) + ft_strlen(s2);
+	tmp = ft_strnew(len);
+	if (!tmp)
+		return (0);
+	while (*s1)
+		*(tmp + ++i) = *(s1++);
+	if (i != -1 && *(tmp + i) == '\\')
+		*(tmp + i) = '\n';
 	while (*s2)
 		*(tmp + ++i) = *(s2++);
 	return (tmp);

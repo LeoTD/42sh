@@ -6,7 +6,7 @@
 /*   By: eliu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/20 07:56:56 by eliu              #+#    #+#             */
-/*   Updated: 2018/06/20 07:56:57 by eliu             ###   ########.fr       */
+/*   Updated: 2018/07/09 22:41:56 by gmalpart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char		*concatinated_string(char type)
 
 #define LAST_CHAR_BSLASH(x, i) (ft_strequ(ft_strstr(x + i, "\\"), "\\") == 1)
 #define N_SLASH(x, i) cont_nbr_backslashes(x, i)
+#define STRNB(x, y) ft_strjoin_newline_back(x, y)
+#define ALLO_FREE_BACK(dest, x, y) dest = STRNB(x, y); free(x); free(y)
 
 char		*concatined_newline(int i)
 {
@@ -67,10 +69,10 @@ char		*concatined_newline(int i)
 				((N_SLASH(concat, e) % 2 == 0) || (N_SLASH(concat, e) == 0)))
 				{
 					extra = concatined_newline(e);
-					ALLO_AND_FREE(join, concat, extra);
+					ALLO_FREE_BACK(join, concat, extra);
 					concat = join;
 				}
-		ALLO_AND_FREE(join, temp, concat);
+		ALLO_FREE_BACK(join, temp, concat);
 		temp = join;
 	}
 	return (temp);
@@ -112,7 +114,7 @@ void		is_capsule_incomplete(char *str, char **temp)
 			(N_SLASH(str, i) == 0)))
 			{
 				concat = concatined_newline(i);
-				ALLO_AND_FREE(tmp, str, concat);
+				ALLO_FREE_BACK(tmp, str, concat);
 				str = tmp;
 			}
 	}
