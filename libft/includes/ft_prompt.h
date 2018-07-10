@@ -6,7 +6,7 @@
 /*   By: ltanenba <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/07 22:14:36 by ltanenba          #+#    #+#             */
-/*   Updated: 2018/06/09 07:28:31 by ltanenba         ###   ########.fr       */
+/*   Updated: 2018/07/10 14:33:21 by ltanenba         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int						ft_prompt_history_add(char *str);
 void					ft_prompt_cleanup(void);
 int						forget_most_recent(void);
 void					cleanup_history(void);
-void					reset_term(t_term *t);
+char					*reset_term(t_term *t);
 
 /*
 **	paste_line.c
