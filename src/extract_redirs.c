@@ -46,12 +46,6 @@ void			append_redir(t_ast *a, t_redir *r)
 	ft_lstaddback(&(a->redirs), lst);
 }
 
-/*
-**	if (!(redir_start = ft_strchr(s, '>')
-**	&& !(redir_start = ft_strchr(s, '<')))
-**		return (NULL);
-*/
-
 t_redir			*get_redir_match(char *s)
 {
 	char		*redir_start;
@@ -59,7 +53,7 @@ t_redir			*get_redir_match(char *s)
 
 	if ((!(REDIR(s, '>')) && !(REDIR(s, '<'))))
 		return (NULL);
-	if (!(ft_strchr("1234567890 \t", *(redir_start - 1))))
+	if (redir_start > s && !ft_strchr("1234567890 \t", *(redir_start - 1)))
 		return (NULL);
 	r = new_redir();
 	if (*redir_start == '<')
