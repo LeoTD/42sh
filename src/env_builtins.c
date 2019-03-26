@@ -59,7 +59,6 @@ void	g_builtin_env(char **args)
 
 void	g_builtin_setenv(char **args)
 {
-	int		i;
 	char	*val;
 
 	if (args[0] == NULL)
@@ -68,7 +67,6 @@ void	g_builtin_setenv(char **args)
 		return ;
 	}
 	val = args[1] == NULL ? "" : args[1];
-	i = 0;
 	ft_set_env(args[0], val, g_environ);
 }
 

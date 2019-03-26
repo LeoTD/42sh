@@ -83,9 +83,6 @@ char		*precision(t_tools tools, char *arg, int j)
 
 void		hash(t_tools tools, char *arg)
 {
-	int i;
-
-	i = 0;
 	if (TYPE == 'x' || TYPE == 'X')
 	{
 		arg[ft_strlen(arg)] = TYPE == 'X' ? 'X' : 'x';

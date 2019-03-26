@@ -14,11 +14,9 @@
 
 void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	char	*tmp;
 	size_t	i;
 
 	i = -1;
-	tmp = (char *)dst;
 	while (++i < n)
 	{
 		*((char *)dst + i) = *((unsigned char *)src + i);

@@ -67,9 +67,6 @@ int		ft_findchar(char c, char *search)
 
 void	ft_putwstr(wchar_t *str)
 {
-	wchar_t *p;
-
-	p = str;
 	while (*str)
 		write(1, str++, 1);
 }

@@ -18,6 +18,10 @@
 # include "ft_printf.h"
 # include "ft_prompt.h"
 # include <termcap.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <signal.h>
+# include <stdio.h>
 # include <sys/ioctl.h>
 # include <stdlib.h>
 # include <unistd.h>

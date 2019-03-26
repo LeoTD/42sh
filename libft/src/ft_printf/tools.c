@@ -40,21 +40,23 @@ t_tools			reset_tools(void)
 int				use_tools(t_tools tools, char *arg, int ret)
 {
 	char	str[9216];
+	ssize_t	arglen;
 
 	if (TYPE == '%' || (((TYPE == 'c' || TYPE == 'C') && !*arg)))
 		ret += ft_specialbuffer(tools, arg);
 	else
 	{
+		arglen = ft_strlen(arg);
 		ft_bzero(str, 9216);
 		ZERO = (MINUS) ? FALSE : ZERO;
 		PREC = (TYPE == 'c' || TYPE == 'C') ? 0 : PREC;
 		SPACE = (ft_findchar(TYPE, "uUxXoO") || PLUS) ? FALSE : SPACE;
 		PLUS = (ft_findchar(TYPE, "uUxXoO")) ? FALSE : PLUS;
 		ZERO = (PREC && ZERO) ? FALSE : ZERO;
-		WIDTH = (!WIDTH && !PREC) ? ft_strlen(arg) : WIDTH;
-		PREC = (PREC > (int)ft_strlen(arg) && TYPE == 's') ? ft_strlen(arg)
+		WIDTH = (!WIDTH && !PREC) ? arglen : WIDTH;
+		PREC = (PREC > arglen && TYPE == 's') ? arglen
 			: PREC;
-		PREC = (!PREC) ? ft_strlen(arg) : PREC;
+		PREC = (!PREC) ? arglen : PREC;
 		arg = precision(tools, arg, 0);
 		width(str, tools, arg);
 		if ((HASH || TYPE == 'p') && (TYPE != 'o' && TYPE != 'O'))

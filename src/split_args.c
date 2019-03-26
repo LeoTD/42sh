@@ -117,11 +117,9 @@ char		**split_args(char *format)
 	char		**tmp;
 	int			i;
 	int			k;
-	int			hold;
 
 	i = 0;
 	k = 0;
-	hold = 0;
 	if (!(tmp = st_strptrnew(ft_strlen(format) / 2)))
 		return (0);
 	while (format[i] && i < (int)ft_strlen(format))

@@ -76,11 +76,6 @@ int		check_brackets(char *str)
 
 int		syntax_error(char *str)
 {
-	int		i;
-	char	inside_quotes;
-
-	inside_quotes = 0;
-	i = -1;
 	if (check_brackets(str) == 0)
 		return (0);
 	else

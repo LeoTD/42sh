@@ -105,12 +105,10 @@ void		wrap_quotes(char **str, int i)
 void		is_capsule_incomplete(char *str, char **temp)
 {
 	int		i;
-	int		cont_nbr_capsule;
 	char	*concat;
 	char	*tmp;
 
 	i = -1;
-	cont_nbr_capsule = 0;
 	while (str[++i])
 	{
 		if (IS_CAPSULE)

@@ -12,7 +12,6 @@
 
 #include "ft_sh.h"
 #include "ast.h"
-#include <crt_externs.h>
 
 /*
 ** TODO:
